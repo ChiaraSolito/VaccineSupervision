@@ -1,21 +1,21 @@
 package Control;
 
-import Model.DemoModel;
-import View.DemoViewBuilder;
+import Model.User;
+import View.LoginViewBuilder;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-public class DemoController {
+public class LoginController {
     private Stage stage;
-    private DemoModel model = new DemoModel();
+    private User model = new User();
 
-    private DemoViewBuilder viewBuilder;
+    private LoginViewBuilder viewBuilder;
 
     //Costruttore
-    public DemoController(Stage stage) {
+    public LoginController(Stage stage) {
         this.stage = stage;
-        viewBuilder = new DemoViewBuilder(model, () -> checkAccess());
+        viewBuilder = new LoginViewBuilder(model, () -> checkAccess());
     }
 
     public Parent getView()  {
@@ -26,12 +26,10 @@ public class DemoController {
     metodo privato che verifica l'accesso
      */
     private void checkAccess() {
-        if (model.getFarmacologo() && model.getUser().equals("fred") && model.getPassword().equals("password")) {
+        if (model.getType() && model.getUsername().equals("fred") && model.getPassword().equals("password")) {
             loadFarmacologistApplication();
-        } else if(model.getMedico() && model.getUser().equals("fred") && model.getPassword().equals("password")) {
+        } else if(!model.getType() && model.getUsername().equals("fred") && model.getPassword().equals("password")) {
             loadDoctorApplication();
-        } else if(model.getMedico() && model.getFarmacologo()){
-            displayDualMessage();
         } else {
             displayErrorMessage();
         }
@@ -42,14 +40,6 @@ public class DemoController {
         dialog.setTitle("Not able to Login");
         dialog.setHeaderText("Incorrect Username or Password");
         dialog.setContentText("You have entered incorrect username or Password.\nPlease try Again and check if you chose the right user type.");
-        dialog.showAndWait();
-    }
-
-    private void displayDualMessage() {
-        Alert dialog = new Alert(Alert.AlertType.ERROR);
-        dialog.setTitle("Not able to Login");
-        dialog.setHeaderText("Incorrect check of boxes");
-        dialog.setContentText("Please try Again and check if you chose the right user type.");
         dialog.showAndWait();
     }
 
