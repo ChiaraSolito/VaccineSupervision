@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -28,8 +29,11 @@ public class LoginViewBuilder {
         Crea la view effettiva
      */
     public Region getView() {
+        GridPane gridpane = new GridPane();
+
         HBox userHBox = new HBox(10, new Text("User ID: "), createBoundTextField(model.userProperty()));
         HBox passwordHBox = new HBox(10, new Text("Password: "), createBoundPasswordField(model.passwordProperty()));
+        HBox loginHBox = new HBox(10, new Text registratinText = new Text("Registration");
         Button loginButton = new Button("Login");
         loginButton.setOnAction(evt -> actionRunnable.run());
         VBox results = new VBox(10, userHBox, passwordHBox, loginButton);
