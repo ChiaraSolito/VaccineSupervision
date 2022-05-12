@@ -138,6 +138,12 @@ Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le quer
             REFERENCES vaccinazione(pazienteid, vaccino, tiposomministrazione)
     );
 \end{verbatim}
-
-
+\paragraph*{Tabella RISCHIOPAZIENTE}
+\begin{verbatim}
+    CREATE TABLE RischioPaziente(
+        pazienteID INTEGER NOT NULL REFERENCES paziente(codice),
+        rischio VARCHAR(20) NOT NULL REFERENCES fattorerischio(nome),
+        PRIMARY KEY(pazienteID, rischio)
+    );
+\end{verbatim}
 \end{document}
