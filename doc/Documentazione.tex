@@ -20,8 +20,8 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{Chiara Solito}
-\lhead{Dispense di Laboratorio di Bioinformatica}
+\rhead{Virginia Filippi e Chiara Solito}
+\lhead{VaccineSupervision}
 \rfoot{Pagina \thepage}
 \lfoot{Bioinformatica - A.A. 2021/22}
 \usetikzlibrary{trees}
@@ -144,6 +144,15 @@ Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le quer
         pazienteID INTEGER NOT NULL REFERENCES paziente(codice),
         rischio VARCHAR(20) NOT NULL REFERENCES fattorerischio(nome),
         PRIMARY KEY(pazienteID, rischio)
+    );
+\end{verbatim}
+Inoltre è stata creata una tabella per tenere traccia degli users, che però non è in alcun modo relazionata al resto del database.
+\paragraph*{Tabella USERS}
+\begin{verbatim}
+    CREATE TABLE users(
+        username VARCHAR(10) NOT NULL,
+        password VARCHAR(12) NOT NULL,
+        PRIMARY KEY (username, password)
     );
 \end{verbatim}
 \end{document}
