@@ -76,5 +76,68 @@ Entrambi i tipi di utente possono utilizzare l'applicazione dopo opportuno login
     \includegraphics[width=0.7\textwidth]{pictures/CasoDUsoMedico_SfondoTrasparente.png}
     \caption{Caso d'uso Medico}
 \end{figure}
+\section{Implementazione del DataBase}
+Come richiesto dalla traccia si è implementato un database con cui l'applicazione potesse interagire.\\
+Il Database è stato creato sulla base dell'ER qui riportato:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{pictures/_Diagramma vuoto.png}
+    \caption{Da modificare!!!}
+\end{figure}
+Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le query usate per la creazione delle tabelle, che ci aiutano a comprendere com'è fatto:
+\paragraph*{Tabella PAZIENTE}
+\begin{verbatim}
+    CREATE TABLE Paziente(
+        codice SERIAL PRIMARY KEY,
+        annonascita NUMERIC(4) NOT NULL ,
+        CHECK ( annonascita >= 1900 ),
+        provincia VARCHAR(20) NOT NULL,
+        professione VARCHAR(20) NOT NULL
+    );
+\end{verbatim}
+\paragraph*{Tabella FATTORERISCHIO}
+\begin{verbatim}
+    CREATE TABLE FattoreRischio(
+        nome VARCHAR(20) PRIMARY KEY,
+        descrizione VARCHAR(50),
+        lvlrischio NUMERIC(1) NOT NULL,
+        CHECK ( lvlrischio >= 1 AND lvlrischio <= 5 )
+    );
+\end{verbatim}
+\paragraph*{Tabella VACCINAZIONE}
+\begin{verbatim}
+    CREATE TABLE Vaccinazione(
+        pazienteID INTEGER REFERENCES paziente(codice),
+        vaccino VARCHAR(15) NOT NULL,
+        tiposomministrazione VARCHAR(10) NOT NULL,
+        PRIMARY KEY (pazienteID, vaccino, tiposomministrazione),
+        sedevaccino VARCHAR(10) NOT NULL,
+        datavaccino DATE NOT NULL
+    );
+\end{verbatim}
+\paragraph*{Tabella REAZIONEAVVERSA}
+\begin{verbatim}
+    CREATE TABLE ReazioneAvversa(
+        nome VARCHAR(20) PRIMARY KEY,
+        gravita NUMERIC(1) NOT NULL,
+        CHECK(gravita >= 1 AND gravita <= 5),
+        descrizione VARCHAR(50) NOT NULL
+    );
+\end{verbatim}
+\paragraph*{Tabella SEGNALAZIONE}
+\begin{verbatim}
+    CREATE TABLE Segnalazione(
+        codice SERIAL PRIMARY KEY,
+        datareazione DATE NOT NULL,
+        datasegnalazione DATE NOT NULL DEFAULT CURRENT_DATE,
+        reazione VARCHAR(20) NOT NULL REFERENCES reazioneavversa(nome),
+        pazienteID INTEGER NOT NULL,
+        vaccino VARCHAR(15) NOT NULL,
+        tiposomm VARCHAR(10) NOT NULL,
+        FOREIGN KEY(pazienteID, vaccino, tiposomm) 
+            REFERENCES vaccinazione(pazienteid, vaccino, tiposomministrazione)
+    );
+\end{verbatim}
+
 
 \end{document}
