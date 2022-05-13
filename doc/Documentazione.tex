@@ -65,23 +65,151 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
 \thispagestyle{empty}
 
 \section{Traccia dell'Elaborato}
+Riportiamo di seguito la traccia dell'elaborato:
+\begin{quotation}
+    Si vuole progettare un sistema software per gestire le segnalazioni di reazioni avverse (ad esempio, asma, dermatiti, insufficienza renale, miocardiopatia, \dots) da vaccini anti-Covid.\\
+    Ogni segnalazione è caratterizzata da un codice univoco, dall'indicazione del paziente a cui fa riferimento, dall'indicazione della reazione avversa, dalla data della reazione avversa, dalla data di segnalazione, e dalle vaccinazioni ricevute nei due mesi precedenti il momento della reazione avversa.
+    Per ogni paziente sono memorizzati: un codice univoco, l'anno di nascita, la provincia di residenza e la professione.\\
+    Per ogni paziente è possibile memorizzare gli eventuali fattori di rischio presenti (paziente fumatore, iperteso, sovrappeso, paziente fragile per precedenti patologie cardiovascolari/oncologiche), anche più d'uno. Ogni fattore di rischio è caratterizzato da un nome univoco, una descrizione e il livello di rischio associato. Per ogni paziente è, inoltre, memorizzata l'intera storia delle sue vaccinazioni precedenti, anti-Covid-19 e antinfluenzali.\\
+    Ogni vaccinazione è caratterizzata da: paziente a cui si riferisce, segnalazioni a cui è legata, vaccino somministrato (AstraZeneca, Pfizer, Moderna, Sputnik, Sinovac, antinfluenzale, \dots), tipo della somministrazione (I, II, III o IV dose, dose unica), sede presso la quale è avvenuta la vaccinazione e data di vaccinazione. Per ogni reazione avversa sono memorizzati un nome univoco, un livello di gravità (da 1 a 5) e una descrizione generale, espressa in linguaggio naturale. Una reazione avversa può essere legata a molte segnalazioni. Per ogni paziente sono memorizzati il numero di reazioni avverse segnalate ed il numero di vaccinazioni ricevute.\\
+    Il sistema deve supportare i medici che effettuano la segnalazione. Dopo opportuna autenticazione, il medico viene introdotto ad una interfaccia che permette l'inserimento dei dati delle reazioni avverse e dei pazienti. Il codice univoco dei pazienti è gestito dal sistema, che tiene traccia dei pazienti indicati da ogni medico. Ogni medico vede solo i codici identificativi dei pazienti, dei quali ha già segnalato qualche reazione avversa, e le relative informazioni.\\
+    Ad ogni fine settimana o quando il numero di segnalazioni raggiunge la soglia di 50, il sistema manda un avviso ad uno dei farmacologi responsabili della gestione delle segnalazioni di reazioni avverse. Il farmacologo, dopo autenticazione, accede alle segnalazioni (tutte, con l'indicazione del medico che le ha fatte) e può effettuare alcune analisi di base (quante segnalazioni per vaccino, quante segnalazioni gravi in settimana, quante segnalazioni per provincia e quante segnalazioni per sede di vaccinazione). Il sistema, inoltre, avvisa il farmacologo quando un vaccino ha accumulato in un mese oltre 5 segnalazioni di gravità superiore a 3.
+    In base alle segnalazioni e agli avvisi del sistema, il farmacologo può proporre di attivare una fase di controllo del vaccino. Tale proposta viene registrata dal sistema, che tiene traccia di tutte le proposte relative ai vaccini segnalati.
+\end{quotation}
+
 \section{Analisi e Specifica dei Requisiti}
-(\dots )\\
 \subsection{Specifiche casi d'uso}
 In questa sezione definiamo le proprietà dell'applicazione.\\
 Come dichiarato nella traccia il sistema prevede l'utilizzo da parte di due tipologie di personale medico: Medico e Farmacologo. 
-Entrambi i tipi di utente possono utilizzare l'applicazione dopo opportuno login: in questa sede si è previsto che gli utenti siano pre-registrati da un amministratore di sistema esterno (sul modello di sistemi medici già noti). Non è stato quindi previsto un form di registrazione, durante lo sviluppo.
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.7\textwidth]{pictures/CasoDUsoMedico_SfondoTrasparente.png}
-    \caption{Caso d'uso Medico}
-\end{figure}
+Entrambi i tipi di utente possono utilizzare l'applicazione dopo opportuno login: in questa sede si è previsto che gli utenti siano pre-registrati da un amministratore di sistema esterno (sul modello di sistemi medici già noti). Non è stato quindi previsto un form di registrazione, durante lo sviluppo e si suppone che ogni utente abbia a disposizione \texttt{username} e \texttt{password}.
+\paragraph*{Casi d'uso relativi al Medico}
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/CasoDUsoMedico.png}
+\captionof{figure}{Caso d'uso Medico}
+\end{center}
+Dopo opportuna autenticazione il medico viene introdotto all'interfaccia di base della sua sezione, che gli permette di:
+\begin{itemize}
+    \item Visualizzare i pazienti già inseriti.
+    \item Visualizzare i dati di un paziente, dalla lista dei pazienti già inseriti.
+    \item Effettuare una segnalazione.
+\end{itemize}
+\subparagraph*{Visualizza i pazienti}
+Una delle possibili attività che il Medico è autorizzato a fare è visualizzare la lista dei codici dei pazienti che lui stesso ha già inserito (gestiti automaticamente dal sistema), effettuando una segnalazione.
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/UC1.png}
+\captionof{figure}{Caso d'uso UC1 del Medico}
+\end{center}
+Il medico può visualizzare anche le informazioni relative ai pazienti di cui vede i codici:
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/UC2.png}
+\captionof{figure}{Caso d'uso UC2 del Medico}
+\end{center}
+Inseriamo ulteriori dettagli rispetto a questi due casi d'uso (gestiti in unico Sequence Diagram).
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{pictures/SDMedico2_listaPazienti.png}
+\captionof{figure}{Sequence Diagram Visualizza Pazienti}
+\end{center}
+
+
+\subparagraph*{Effettua segnalazione}
+La principale attività dei medici è quella di inserire segnalazioni. Per fare questo, è necessario
+inserire i \textbf{dati del paziente} ed inserire i \textbf{dati della reazione avversa}. In questa sede si è scelto di dare uno specifico ordine a queste due azioni.\\
+La data della segnalazione può essere gestita automaticamente oppure modificata dal medico.
+\begin{center}
+    \includegraphics[width=0.65\textwidth]{pictures/UC3.png}
+\captionof{figure}{Caso d'uso UC3 del Medico}
+\end{center}
+In questa fase prevediamo che il primo passo sia inserire i dati del paziente due alternative:
+\begin{itemize}
+    \item Inserire nuovi dati del paziente, effettuando quindi l'intera procedura di inserimento.
+    \item Scegliere uno dei pazienti già inseriti nel sistema.
+\end{itemize}
+L'identificativo univoco del paziente sarà gestito dal sistema.\\
+Subito dopo si inseriscono i dati sulla reazione avversa.
+Anche in questa fase prevediamo le due alternative:
+\begin{itemize}
+    \item Inserimento in sistema di una nuova reazione avversa, immettendo nome (univoco), gravità e descrizione.
+    \item Selezione di una reazione avversa nota, pre-esistente nel sistema.
+\end{itemize}
+In ambo i casi, sarà necessario inserire la data della reazione avversa: questa dovrà essere consistente sia con la data della segnalazione sia con la data delle terapie del paziente.
+\begin{center}
+    \includegraphics[width=0.65\textwidth]{pictures/SDMedico1_Segnalazione.png}
+\captionof{figure}{Sequence Diagram Effettua Segnalazione}
+\end{center}
+\paragraph*{Casi d'uso relativi al Farmacologo}
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/CasoDUsoFarmacologo.png}
+\captionof{figure}{Caso d'uso Farmacologo}
+\end{center}
+Dopo opportuna autenticazione il farmacologo viene introdotto all'interfaccia di base della sua sezione. Prima di poter effettuare qualsiasi azione gli vengono mostrati gli \textbf{avvisi non letti}. Dopo di che egli può:
+\begin{itemize}
+    \item Accedere alle segnalazioni
+    \item Dalle segnalazioni può effettuare delle analisi di base
+    \item Proporre delle fasi di controllo
+\end{itemize}
+\subparagraph*{Avvisi}
+Iniziamo dalla ricezione degli avvisi.\\
+Il sistema deve fornire un meccanismo di gestione ed invio di avvisi verso i
+farmacologi, che si dividono in tre tipologie:
+\begin{enumerate}
+    \item Il sistema manda un avviso non specifico se sono state raggiunte le 50 segnalazioni in una settimana.
+    \item Il sistema manda un avviso non specifico se è il weekend.
+    \item Il sistema manda un avviso specifico rispetto a un vaccino, se questo ha accumulato oltre 5 segnalazioni di gravità superiore a 3.
+\end{enumerate}
+Il sistema avverte \textbf{tutti} i farmacologi responsabili. Ciò significa che ogni farmacologo all'autenticarsi riceverà gli avvisi generati e non ancora letti \textit{da lui}:
+questo avviene in forma di pop-up e prima di vedere la schermata iniziale. È inoltre possibile, tramite un'opzione nel menù principale, rivedere gli avvisi già letti.
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/UC4.png}
+\captionof{figure}{Caso d'uso UC4 del Farmacologo}
+\end{center}
+In fase di descrizione dei casi d'uso si è ritenuto opportuno inserire anche la possibilità di vedere gli avvisi già letti, sulla base dei quali il farmacologo propone le fasi di controllo:
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/UC5.png}
+\captionof{figure}{Caso d'uso UC5 del Farmacologo}
+\end{center}
+\subparagraph*{Leggi Segnalazioni}
+Il farmacologo può accedere alla lista delle segnalazioni:
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/UC6.png}
+\captionof{figure}{Caso d'uso UC6 del Farmacologo}
+\end{center}
+Si è previsto che, come il medico visualizza informazioni di base dalla lista dei pazienti, anche il farmacologo possa visualizzare informazioni di base sulle segnalazioni. Questo è stato specificato nel sequence diagram qui inserito:
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/SDFarmacologo1_Segnalazioni.png}
+\captionof{figure}{Sequence Diagram 1 Farmacologo}
+\end{center}
+\subparagraph*{Effettua analisi di base}
+Dalla lista delle segnalazioni può scegliere di effettuare delle \textbf{analisi di base}. Queste sono:
+\begin{itemize}
+    \item Quante segnalazioni per vaccino
+    \item Quante segnalazioni gravi in settimana
+    \item Quante segnalazioni per provincia 
+    \item Quante segnalazioni per sede di vaccinazione
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/UC7.png}
+\captionof{figure}{Caso d'uso UC7 del Farmacologo}
+\end{center}
+\subparagraph*{Propone Fase di Controllo}
+In base alle analisi eseguite e alla lettura delle segnalazioni, il farmacologo può proporre di attivare una fase di controllo del vaccino.\\
+Tale proposta viene registrata dal sistema.
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/UC8.png}
+\captionof{figure}{Caso d'uso UC8 del Farmacologo}
+\end{center}
+Di seguito un Sequence Diagram specifica queste azioni:
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/SDFarmacolo2_proponeControllo.png}
+\captionof{figure}{Sequence Diagram 2 Farmacologo}
+\end{center}
+
+
 \section{Implementazione del DataBase}
 Come richiesto dalla traccia si è implementato un database con cui l'applicazione potesse interagire.\\
 Il Database è stato creato sulla base dell'ER qui riportato:
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{pictures/_Diagramma vuoto.png}
+    \includegraphics[width=1\textwidth]{pictures/_Diagramma vuoto.png}
     \caption{Da modificare!!!}
 \end{figure}
 Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le query usate per la creazione delle tabelle, che ci aiutano a comprendere com'è fatto:
@@ -152,6 +280,7 @@ Inoltre è stata creata una tabella per tenere traccia degli users, che però no
     CREATE TABLE users(
         username VARCHAR(10) NOT NULL,
         password VARCHAR(12) NOT NULL,
+        type BOOLEAN NOT NULL,
         PRIMARY KEY (username, password)
     );
 \end{verbatim}
