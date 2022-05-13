@@ -278,10 +278,22 @@ Inoltre è stata creata una tabella per tenere traccia degli users, che però no
 \paragraph*{Tabella USERS}
 \begin{verbatim}
     CREATE TABLE users(
-        username VARCHAR(10) NOT NULL,
+        username VARCHAR(10) PRIMARY KEY,
         password VARCHAR(12) NOT NULL,
         type BOOLEAN NOT NULL,
-        PRIMARY KEY (username, password)
+        UNIQUE (username, password)
     );
 \end{verbatim}
+
+\paragraph*{Tabella USERS}
+\begin{verbatim}
+    CREATE TABLE medicosegnala(
+        codicesegnalazione INTEGER NOT NULL REFERENCES segnalazione(codice),
+        codicepaziente INTEGER NOT NULL REFERENCES paziente(codice),
+        medico VARCHAR(10) NOT NULL REFERENCES users(username),
+        primary key (codicesegnalazione, medico)
+);
+\end{verbatim}
+
+
 \end{document}
