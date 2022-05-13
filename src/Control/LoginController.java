@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+
 public class LoginController {
     private Stage stage;
     private User model = new User();
@@ -18,7 +20,7 @@ public class LoginController {
         viewBuilder = new LoginViewBuilder(model, () -> checkAccess());
     }
 
-    public Parent getView()  {
+    public Parent getView() throws FileNotFoundException {
         return viewBuilder.getView();
     }
 
