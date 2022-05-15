@@ -82,6 +82,8 @@ Riportiamo di seguito la traccia dell'elaborato:
 In questa sezione definiamo le proprietà dell'applicazione.\\
 Come dichiarato nella traccia il sistema prevede l'utilizzo da parte di due tipologie di personale medico: Medico e Farmacologo. 
 Entrambi i tipi di utente possono utilizzare l'applicazione dopo opportuno login: in questa sede si è previsto che gli utenti siano pre-registrati da un amministratore di sistema esterno (sul modello di sistemi medici già noti). Non è stato quindi previsto un form di registrazione, durante lo sviluppo e si suppone che ogni utente abbia a disposizione \texttt{username} e \texttt{password}.
+
+\newpage
 \paragraph*{Casi d'uso relativi al Medico}
 \begin{center}
     \includegraphics[width=0.75\textwidth]{pictures/CasoDUsoMedico.png}
@@ -99,6 +101,8 @@ Una delle possibili attività che il Medico è autorizzato a fare è visualizzar
     \includegraphics[width=0.75\textwidth]{pictures/UC1.png}
 \captionof{figure}{Caso d'uso UC1 del Medico}
 \end{center}
+
+\newpage
 Il medico può visualizzare anche le informazioni relative ai pazienti di cui vede i codici:
 \begin{center}
     \includegraphics[width=0.75\textwidth]{pictures/UC2.png}
@@ -106,11 +110,11 @@ Il medico può visualizzare anche le informazioni relative ai pazienti di cui ve
 \end{center}
 Inseriamo ulteriori dettagli rispetto a questi due casi d'uso (gestiti in unico Sequence Diagram).
 \begin{center}
-    \includegraphics[width=0.6\textwidth]{pictures/SDMedico2_listaPazienti.png}
+    \includegraphics[width=0.80\textwidth]{pictures/SDMedico2_listaPazienti.png}
 \captionof{figure}{Sequence Diagram Visualizza Pazienti}
 \end{center}
 
-
+\newpage
 \subparagraph*{Effettua segnalazione}
 La principale attività dei medici è quella di inserire segnalazioni. Per fare questo, è necessario
 inserire i \textbf{dati del paziente} ed inserire i \textbf{dati della reazione avversa}. In questa sede si è scelto di dare uno specifico ordine a queste due azioni.\\
@@ -131,11 +135,15 @@ Anche in questa fase prevediamo le due alternative:
     \item Inserimento in sistema di una nuova reazione avversa, immettendo nome (univoco), gravità e descrizione.
     \item Selezione di una reazione avversa nota, pre-esistente nel sistema.
 \end{itemize}
+
+\newpage
 In ambo i casi, sarà necessario inserire la data della reazione avversa: questa dovrà essere consistente sia con la data della segnalazione sia con la data delle terapie del paziente.
 \begin{center}
-    \includegraphics[width=0.65\textwidth]{pictures/SDMedico1_Segnalazione.png}
+    \includegraphics[width=0.80\textwidth]{pictures/SDMedico1_Segnalazione.png}
 \captionof{figure}{Sequence Diagram Effettua Segnalazione}
 \end{center}
+
+\newpage
 \paragraph*{Casi d'uso relativi al Farmacologo}
 \begin{center}
     \includegraphics[width=0.75\textwidth]{pictures/CasoDUsoFarmacologo.png}
@@ -173,7 +181,10 @@ Il farmacologo può accedere alla lista delle segnalazioni:
     \includegraphics[width=0.75\textwidth]{pictures/UC6.png}
 \captionof{figure}{Caso d'uso UC6 del Farmacologo}
 \end{center}
-Si è previsto che, come il medico visualizza informazioni di base dalla lista dei pazienti, anche il farmacologo possa visualizzare informazioni di base sulle segnalazioni. Questo è stato specificato nel sequence diagram qui inserito:
+Si è previsto che, come il medico visualizza informazioni di base dalla lista dei pazienti, anche il farmacologo possa visualizzare informazioni di base sulle segnalazioni. 
+
+\newpage
+Questo è stato specificato nel sequence diagram qui inserito:
 \begin{center}
     \includegraphics[width=0.75\textwidth]{pictures/SDFarmacologo1_Segnalazioni.png}
 \captionof{figure}{Sequence Diagram 1 Farmacologo}
@@ -190,6 +201,8 @@ Dalla lista delle segnalazioni può scegliere di effettuare delle \textbf{analis
     \includegraphics[width=0.75\textwidth]{pictures/UC7.png}
 \captionof{figure}{Caso d'uso UC7 del Farmacologo}
 \end{center}
+
+\newpage
 \subparagraph*{Propone Fase di Controllo}
 In base alle analisi eseguite e alla lettura delle segnalazioni, il farmacologo può proporre di attivare una fase di controllo del vaccino.\\
 Tale proposta viene registrata dal sistema.
@@ -199,19 +212,43 @@ Tale proposta viene registrata dal sistema.
 \end{center}
 Di seguito un Sequence Diagram specifica queste azioni:
 \begin{center}
-    \includegraphics[width=0.75\textwidth]{pictures/SDFarmacolo2_proponeControllo.png}
+    \includegraphics[width=0.80\textwidth]{pictures/SDFarmacolo2_proponeControllo.png}
 \captionof{figure}{Sequence Diagram 2 Farmacologo}
 \end{center}
 
+\newpage
+\subsection{Diagrammi di Attività}
+\paragraph*{Attività di Login}
+\begin{center}
+    \includegraphics[width=0.60\textwidth]{pictures/ActivityDiagram_Login.png}
+\captionof{figure}{}
+\end{center}
 
+\newpage
+\paragraph*{Attività dell'attore medico}
+\begin{center}
+    \includegraphics[width=1\textwidth]{pictures/ActivityDiagram_Medico.png}
+\captionof{figure}{}
+\end{center}
+
+\newpage
+\paragraph*{Attività dell'attore farmacologo}
+\begin{center}
+    \includegraphics[width=1\textwidth]{pictures/ActivityDiagram_Farmacologo.png}
+\captionof{figure}{}
+\end{center}
+
+
+\newpage
 \section{Implementazione del DataBase}
 Come richiesto dalla traccia si è implementato un database con cui l'applicazione potesse interagire.\\
 Il Database è stato creato sulla base dell'ER qui riportato:
-\begin{figure}[h]
-    \centering
+\begin{center}
     \includegraphics[width=1\textwidth]{pictures/_Diagramma vuoto.png}
-    \caption{Da modificare!!!}
-\end{figure}
+    \captionof{figure}{Schema ER da modificare!}
+\end{center}
+
+
 Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le query usate per la creazione delle tabelle, che ci aiutano a comprendere com'è fatto:
 \paragraph*{Tabella PAZIENTE}
 \begin{verbatim}
