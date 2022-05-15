@@ -14,11 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
-import static javafx.geometry.Pos.CENTER;
 import static javafx.geometry.Pos.CENTER_RIGHT;
 
 public class LoginViewBuilder {
@@ -48,20 +44,20 @@ public class LoginViewBuilder {
         loginButton.setOnAction(evt -> actionRunnable.run());
         VBox results = new VBox(10, userHBox, passwordHBox, loginButton);
 
-        //Passing FileInputStream object as a parameter
+        //Using an ImageView to set an image in the login form
         ImageView imageView = new ImageView();
         imageView.setImage(new Image("pic/VaccineSupervision.png"));
 
-        // Set the alignment of the Left Button to Center
+        // Set the alignment
         BorderPane.setAlignment(title,Pos.TOP_CENTER);
-        // Set the alignment of the Right Button to Center
         BorderPane.setAlignment(imageView,Pos.CENTER_LEFT);
-        // Set the alignment of the Center Button to Center
         BorderPane.setAlignment(results,CENTER_RIGHT);
 
         // Create the upper BorderPane
         BorderPane borderPane = new BorderPane();
-        // Set the Buttons to their Location
+
+        // Set the Location
+        borderPane.setTop(title);
         borderPane.setLeft(imageView);
         borderPane.setRight(results);
 
