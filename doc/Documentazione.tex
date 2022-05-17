@@ -125,7 +125,7 @@ La data della segnalazione può essere gestita automaticamente oppure modificata
 \end{center}
 In questa fase prevediamo che il primo passo sia inserire i dati del paziente due alternative:
 \begin{itemize}
-    \item Inserire nuovi dati del paziente, effettuando quindi l'intera procedura di inserimento.
+    \item Inserire nuovi dati del paziente, effettuando quindi l'intera procedura di inserimento (dati anagrafici e storia vaccinale)
     \item Scegliere uno dei pazienti già inseriti nel sistema.
 \end{itemize}
 L'identificativo univoco del paziente sarà gestito dal sistema.\\
@@ -133,8 +133,10 @@ Subito dopo si inseriscono i dati sulla reazione avversa.
 Anche in questa fase prevediamo le due alternative:
 \begin{itemize}
     \item Inserimento in sistema di una nuova reazione avversa, immettendo nome (univoco), gravità e descrizione.
-    \item Selezione di una reazione avversa nota, pre-esistente nel sistema.
+    \item Selezione di una reazione avversa nota, pre-esistente nel sistema, aggiungendo la data.
 \end{itemize}
+Si prevede quindi che, data la storia vaccinale del paziente e la data della segnalazione, il sistema gestisce autonomamente
+le vaccinazioni del paziente entro i due mesi precedenti la segnalazione.
 
 \newpage
 In ambo i casi, sarà necessario inserire la data della reazione avversa: questa dovrà essere consistente sia con la data della segnalazione sia con la data delle terapie del paziente.
@@ -218,6 +220,9 @@ Di seguito un Sequence Diagram specifica queste azioni:
 
 \newpage
 \subsection{Diagrammi di Attività}
+\paragraph*{Nota sui diagrammi}
+Nei diagrammi relativi alle azioni successive al login non si è ritenuto di aggiungere una freccia che collega la scelta finale ad ogni interfaccia di partenza, per chiarezza e compattezza degli schemi.\\
+
 \paragraph*{Attività di Login}
 \begin{center}
     \includegraphics[width=0.60\textwidth]{pictures/ActivityDiagram_Login.png}
@@ -247,7 +252,11 @@ Il Database è stato creato sulla base dell'ER qui riportato:
     \includegraphics[width=1\textwidth]{pictures/_Diagramma vuoto.png}
     \captionof{figure}{Schema ER da modificare!}
 \end{center}
+%Aggiungere Relazionale
 
+\newpage
+\section*{Appendice A: Query di creazione Database}
+\addcontentsline{toc}{section}{Appendice A}
 
 Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le query usate per la creazione delle tabelle, che ci aiutano a comprendere com'è fatto:
 \paragraph*{Tabella PAZIENTE}
