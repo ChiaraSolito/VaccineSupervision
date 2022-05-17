@@ -1,43 +1,27 @@
 package Model.DataBase;
-
 import java.sql.*;
 
-
 public class DataBaseConnection {
+    public Connection connection = null;
+    public Statement statement = null;
+    public ResultSet rs = null;
 
-    //Connessione al database
-    private Connection connection;
-
-    //Nome della tabella del database
-    private String table_name = "expenses";
-
-    private void manageSQLException(Exception e){
-        e.printStackTrace();
-        System.err.println(e.getClass().getName()+": "+e.getMessage());
-        System.exit(0);
-    }
-
-    /*
-        Costruttore che apre la connessione
-        COMPLETAMENTE DA RIVEDERE
-     */
-    public DataBaseConnection(){
-        connection = null;
+    public void openConnection() {
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql:src/DataBase/Users.db",
-                    "postgres", "ingdelsw");
-        } catch (Exception e) {
-            manageSQLException(e);
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/VaccineSupervisionDB", "postgres", "postgres");
+        } catch (SQLException psql) {
+            System.out.println("Error: " + psql.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println("Error: " + cnfe.getMessage());
         }
-        System.out.println("Opened database successfully");
     }
 
     public void closeConnection() {
         try {
             connection.close();
-        } catch(SQLException sqle) {
-            System.out.println("Error: " + sqle.getMessage());
+        } catch(SQLException psql) {
+            System.out.println("Error: " + psql.getMessage());
         }
     }
 }
