@@ -123,9 +123,9 @@ La data della segnalazione può essere gestita automaticamente oppure modificata
     \includegraphics[width=0.65\textwidth]{pictures/UC3.png}
 \captionof{figure}{Caso d'uso UC3 del Medico}
 \end{center}
-In questa fase prevediamo che il primo passo sia inserire i dati del paziente due alternative:
+In questa fase prevediamo che il primo passo sia inserire i dati del paziente, abbiamo due alternative:
 \begin{itemize}
-    \item Inserire nuovi dati del paziente, effettuando quindi l'intera procedura di inserimento (dati anagrafici e storia vaccinale)
+    \item Inserire nuovi dati del paziente, effettuando quindi l'intera procedura di inserimento (dati anagrafici, fattori di rischio e storia vaccinale)
     \item Scegliere uno dei pazienti già inseriti nel sistema.
 \end{itemize}
 L'identificativo univoco del paziente sarà gestito dal sistema.\\
@@ -289,6 +289,7 @@ Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le quer
         datavaccino DATE NOT NULL
     );
 \end{verbatim}
+
 \paragraph*{Tabella REAZIONEAVVERSA}
 \begin{verbatim}
     CREATE TABLE ReazioneAvversa(
@@ -298,6 +299,26 @@ Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le quer
         descrizione VARCHAR(50) NOT NULL
     );
 \end{verbatim}
+
+\paragraph*{Tabella RISCHIOPAZIENTE}
+\begin{verbatim}
+    CREATE TABLE RischioPaziente(
+        pazienteID INTEGER NOT NULL REFERENCES paziente(codice),
+        rischio VARCHAR(20) NOT NULL REFERENCES fattorerischio(nome),
+        PRIMARY KEY(pazienteID, rischio)
+    );
+\end{verbatim}
+
+\paragraph*{Tabella USERS}
+\begin{verbatim}
+    CREATE TABLE users(
+        username VARCHAR(10) PRIMARY KEY,
+        password VARCHAR(12) NOT NULL,
+        type BOOLEAN NOT NULL,
+        UNIQUE (username, password)
+    );
+\end{verbatim}
+
 \paragraph*{Tabella SEGNALAZIONE}
 \begin{verbatim}
     CREATE TABLE Segnalazione(
@@ -310,36 +331,17 @@ Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le quer
         tiposomm VARCHAR(10) NOT NULL,
         FOREIGN KEY(pazienteID, vaccino, tiposomm) 
             REFERENCES vaccinazione(pazienteid, vaccino, tiposomministrazione)
-    );
-\end{verbatim}
-\paragraph*{Tabella RISCHIOPAZIENTE}
-\begin{verbatim}
-    CREATE TABLE RischioPaziente(
-        pazienteID INTEGER NOT NULL REFERENCES paziente(codice),
-        rischio VARCHAR(20) NOT NULL REFERENCES fattorerischio(nome),
-        PRIMARY KEY(pazienteID, rischio)
-    );
-\end{verbatim}
-Inoltre è stata creata una tabella per tenere traccia degli users, che però non è in alcun modo relazionata al resto del database.
-\paragraph*{Tabella USERS}
-\begin{verbatim}
-    CREATE TABLE users(
-        username VARCHAR(10) PRIMARY KEY,
-        password VARCHAR(12) NOT NULL,
-        type BOOLEAN NOT NULL,
-        UNIQUE (username, password)
+        medico VARCHAR(10) REFERENCES users(username)
     );
 \end{verbatim}
 
-\paragraph*{Tabella USERS}
+\paragraph*{Tabella FASECONTROLLO} 
 \begin{verbatim}
-    CREATE TABLE medicosegnala(
-        codicesegnalazione INTEGER NOT NULL REFERENCES segnalazione(codice),
-        codicepaziente INTEGER NOT NULL REFERENCES paziente(codice),
-        medico VARCHAR(10) NOT NULL REFERENCES users(username),
-        primary key (codicesegnalazione, medico)
-);
+    CREATE TABLE FaseControllo(
+        farmacologo VARCHAR(10) REFERENCES users(username),
+        vaccino VARCHAR(15) NOT NULL,
+        PRIMARY KEY (farmacologo, vaccino)
+    );
 \end{verbatim}
-
 
 \end{document}
