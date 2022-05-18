@@ -87,4 +87,8 @@ public class Vaccination {
     public List<Report> getVaccinationReport() {
         return vaccinationReport;
     }
+
+    public void addReport(Report report){
+        this.vaccinationReport.add(report);
+    }
 }

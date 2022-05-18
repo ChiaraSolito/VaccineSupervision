@@ -3,25 +3,27 @@ package Model;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.List;
+
 public class Report {
     private final SimpleStringProperty id;
     private final SimpleObjectProperty<Patient> patient;
     private final SimpleObjectProperty<Reaction> reaction;
     private final SimpleStringProperty reportDate;
     private final SimpleStringProperty reactionDate;
-    private final SimpleObjectProperty<Vaccination> vaccination;
-    private final SimpleStringProperty medico;
+    private final List<Vaccination> vaccination;
+    private final SimpleStringProperty doctor;
 
     public Report(SimpleStringProperty id, SimpleObjectProperty<Patient> patient, SimpleObjectProperty<Reaction> reaction,
                   SimpleStringProperty reportDate, SimpleStringProperty reactionDate,
-                  SimpleObjectProperty<Vaccination> vaccination, SimpleStringProperty medico) {
+                  List<Vaccination> vaccination, SimpleStringProperty doctor) {
         this.id = id;
         this.patient = patient;
         this.reaction = reaction;
         this.reportDate = reportDate;
         this.reactionDate = reactionDate;
         this.vaccination = vaccination;
-        this.medico = medico;
+        this.doctor = doctor;
     }
 
     public String getId() {
@@ -84,27 +86,23 @@ public class Report {
         this.reactionDate.set(reactionDate);
     }
 
-    public Vaccination getVaccination() {
-        return vaccination.get();
-    }
-
-    public SimpleObjectProperty<Vaccination> vaccinationProperty() {
+    public List<Vaccination> vaccinationProperty() {
         return vaccination;
     }
 
-    public void setVaccination(Vaccination vaccination) {
-        this.vaccination.set(vaccination);
+    public void addVaccination(Vaccination vaccination) {
+        this.vaccination.add(vaccination);
     }
 
-    public String getMedico() {
-        return medico.get();
+    public String getDoctor() {
+        return doctor.get();
     }
 
-    public SimpleStringProperty medicoProperty() {
-        return medico;
+    public SimpleStringProperty doctorProperty() {
+        return doctor;
     }
 
-    public void setMedico(String medico) {
-        this.medico.set(medico);
+    public void setDoctor(String doctor) {
+        this.doctor.set(doctor);
     }
 }
