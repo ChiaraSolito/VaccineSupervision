@@ -259,89 +259,66 @@ Il Database è stato creato sulla base dell'ER qui riportato:
 \addcontentsline{toc}{section}{Appendice A}
 
 Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le query usate per la creazione delle tabelle, che ci aiutano a comprendere com'è fatto:
-\paragraph*{Tabella PAZIENTE}
+\paragraph*{Tabelle dello schema VaccineSupervisionDB}
 \begin{verbatim}
-    CREATE TABLE Paziente(
-        codice SERIAL PRIMARY KEY,
-        annonascita NUMERIC(4) NOT NULL ,
-        CHECK ( annonascita >= 1900 ),
-        provincia VARCHAR(20) NOT NULL,
-        professione VARCHAR(20) NOT NULL
-    );
-\end{verbatim}
-\paragraph*{Tabella FATTORERISCHIO}
-\begin{verbatim}
-    CREATE TABLE FattoreRischio(
-        nome VARCHAR(20) PRIMARY KEY,
-        descrizione VARCHAR(50),
-        lvlrischio NUMERIC(1) NOT NULL,
-        CHECK ( lvlrischio >= 1 AND lvlrischio <= 5 )
-    );
-\end{verbatim}
-\paragraph*{Tabella VACCINAZIONE}
-\begin{verbatim}
-    CREATE TABLE Vaccinazione(
-        pazienteID INTEGER REFERENCES paziente(codice),
-        vaccino VARCHAR(15) NOT NULL,
-        tiposomministrazione VARCHAR(10) NOT NULL,
-        PRIMARY KEY (pazienteID, vaccino, tiposomministrazione),
-        sedevaccino VARCHAR(10) NOT NULL,
-        datavaccino DATE NOT NULL
-    );
-\end{verbatim}
-
-\paragraph*{Tabella REAZIONEAVVERSA}
-\begin{verbatim}
-    CREATE TABLE ReazioneAvversa(
-        nome VARCHAR(20) PRIMARY KEY,
-        gravita NUMERIC(1) NOT NULL,
-        CHECK(gravita >= 1 AND gravita <= 5),
-        descrizione VARCHAR(50) NOT NULL
-    );
-\end{verbatim}
-
-\paragraph*{Tabella RISCHIOPAZIENTE}
-\begin{verbatim}
-    CREATE TABLE RischioPaziente(
-        pazienteID INTEGER NOT NULL REFERENCES paziente(codice),
-        rischio VARCHAR(20) NOT NULL REFERENCES fattorerischio(nome),
-        PRIMARY KEY(pazienteID, rischio)
-    );
-\end{verbatim}
-
-\paragraph*{Tabella USERS}
-\begin{verbatim}
-    CREATE TABLE users(
-        username VARCHAR(10) PRIMARY KEY,
-        password VARCHAR(12) NOT NULL,
-        type BOOLEAN NOT NULL,
-        UNIQUE (username, password)
-    );
-\end{verbatim}
-
-\paragraph*{Tabella SEGNALAZIONE}
-\begin{verbatim}
-    CREATE TABLE Segnalazione(
-        codice SERIAL PRIMARY KEY,
-        datareazione DATE NOT NULL,
-        datasegnalazione DATE NOT NULL DEFAULT CURRENT_DATE,
-        reazione VARCHAR(20) NOT NULL REFERENCES reazioneavversa(nome),
-        pazienteID INTEGER NOT NULL,
-        vaccino VARCHAR(15) NOT NULL,
-        tiposomm VARCHAR(10) NOT NULL,
-        FOREIGN KEY(pazienteID, vaccino, tiposomm) 
-            REFERENCES vaccinazione(pazienteid, vaccino, tiposomministrazione)
-        medico VARCHAR(10) REFERENCES users(username)
-    );
-\end{verbatim}
-
-\paragraph*{Tabella FASECONTROLLO} 
-\begin{verbatim}
-    CREATE TABLE FaseControllo(
-        farmacologo VARCHAR(10) REFERENCES users(username),
-        vaccino VARCHAR(15) NOT NULL,
-        PRIMARY KEY (farmacologo, vaccino)
-    );
+    CREATE TABLE patient(
+        idPatient SERIAL PRIMARY KEY,
+        birthYear NUMERIC(4) NOT NULL ,
+        CHECK ( birthYear >= 1900 ),
+        province VARCHAR(20) NOT NULL,
+        profession VARCHAR(20) NOT NULL
+   );
+   
+   CREATE TABLE RiskFactor(
+       name VARCHAR(20) PRIMARY KEY,
+       description VARCHAR(50),
+       riskLevel NUMERIC(1) NOT NULL,
+       CHECK ( riskLevel >= 1 AND riskLevel <= 5 )
+   );
+   
+   CREATE TABLE Vaccination(
+       idPatient INTEGER REFERENCES patient(idPatient),
+       vaccine VARCHAR(15) NOT NULL,
+       typeSomministration VARCHAR(10) NOT NULL,
+       PRIMARY KEY (idPatient, vaccine, typeSomministration),
+       vaccinationSite VARCHAR(10) NOT NULL,
+       vaccinationDate DATE NOT NULL
+   );
+   
+   CREATE TABLE Reaction(
+       name VARCHAR(20) PRIMARY KEY,
+       gravity NUMERIC(1) NOT NULL,
+       CHECK(gravity >= 1 AND gravity <= 5),
+       description VARCHAR(50) NOT NULL
+   );
+   
+   CREATE TABLE PatientRisk(
+       idPatient INTEGER NOT NULL REFERENCES patient(idPatient),
+       risk VARCHAR(20) NOT NULL REFERENCES RiskFactor(name),
+       PRIMARY KEY(idPatient, risk)
+   );
+   
+   CREATE TABLE users(
+       username VARCHAR(10) PRIMARY KEY,
+       password VARCHAR(12) NOT NULL,
+       type BOOLEAN NOT NULL,
+       UNIQUE (username, password)
+   );
+   
+   CREATE TABLE Report(
+       id SERIAL PRIMARY KEY,
+       reportDate DATE NOT NULL DEFAULT CURRENT_DATE,
+       reactionDate DATE NOT NULL,
+       reaction VARCHAR(20) NOT NULL REFERENCES Reaction(name),
+       idPatient INTEGER NOT NULL REFERENCES patient(idPatient),
+       doctor VARCHAR(10) REFERENCES users(username)
+   );
+   
+   CREATE TABLE ControlPhase(
+       pharmacologist VARCHAR(10) REFERENCES users(username),
+       vaccine VARCHAR(15) NOT NULL,
+       PRIMARY KEY (pharmacologist, vaccine)
+   );
 \end{verbatim}
 
 \end{document}
