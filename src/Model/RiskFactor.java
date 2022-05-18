@@ -6,12 +6,12 @@ public class RiskFactor {
 
     private final SimpleStringProperty name;
     private final SimpleStringProperty description;
-    private final SimpleStringProperty risk_level;
+    private final SimpleStringProperty riskLevel;
 
-    public RiskFactor(SimpleStringProperty name, SimpleStringProperty description, SimpleStringProperty risk_level) {
+    public RiskFactor(SimpleStringProperty name, SimpleStringProperty description, SimpleStringProperty riskLevel) {
         this.name = name;
         this.description = description;
-        this.risk_level = risk_level;
+        this.riskLevel = riskLevel;
     }
 
     public String getName() {
@@ -38,15 +38,15 @@ public class RiskFactor {
         this.description.set(description);
     }
 
-    public String getRisk_level() {
-        return risk_level.get();
+    public String getRiskLevel() {
+        return riskLevel.get();
     }
 
-    public SimpleStringProperty risk_levelProperty() {
-        return risk_level;
+    public SimpleStringProperty riskLevelProperty() {
+        return riskLevel;
     }
 
-    public void setRisk_level(String risk_level) {
-        this.risk_level.set(risk_level);
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel.set(riskLevel);
     }
 }
