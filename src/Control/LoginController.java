@@ -1,6 +1,7 @@
 package Control;
 
 import Control.DoctorControl.MainPageController;
+import Model.DataBase.DataBaseConnection;
 import Model.User;
 import View.DoctorView.MainPage;
 import View.LoginViewBuilder;
@@ -10,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 
 public class LoginController {
     private Stage stage;
@@ -18,13 +20,15 @@ public class LoginController {
     private LoginViewBuilder viewBuilder;
     private MainPage mainPage;
 
+    DataBaseConnection userConnection;
+
     //Costruttore
     public LoginController(Stage stage) {
         this.stage = stage;
         viewBuilder = new LoginViewBuilder(model, () -> {
             try {
                 checkAccess();
-            } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException | SQLException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -37,11 +41,19 @@ public class LoginController {
     /*
     metodo privato che verifica l'accesso
      */
-    private void checkAccess() throws FileNotFoundException {
-        if (model.getType() && model.getUsername().equals("fred") && model.getPassword().equals("password")) {
-            loadFarmacologistApplication();
-        } else if(!model.getType() && model.getUsername().equals("fred") && model.getPassword().equals("password")) {
-            loadDoctorApplication(stage);
+    private void checkAccess() throws FileNotFoundException, SQLException {
+        userConnection = new DataBaseConnection();
+        userConnection.openConnection();
+
+        userConnection.statement = userConnection.connection.createStatement();
+
+        String username = model.getUsername();
+        if(model.getPassword().equals(userConnection.statement.executeQuery("SELECT password FROM users WHERE username = '" + username + "'"))){
+            if (model.getType() ) {
+                loadFarmacologistApplication();
+            } else {
+                loadDoctorApplication(stage);
+            }
         } else {
             displayErrorMessage();
         }

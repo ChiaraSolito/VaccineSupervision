@@ -8,7 +8,7 @@ public class DataBaseConnection {
 
     public void openConnection() {
         try {
-            Class.forName("org.sqlite.JDBC");
+            Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/VaccineSupervisionDB", "postgres", "postgres");
         } catch (SQLException psql) {
             System.out.println("Error: " + psql.getMessage());
