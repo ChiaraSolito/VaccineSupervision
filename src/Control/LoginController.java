@@ -11,6 +11,8 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -42,20 +44,28 @@ public class LoginController {
     metodo privato che verifica l'accesso
      */
     private void checkAccess() throws FileNotFoundException, SQLException {
+        //get username
+        String username = model.getUsername();
+
+        //open connection
         userConnection = new DataBaseConnection();
         userConnection.openConnection();
 
-        userConnection.statement = userConnection.connection.createStatement();
+        //query to the database
+        userConnection.statement = userConnection.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        userConnection.rs = userConnection.statement.executeQuery("SELECT password, type FROM users WHERE username = '" + username + "'");
 
-        String username = model.getUsername();
-        if(model.getPassword().equals(userConnection.statement.executeQuery("SELECT password FROM users WHERE username = '" + username + "'"))){
-            if (model.getType() ) {
-                loadFarmacologistApplication();
+        //check login
+        while(userConnection.rs.next()) {
+            if (model.getPassword().equals(userConnection.rs.getString("password"))) {
+                if (userConnection.rs.getBoolean("type")) {
+                    loadPharmacologistApplication();
+                } else {
+                    loadDoctorApplication(stage);
+                }
             } else {
-                loadDoctorApplication(stage);
+                displayErrorMessage();
             }
-        } else {
-            displayErrorMessage();
         }
     }
 
@@ -74,11 +84,11 @@ public class LoginController {
         stage.show();
     }
 
-    private void loadFarmacologistApplication() {
+    private void loadPharmacologistApplication() {
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setTitle("Not able to Login");
-        dialog.setHeaderText("You have successfully login as Farmacologist!");
-        dialog.setContentText("This will be the farmacologist view");
+        dialog.setHeaderText("You have successfully login as Pharmacologist!");
+        dialog.setContentText("This will be the pharmacologist view");
         dialog.showAndWait();
     }
 }
