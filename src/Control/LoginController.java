@@ -78,7 +78,6 @@ public class LoginController {
     }
 
     private void loadDoctorApplication(Stage stage) throws FileNotFoundException {
-        System.out.println("Sono un dottore");
         stage.setScene(new Scene(new MainPageController(stage).getView()));
         stage.setTitle("Doctor Menù");
         stage.show();
