@@ -63,6 +63,8 @@ public class LoginController {
                 } else {
                     loadDoctorApplication(stage);
                 }
+            } else {
+                displayErrorMessage();
             }
         } else {
             displayErrorMessage();
