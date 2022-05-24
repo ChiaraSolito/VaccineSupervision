@@ -56,16 +56,16 @@ public class LoginController {
         userConnection.rs = userConnection.statement.executeQuery("SELECT password, type FROM users WHERE username = '" + username + "'");
 
         //check login
-        while(userConnection.rs.next()) {
+        if(userConnection.rs.next()) {
             if (model.getPassword().equals(userConnection.rs.getString("password"))) {
                 if (userConnection.rs.getBoolean("type")) {
                     loadPharmacologistApplication();
                 } else {
                     loadDoctorApplication(stage);
                 }
-            } else {
-                displayErrorMessage();
             }
+        } else {
+            displayErrorMessage();
         }
     }
 

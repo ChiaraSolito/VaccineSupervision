@@ -1,10 +1,14 @@
 package View.DoctorView;
 
 import Model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -46,8 +50,8 @@ public class MainPage {
         HBox user = new HBox(10, new Text("User ID: "), new Text(model.getUsername()));
         user.setPrefWidth(300);
 
-        VBox total = new VBox(10, helloText, img, user, actions);
-        total.setPrefWidth(300);
+        VBox docInfo = new VBox(10, helloText, img, user);
+        docInfo.setPrefWidth(300);
 
         /*
             Buttons creation
@@ -67,24 +71,26 @@ public class MainPage {
         Button button5 = new Button("Button5");
         Button button6 = new Button("Button6");
 
-        TilePane layout = new TilePane(button1, button2, button3, button4, button5, button6);
+        //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
+        //ListView<String> listView = new ListView<String>(menu);
 
-        //Layout settings
-        layout.setStyle("-fx-padding: 10");
-        layout.setPrefColumns(3);
+        TilePane layout = new TilePane(button1, button2, button3, button4, button5, button6);
+        VBox menu = new VBox(10, actions, layout);
+        layout.setPrefWidth(300);
+        menu.setPrefWidth(300);
 
         // Set the alignment
-        BorderPane.setAlignment(total, TOP_CENTER);
-        BorderPane.setAlignment(layout,CENTER);
+        BorderPane.setAlignment(docInfo, CENTER_RIGHT);
+        BorderPane.setAlignment(menu, CENTER_LEFT);
 
         // Create the BorderPane
         BorderPane borderPane = new BorderPane();
 
         // Set the Location
-        borderPane.setTop(total);
-        borderPane.setCenter(layout);
-        BorderPane.setMargin(total, insets);
-        BorderPane.setMargin(layout, insets);
+        borderPane.setRight(docInfo);
+        borderPane.setLeft(menu);
+        BorderPane.setMargin(menu, insets);
+        BorderPane.setMargin(docInfo, insets);
 
         return borderPane;
 
