@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -51,33 +52,37 @@ public class MainPage {
         user.setPrefWidth(300);
 
         VBox docInfo = new VBox(10, helloText, img, user);
+        Color set = Color.web("0x236D5E",1.0);
+        docInfo.setBorder(new Border(new BorderStroke( set, set, set, set,
+                BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID,
+                CornerRadii.EMPTY, new BorderWidths(2), Insets.EMPTY)));
+        docInfo.setSpacing(20);
         docInfo.setPrefWidth(300);
 
         /*
             Buttons creation
          */
         //Lista pazienti
-        Button button1 = new Button("Lista Pazienti");
+        Button button1 = new Button();
         ImageView icon1 = new ImageView("pic/clipboardIcon.png");
-        icon1.setFitWidth(30);
-        icon1.setFitHeight(30);
-        button1.setGraphic(icon1);
-        button1.setOnAction(evt -> actionRunnable.run());
+        Text text=new Text("Lista pazienti");
+        button1 = createButton(button1, icon1, text);
 
         //
-        Button button2 = new Button("Button2");
-        Button button3 = new Button("Button3");
-        Button button4 = new Button("Button4");
-        Button button5 = new Button("Button5");
-        Button button6 = new Button("Button6");
+        Button button2 = new Button();
+        ImageView icon2 = new ImageView("pic/reazione.png");
+        Text text2=new Text("Inserisci reazione");
+        button2 = createButton(button2, icon2, text2);
 
         //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
         //ListView<String> listView = new ListView<String>(menu);
 
-        TilePane layout = new TilePane(button1, button2, button3, button4, button5, button6);
-        VBox menu = new VBox(10, actions, layout);
+        HBox layout = new HBox(button1, button2);
+        VBox menu = new VBox(20, actions, layout);
+        layout.setSpacing(20);
         layout.setPrefWidth(300);
         menu.setPrefWidth(300);
+
 
         // Set the alignment
         BorderPane.setAlignment(docInfo, CENTER_RIGHT);
@@ -94,6 +99,20 @@ public class MainPage {
 
         return borderPane;
 
+    }
+
+    private Button createButton(Button button, ImageView icon, Text text) {
+        text.setWrappingWidth(100);
+        VBox vBox = new VBox(5, icon,text);
+        vBox.setAlignment(Pos.CENTER);
+        button.setGraphic(vBox);
+
+        button.setMinHeight(100);
+        button.setMinWidth(50);
+        icon.setFitWidth(30);
+        icon.setFitHeight(30);
+        button.setOnAction(evt -> actionRunnable.run());
+        return button;
     }
 
 }
