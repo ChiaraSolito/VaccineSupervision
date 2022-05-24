@@ -1,6 +1,7 @@
 package Control;
 
-import Control.DoctorControl.MainPageController;
+import Control.DoctorControl.MainControllerDoc;
+import Control.FarmacologistControl.MainControllerPharm;
 import Model.DataBase.DataBaseConnection;
 import Model.User;
 import View.DoctorView.MainPage;
@@ -11,7 +12,6 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -59,7 +59,7 @@ public class LoginController {
         if(userConnection.rs.next()) {
             if (model.getPassword().equals(userConnection.rs.getString("password"))) {
                 if (userConnection.rs.getBoolean("type")) {
-                    loadPharmacologistApplication();
+                    loadPharmacologistApplication(stage);
                 } else {
                     loadDoctorApplication(stage);
                 }
@@ -80,16 +80,14 @@ public class LoginController {
     }
 
     private void loadDoctorApplication(Stage stage) throws FileNotFoundException {
-        stage.setScene(new Scene(new MainPageController(stage).getView()));
+        stage.setScene(new Scene(new MainControllerDoc(stage).getView()));
         stage.setTitle("Doctor Menù");
         stage.show();
     }
 
-    private void loadPharmacologistApplication() {
-        Alert dialog = new Alert(Alert.AlertType.ERROR);
-        dialog.setTitle("Not able to Login");
-        dialog.setHeaderText("You have successfully login as Pharmacologist!");
-        dialog.setContentText("This will be the pharmacologist view");
-        dialog.showAndWait();
+    private void loadPharmacologistApplication(Stage stage) throws FileNotFoundException {
+        stage.setScene(new Scene(new MainControllerPharm(this.stage).getView()));
+        stage.setTitle("Pharmacologist Menù");
+        stage.show();
     }
 }

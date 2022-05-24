@@ -1,4 +1,4 @@
-package View.DoctorView;
+package View.PharmaView;
 
 import Model.User;
 import javafx.geometry.Insets;
@@ -39,7 +39,7 @@ public class MainPage {
         img.setFitWidth(20);
         img.setFitHeight(20);
         Label actions = new Label("Menù:");
-        Text helloText = new Text("Ciao Doc!");
+        Text helloText = new Text("Ciao Farmacologo!");
 
         HBox user = new HBox(10, new Text("User ID: "), new Text(model.getUsername()));
         user.setPrefWidth(300);
@@ -58,19 +58,24 @@ public class MainPage {
         //Lista pazienti
         Button button1 = new Button();
         ImageView icon1 = new ImageView("pic/clipboardIcon.png");
-        Text text=new Text("Lista pazienti");
+        Text text=new Text("Accedi a Segnalazioni");
         button1 = createButton(button1, icon1, text);
 
         //
         Button button2 = new Button();
-        ImageView icon2 = new ImageView("pic/reazione.png");
-        Text text2=new Text("Inserisci reazione");
+        ImageView icon2 = new ImageView("pic/notice.png");
+        Text text2=new Text("Avvisi già letti");
         button2 = createButton(button2, icon2, text2);
+
+        Button button3 = new Button();
+        ImageView icon3 = new ImageView("pic/control.png");
+        Text text3=new Text("Attiva fase controllo");
+        button3 = createButton(button3, icon3, text3);
 
         //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
         //ListView<String> listView = new ListView<String>(menu);
 
-        HBox layout = new HBox(button1, button2);
+        HBox layout = new HBox(button1, button2, button3);
         VBox menu = new VBox(20, actions, layout);
         layout.setSpacing(20);
         layout.setPrefWidth(300);
@@ -101,7 +106,7 @@ public class MainPage {
         button.setGraphic(vBox);
 
         button.setMinHeight(100);
-        button.setMinWidth(50);
+        button.setMinWidth(100);
         icon.setFitWidth(30);
         icon.setFitHeight(30);
         button.setOnAction(evt -> actionRunnable.run());

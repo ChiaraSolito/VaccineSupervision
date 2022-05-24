@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 
 
-public class MainPageController {
+public class MainControllerDoc {
     private User model = new User();
 
     private LoginViewBuilder viewBuilder;
@@ -17,7 +17,7 @@ public class MainPageController {
 
     private Stage stage;
 
-    public MainPageController(Stage stage) {
+    public MainControllerDoc(Stage stage) {
         this.stage = stage;
         mainPage = new MainPage(model, () -> selectTask());
     }
