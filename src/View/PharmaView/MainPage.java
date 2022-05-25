@@ -16,7 +16,7 @@ import static javafx.geometry.Pos.*;
 
 public class MainPage {
     private final User model;
-    private static Runnable actionRunnable;
+    public static Runnable actionRunnable;
 
     /*
         Costruttore

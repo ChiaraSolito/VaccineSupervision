@@ -1,5 +1,6 @@
 package View.DoctorView;
 
+import Control.DoctorControl.MainControllerDoc;
 import Model.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,11 +13,13 @@ import javafx.scene.text.Text;
 
 import java.io.FileNotFoundException;
 
+import static View.PharmaView.MainPage.actionRunnable;
 import static javafx.geometry.Pos.*;
 
 public class MainPage {
     private final User model;
-    private static Runnable actionRunnable;
+    private final Runnable actionRunnable;
+    //private final MainControllerDoc controller = new MainControllerDoc();
 
     /*
         Costruttore
@@ -60,12 +63,14 @@ public class MainPage {
         ImageView icon1 = new ImageView("pic/clipboardIcon.png");
         Text text=new Text("Lista pazienti");
         button1 = createButton(button1, icon1, text);
+        button1.setOnAction( e -> actionRunnable.run() );
 
         //
         Button button2 = new Button();
         ImageView icon2 = new ImageView("pic/reazione.png");
         Text text2=new Text("Inserisci reazione");
         button2 = createButton(button2, icon2, text2);
+        button2.setOnAction( e -> actionRunnable.run() );
 
         //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
         //ListView<String> listView = new ListView<String>(menu);
@@ -104,7 +109,6 @@ public class MainPage {
         button.setMinWidth(50);
         icon.setFitWidth(30);
         icon.setFitHeight(30);
-        button.setOnAction(evt -> actionRunnable.run());
         return button;
     }
 
