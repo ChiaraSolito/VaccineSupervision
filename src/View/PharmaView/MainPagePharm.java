@@ -3,27 +3,30 @@ package View.PharmaView;
 import Model.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 
 import static javafx.geometry.Pos.*;
 
-public class MainPage {
+public class MainPagePharm extends Parent {
     private final User model;
-    public static Runnable actionRunnable;
+    public final Stage mainPharmStage;
 
     /*
         Costruttore
      */
-    public MainPage(User model, Runnable actionRunnable) {
+    public MainPagePharm(Stage stage, User model) {
         this.model = model;
-        this.actionRunnable = actionRunnable;
+        this.mainPharmStage = stage;
     }
 
     /*
@@ -71,6 +74,7 @@ public class MainPage {
         ImageView icon3 = new ImageView("pic/control.png");
         Text text3=new Text("Attiva fase controllo");
         button3 = createButton(button3, icon3, text3);
+        //inserire il setOnAction per la fase controllo
 
         //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
         //ListView<String> listView = new ListView<String>(menu);
@@ -109,8 +113,11 @@ public class MainPage {
         button.setMinWidth(100);
         icon.setFitWidth(30);
         icon.setFitHeight(30);
-        button.setOnAction(evt -> actionRunnable.run());
         return button;
     }
 
+    @Override
+    public Node getStyleableNode() {
+        return super.getStyleableNode();
+    }
 }

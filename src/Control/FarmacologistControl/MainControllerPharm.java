@@ -1,8 +1,7 @@
 package Control.FarmacologistControl;
 
 import Model.User;
-import View.PharmaView.MainPage;
-import View.LoginViewBuilder;
+import View.PharmaView.MainPagePharm;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -10,16 +9,11 @@ import java.io.FileNotFoundException;
 
 
 public class MainControllerPharm {
-    private User model = new User();
+    private User model;
+    private MainPagePharm mainPagePharm;
 
-    private LoginViewBuilder viewBuilder;
-    private MainPage mainPage;
 
-    private Stage stage;
-
-    public MainControllerPharm(Stage stage) {
-        this.stage = stage;
-        mainPage = new MainPage(model, () -> selectTask());
+    public MainControllerPharm() {
     }
 
     private void selectTask() {
@@ -27,26 +21,19 @@ public class MainControllerPharm {
     }
 
     public Parent getView() throws FileNotFoundException {
-        return mainPage.getView();
+        return mainPagePharm.getView();
     }
 
     private void displayErrorMessage() {
-        Alert dialog = new Alert(Alert.AlertType.ERROR);
-        dialog.setTitle("What the hell!");
-        dialog.setHeaderText("Non dovresti essere qui.");
-        dialog.setContentText("You have entered hell.");
-        dialog.showAndWait();
     }
 
     private void loadPatientList(Stage stage) {
-        this.stage = stage;
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setTitle("Oh ma guarda pazienti");
         dialog.showAndWait();
     }
 
-    private void loadInsertView(Stage stage) {
-        this.stage = stage;
+    private void loadInsertView() {
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setTitle("Oh ma guarda cose");
         dialog.showAndWait();

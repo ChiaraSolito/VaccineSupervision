@@ -4,29 +4,33 @@ import Control.DoctorControl.MainControllerDoc;
 import Model.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-
-import static View.PharmaView.MainPage.actionRunnable;
 import static javafx.geometry.Pos.*;
 
-public class MainPage {
+public class MainPageDoc extends Parent {
     private final User model;
-    private final Runnable actionRunnable;
-    //private final MainControllerDoc controller = new MainControllerDoc();
+
+    private final MainControllerDoc controller;
+
+    private final Stage mainDocStage;
 
     /*
         Costruttore
      */
-    public MainPage(User model, Runnable actionRunnable) {
+    public MainPageDoc(Stage stage, User model) {
         this.model = model;
-        this.actionRunnable = actionRunnable;
+        this.mainDocStage = stage;
+        controller = new MainControllerDoc();
     }
 
     /*
@@ -63,14 +67,14 @@ public class MainPage {
         ImageView icon1 = new ImageView("pic/clipboardIcon.png");
         Text text=new Text("Lista pazienti");
         button1 = createButton(button1, icon1, text);
-        button1.setOnAction( e -> actionRunnable.run() );
+        //button1.setOnAction(); //inserisci una chiamata alla vista della lista pazienti
 
         //
         Button button2 = new Button();
         ImageView icon2 = new ImageView("pic/reazione.png");
         Text text2=new Text("Inserisci reazione");
         button2 = createButton(button2, icon2, text2);
-        button2.setOnAction( e -> actionRunnable.run() );
+        //button2.setOnAction(); //inserire una chiamata al form inserisci reazione
 
         //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
         //ListView<String> listView = new ListView<String>(menu);
@@ -112,4 +116,8 @@ public class MainPage {
         return button;
     }
 
+    @Override
+    public Node getStyleableNode() {
+        return super.getStyleableNode();
+    }
 }
