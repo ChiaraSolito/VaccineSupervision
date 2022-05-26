@@ -9,7 +9,7 @@ import java.util.List;
 public interface VaccinationDAO {
     void createVaccination(String idPatient, String vaccine,
                            String typeSomministration, String vaccinationSite,
-                           Date vaccinationDate, List<Report> vaccinationReport);
+                           Date vaccinationDate);
     List<Vaccination> getAllVaccination(String idPatient);
     List<Vaccination> getTwoMonthsVaccination(String idPatient);
 }

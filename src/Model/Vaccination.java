@@ -11,17 +11,15 @@ public class Vaccination {
     private final SimpleStringProperty typeSomministration;
     private final SimpleStringProperty vaccinationSite;
     private final SimpleStringProperty vaccinationDate;
-    private final List<Report> vaccinationReport;
 
     public Vaccination(SimpleObjectProperty<Patient> patient, SimpleStringProperty vaccine,
                        SimpleStringProperty typeSomministration, SimpleStringProperty vaccinationSite,
-                       SimpleStringProperty vaccinationDate, List<Report> vaccinationReport) {
+                       SimpleStringProperty vaccinationDate) {
         this.patient = patient;
         this.vaccine = vaccine;
         this.typeSomministration = typeSomministration;
         this.vaccinationSite = vaccinationSite;
         this.vaccinationDate = vaccinationDate;
-        this.vaccinationReport = vaccinationReport;
     }
 
     public Patient getPatient() {
@@ -82,13 +80,5 @@ public class Vaccination {
 
     public void setVaccinationDate(String vaccinationDate) {
         this.vaccinationDate.set(vaccinationDate);
-    }
-
-    public List<Report> getVaccinationReport() {
-        return vaccinationReport;
-    }
-
-    public void addReport(Report report){
-        this.vaccinationReport.add(report);
     }
 }
