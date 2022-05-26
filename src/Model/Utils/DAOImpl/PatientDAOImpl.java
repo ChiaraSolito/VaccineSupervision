@@ -2,8 +2,11 @@ package Model.Utils.DAOImpl;
 
 import Model.DataBase.DataBaseConnection;
 import Model.Patient;
+import Model.Report;
 import Model.RiskFactor;
 import Model.Utils.DAO.PatientDAO;
+import Model.Vaccination;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.SQLException;
@@ -49,8 +52,7 @@ public class PatientDAOImpl implements PatientDAO {
                         new SimpleStringProperty(pConnection.rs.getString("RF.name")),
                         new SimpleStringProperty(pConnection.rs.getString("RF.description")),
                         new SimpleStringProperty(pConnection.rs.getString("RF.risklevel"))
-                        )
-                );
+                ));
             }
         }
 
@@ -59,8 +61,47 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public List<Patient> getPatientReports(String username, String idPatient) throws SQLException {
-        return null;
+    public List<Report> getPatientReports(String username, String idPatient) throws SQLException {
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        List<Report> reports = new ArrayList<>();
+
+        pConnection.statement = pConnection.connection.createStatement();
+        pConnection.rs = pConnection.statement.executeQuery("SELECT R.id, R.reportdate, R.reactiondate, R.reaction, R.idpatient, R.doctor" +
+                "FROM Report R WHERE R.idpatient = '" + idPatient +"' AND R.doctor = '" + username + "'");
+
+        while (pConnection.rs.next()) {
+            List<Vaccination> listaVuota = new ArrayList<>();
+            reports.add(new Report(
+                    new SimpleStringProperty(pConnection.rs.getString("R.id")),
+                    new SimpleObjectProperty(pConnection.rs.getString("R.idpatient")),
+                    new SimpleObjectProperty(pConnection.rs.getString("R.reaction")),
+                    new SimpleStringProperty(pConnection.rs.getString("R.reportdate")),
+                    new SimpleStringProperty(pConnection.rs.getString("R.reactiondate")),
+                    listaVuota,
+                    new SimpleStringProperty(pConnection.rs.getString("R.doctor"))
+            ));
+        }
+
+        for (Report r : reports){
+            pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate" +
+                    "FROM Vaccination V JOIN Report R ON R.idpatient = V.idpatient " +
+                    "WHERE R.idpatient = '" + idPatient + "' AND V.vaccinationdate BETWEEN R.reactiondate - 60 AND R.reactiondate");
+
+            while (pConnection.rs.next()) {
+                r.addVaccination(new Vaccination(
+                        new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
+                ));
+            }
+        }
+
+        pConnection.closeConnection();
+        return reports;
     }
 
     @Override
