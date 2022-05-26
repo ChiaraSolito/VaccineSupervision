@@ -90,7 +90,6 @@ public class PatientDAOImpl implements PatientDAO {
 
         Patient p = new Patient();
         while(pConnection.rs.next()){
-            List<RiskFactor> listaVuota = new ArrayList<>();
             p.setIdPatient(pConnection.rs.getString("P.idpatient"));
             p.setBirthYear(pConnection.rs.getString("P.birthyear"));
             p.setProvince(pConnection.rs.getString("P.province"));
