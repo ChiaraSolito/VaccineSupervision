@@ -20,6 +20,14 @@ public class Patient {
         this.risk_factor = risk_factor;
     }
 
+    public Patient() {
+        this.idPatient = null;
+        this.birthYear = null;
+        this.province = null;
+        this.profession = null;
+        this.risk_factor = null;
+    }
+
     public String getIdPatient() {
         return idPatient.get();
     }

@@ -17,43 +17,18 @@ public class PatientDAOImpl implements PatientDAO {
     DataBaseConnection pConnection;
 
     @Override
-    public List<Patient> getAllPatients(String username) throws SQLException {
+    public List<String> getAllPatients(String username) throws SQLException {
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
 
-        List<Patient> patients = new ArrayList<>();
+        List<String> patients = new ArrayList<>();
 
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT P.idpatient, P.birthyear, P.province, P.profession " +
-                "FROM Report R JOIN Patient P ON P.idpatient = R.idpatient, " +
-                "WHERE R.doctor = '" + username + "'");
+        pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT R.idpatient" +
+                "FROM Report R WHERE R.doctor = '" + username + "'");
 
-        /*
-            La lista dei fattori di rischio è inserita vuota, perché saranno inseriti in una query successiva
-         */
-        while(pConnection.rs.next()){
-            List<RiskFactor> listaVuota = new ArrayList<>();
-            patients.add(new Patient(
-                    new SimpleStringProperty(pConnection.rs.getString("idpatient")),
-                    new SimpleStringProperty(pConnection.rs.getString("birthyear")),
-                    new SimpleStringProperty(pConnection.rs.getString("province")),
-                    new SimpleStringProperty(pConnection.rs.getString("profession")),
-                    listaVuota
-            ));
-        }
-
-        for (Patient p : patients){
-            pConnection.rs = pConnection.statement.executeQuery("SELECT RF.name, RF.risklevel, RF.description" +
-                    "FROM RiskFactor RF JOIN PatientRisk PR ON PR.risk = RF.name " +
-                    "WHERE PR.idpatient = '" + p.getIdPatient() + "'");
-
-            while (pConnection.rs.next()) {
-                p.addRiskFactor(new RiskFactor(
-                        new SimpleStringProperty(pConnection.rs.getString("RF.name")),
-                        new SimpleStringProperty(pConnection.rs.getString("RF.description")),
-                        new SimpleStringProperty(pConnection.rs.getString("RF.risklevel"))
-                ));
-            }
+       while(pConnection.rs.next()){
+            patients.add(pConnection.rs.getString("R.idpatient"));
         }
 
         pConnection.closeConnection();
@@ -106,6 +81,40 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public Patient getPatient(String idPatient) throws SQLException {
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        pConnection.statement = pConnection.connection.createStatement();
+        pConnection.rs = pConnection.statement.executeQuery("SELECT P.idpatient, P.birthyear, P.province, P.profession" +
+                "FROM Patient P WHERE P.idpatient = '" + idPatient + "'");
+
+        Patient p = new Patient();
+        while(pConnection.rs.next()){
+            List<RiskFactor> listaVuota = new ArrayList<>();
+            p.setIdPatient(pConnection.rs.getString("P.idpatient"));
+            p.setBirthYear(pConnection.rs.getString("P.birthyear"));
+            p.setProvince(pConnection.rs.getString("P.province"));
+            p.setProfession(pConnection.rs.getString("P.profession"));
+        }
+
+        pConnection.rs = pConnection.statement.executeQuery("SELECT RF.name, RF.risklevel, RF.description" +
+                "FROM RiskFactor RF JOIN PatientRisk PR ON PR.risk = RF.name " +
+                "WHERE PR.idpatient = '" + idPatient + "'");
+
+        while (pConnection.rs.next()) {
+            p.addRiskFactor(new RiskFactor(
+                    new SimpleStringProperty(pConnection.rs.getString("RF.name")),
+                    new SimpleStringProperty(pConnection.rs.getString("RF.description")),
+                    new SimpleStringProperty(pConnection.rs.getString("RF.risklevel"))
+            ));
+        }
+
+        pConnection.closeConnection();
+        return null;
+    }
+
+    @Override
+    public List<Vaccination> getPatientVaccinations(String idPatient) throws SQLException {
 
         return null;
     }
