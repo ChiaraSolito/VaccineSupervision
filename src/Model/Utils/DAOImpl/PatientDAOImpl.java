@@ -115,22 +115,88 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public List<Vaccination> getPatientVaccinations(String idPatient) throws SQLException {
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
 
-        return null;
+        List<Vaccination> vaccinations = new ArrayList<>();
+
+        pConnection.statement = pConnection.connection.createStatement();
+        pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate" +
+                "FROM Vaccination V WHERE R.idpatient = '" + idPatient + "'");
+
+        while (pConnection.rs.next()) {
+            vaccinations.add(new Vaccination(
+                    new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
+                    new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
+                    new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
+                    new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
+                    new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
+            ));
+        }
+
+        pConnection.closeConnection();
+        return vaccinations;
     }
 
     @Override
-    public void createPatient(String idPatient, String birthYear, String province, String profession, List<RiskFactor> risk_factor) {
+    public void createPatient(String idPatient, String birthYear, String province, String profession, List<RiskFactor> risk_factor) throws SQLException {
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
 
+        pConnection.statement = pConnection.connection.createStatement();
+        pConnection.rs = pConnection.statement.executeQuery("INSERT INTO Patient " +
+                "VALUES('" + idPatient + "', '" + birthYear + "', " + province + "', " + profession + "'");
+
+        for (RiskFactor risk : risk_factor)  {
+            pConnection.rs = pConnection.statement.executeQuery("SELECT true WHERE EXISTS " +
+                    "(SELECT name FROM RiskFactor WHERE name = '" + risk.getName() + "')");
+            if(pConnection.rs.next()) {
+                pConnection.rs = pConnection.statement.executeQuery("INSERT INTO PatientRisk " +
+                        "VALUES('" + idPatient + "', '" + risk.getName() + "'");
+            } else {
+                pConnection.rs = pConnection.statement.executeQuery("INSERT INTO RiskFactor " +
+                        "VALUES('" + risk.getName() + "', '" + risk.getRiskLevel() + "', " + risk.getDescription() + "'");
+                pConnection.rs = pConnection.statement.executeQuery("INSERT INTO PatientRisk " +
+                        "VALUES('" + idPatient + "', '" + risk.getName() + "'");
+            }
+        }
+
+        pConnection.closeConnection();
     }
 
     @Override
-    public int reactionsNumber(String idPatient) {
-        return 0;
+    public int reactionsNumber(String idPatient) throws SQLException {
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        int reactionNumber = 0;
+        pConnection.statement = pConnection.connection.createStatement();
+        pConnection.rs = pConnection.statement.executeQuery("SELECT COUNT id AS count FROM Report " +
+                "WHERE idpatient = '" + idPatient + "'");
+
+        while(pConnection.rs.next()){
+            reactionNumber = pConnection.rs.getInt("count");
+        }
+
+        pConnection.closeConnection();
+        return reactionNumber;
     }
 
     @Override
-    public int vaccinationsNumber(String idPatient) {
-        return 0;
+    public int vaccinationsNumber(String idPatient) throws SQLException {
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        int vaccinationNumber = 0;
+        pConnection.statement = pConnection.connection.createStatement();
+        pConnection.rs = pConnection.statement.executeQuery("SELECT COUNT vaccine AS count FROM Vaccination " +
+                "WHERE idpatient = '" + idPatient + "'");
+
+        while(pConnection.rs.next()){
+            vaccinationNumber = pConnection.rs.getInt("count");
+        }
+
+        pConnection.closeConnection();
+        return vaccinationNumber;
     }
 }
