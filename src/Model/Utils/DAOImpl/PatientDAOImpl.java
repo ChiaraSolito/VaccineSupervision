@@ -121,7 +121,7 @@ public class PatientDAOImpl implements PatientDAO {
 
         pConnection.statement = pConnection.connection.createStatement();
         pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
-                "FROM Vaccination V WHERE R.idpatient = '" + idPatient + "'");
+                "FROM Vaccination V WHERE V.idpatient = '" + idPatient + "'");
 
         while (pConnection.rs.next()) {
             vaccinations.add(new Vaccination(
@@ -144,19 +144,19 @@ public class PatientDAOImpl implements PatientDAO {
 
         pConnection.statement = pConnection.connection.createStatement();
         pConnection.rs = pConnection.statement.executeQuery("INSERT INTO Patient " +
-                "VALUES('" + idPatient + "', '" + birthYear + "', " + province + "', " + profession + "'");
+                "VALUES('" + idPatient + "', '" + birthYear + "', " + province + "', " + profession + "')");
 
         for (RiskFactor risk : risk_factor)  {
             pConnection.rs = pConnection.statement.executeQuery( "SELECT true WHERE EXISTS " +
                     "(SELECT name FROM RiskFactor WHERE name = '" + risk.getName() + "')");
             if(pConnection.rs.next()) {
                 pConnection.rs = pConnection.statement.executeQuery("INSERT INTO PatientRisk " +
-                        "VALUES('" + idPatient + "', '" + risk.getName() + "'");
+                        "VALUES('" + idPatient + "', '" + risk.getName() + "')");
             } else {
                 pConnection.rs = pConnection.statement.executeQuery("INSERT INTO RiskFactor " +
-                        "VALUES('" + risk.getName() + "', '" + risk.getRiskLevel() + "', " + risk.getDescription() + "'");
+                        "VALUES('" + risk.getName() + "', '" + risk.getRiskLevel() + "', " + risk.getDescription() + "')");
                 pConnection.rs = pConnection.statement.executeQuery("INSERT INTO PatientRisk " +
-                        "VALUES('" + idPatient + "', '" + risk.getName() + "'");
+                        "VALUES('" + idPatient + "', '" + risk.getName() + "')");
             }
         }
 
