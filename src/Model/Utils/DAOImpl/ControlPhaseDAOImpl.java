@@ -69,7 +69,7 @@ public class ControlPhaseDAOImpl implements ControlPhaseDAO {
         pConnection.openConnection();
 
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("INSERT INTO vaccination " +
+        pConnection.rs = pConnection.statement.executeQuery("INSERT INTO controlphase " +
                 "VALUES('" + vaccine + "', '" + pharmacologist + "', '" + date + "')"
         );
 
