@@ -61,13 +61,13 @@ public class ReportDAOImpl implements ReportDAO {
     }
 
     @Override
-    public void createReport(String id, String idPatient, String reactionName, Date reactionDate, String vaccination, SimpleStringProperty doctor) throws SQLException {
+    public void createReport(String idPatient, String reactionName, Date reactionDate, String vaccination, SimpleStringProperty doctor) throws SQLException {
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
 
         pConnection.statement = pConnection.connection.createStatement();
         pConnection.rs = pConnection.statement.executeQuery("INSERT INTO report " +
-                "VALUES('" + id + "', CURRENT_DATE, '" + reactionDate + "', '" + reactionName + "', '" + idPatient + "', '" + doctor + "')"
+                "VALUES( DEFAULT , CURRENT_DATE, '" + reactionDate + "', '" + reactionName + "', '" + idPatient + "', '" + doctor + "')"
         );
 
         pConnection.closeConnection();
