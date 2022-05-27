@@ -138,25 +138,34 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public void createPatient(String idPatient, String birthYear, String province, String profession, List<RiskFactor> risk_factor) throws SQLException {
+    public void createPatient(String birthYear, String province, String profession, List<RiskFactor> risk_factor) throws SQLException {
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
 
         pConnection.statement = pConnection.connection.createStatement();
         pConnection.rs = pConnection.statement.executeQuery("INSERT INTO Patient " +
-                "VALUES('" + idPatient + "', '" + birthYear + "', " + province + "', " + profession + "')");
+                "VALUES( DEFAULT , '" + birthYear + "', " + province + "', " + profession + "')");
+
+        pConnection.rs = pConnection.statement.executeQuery("SELECT P.idpatient " +
+                "FROM patient P WHERE P.idPatient = nextval(P.idpatient) - 1");
+
+        String idCurrent = "";
+
+        while(pConnection.rs.next()){
+            idCurrent = pConnection.rs.getString("P.idPatient");
+        }
 
         for (RiskFactor risk : risk_factor)  {
             pConnection.rs = pConnection.statement.executeQuery( "SELECT true WHERE EXISTS " +
                     "(SELECT name FROM RiskFactor WHERE name = '" + risk.getName() + "')");
             if(pConnection.rs.next()) {
                 pConnection.rs = pConnection.statement.executeQuery("INSERT INTO PatientRisk " +
-                        "VALUES('" + idPatient + "', '" + risk.getName() + "')");
+                        "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
             } else {
                 pConnection.rs = pConnection.statement.executeQuery("INSERT INTO RiskFactor " +
                         "VALUES('" + risk.getName() + "', '" + risk.getRiskLevel() + "', " + risk.getDescription() + "')");
                 pConnection.rs = pConnection.statement.executeQuery("INSERT INTO PatientRisk " +
-                        "VALUES('" + idPatient + "', '" + risk.getName() + "')");
+                        "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
             }
         }
 
