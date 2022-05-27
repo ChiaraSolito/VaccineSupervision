@@ -109,7 +109,7 @@ public class PatientDAOImpl implements PatientDAO {
         }
 
         pConnection.closeConnection();
-        return null;
+        return p;
     }
 
     @Override
