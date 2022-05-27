@@ -66,7 +66,7 @@ public class VaccinationDAOImpl implements VaccinationDAO {
         pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
                 "FROM vaccination V " +
                 "WHERE V.idpatient = '" + idPatient + "'" +
-                "AND V.vaccinationdate >= CURRENT_DATE");
+                "AND V.vaccinationdate BETWEEN CURRENT_DATE - 60 AND CURRENT_DATE");
 
         while (pConnection.rs.next()) {
             vaccinations.add(new Vaccination(
