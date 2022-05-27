@@ -6,26 +6,26 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.List;
 
 public class ControlPhase {
-    private final SimpleStringProperty reportDate;
+    private final SimpleStringProperty date;
     private final SimpleStringProperty vaccine;
     private final SimpleStringProperty pharmacologist;
 
     public ControlPhase(SimpleStringProperty reportDate, SimpleStringProperty vaccine, SimpleStringProperty pharmacologist) {
-        this.reportDate = reportDate;
+        this.date = reportDate;
         this.vaccine = vaccine;
         this.pharmacologist = pharmacologist;
     }
 
     public String getReportDate() {
-        return reportDate.get();
+        return date.get();
     }
 
     public SimpleStringProperty reportDateProperty() {
-        return reportDate;
+        return date;
     }
 
     public void setReportDate(String reportDate) {
-        this.reportDate.set(reportDate);
+        this.date.set(reportDate);
     }
 
     public String getVaccine() {

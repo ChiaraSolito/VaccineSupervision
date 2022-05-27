@@ -9,5 +9,5 @@ import java.util.List;
 public interface ControlPhaseDAO {
     List<ControlPhase> getAllControls();
     List<ControlPhase> getControls(String vaccine);
-    void proposeControlPhase(Date reportDate, String vaccine, String pharmacologist);
+    void proposeControlPhase(Date date, String vaccine, String pharmacologist);
 }
