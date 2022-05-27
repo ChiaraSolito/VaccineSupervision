@@ -34,17 +34,15 @@ public class ReactionDAOImpl implements ReactionDAO {
         pConnection.rs = pConnection.statement.executeQuery("SELECT R.name, R.gravity, R.description" +
                 "FROM Reaction R WHERE R.name = '" + name + "'");
 
+        Reaction reaction = new Reaction();
+
         while(pConnection.rs.next()){
-            Reaction reaction = new Reaction(
-                new SimpleStringProperty(pConnection.rs.getString("R.name")),
-                new SimpleStringProperty(pConnection.rs.getString("P.birthyear")),
-                new SimpleStringProperty(pConnection.rs.getString("P.province"))
-            );
+            reaction.setName(pConnection.rs.getString("R.name"));
+            reaction.setGravity(pConnection.rs.getString("R.gravity"));
+            reaction.setDescription(pConnection.rs.getString("R.description"));
         }
 
         pConnection.closeConnection();
-        //sarebbe da ritornare reaction...fare costruttore vuoto così dichiariamo la variabile fuori dal while
-        //e poi così ritorniamo reaction
-        return null;
+        return reaction;
     }
 }

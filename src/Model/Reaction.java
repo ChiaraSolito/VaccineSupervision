@@ -8,6 +8,12 @@ public class Reaction {
     private final SimpleStringProperty gravity;
     private final SimpleStringProperty description;
 
+    public Reaction() {
+        this.name = null;
+        this.gravity = null;
+        this.description = null;
+    }
+
     public Reaction(SimpleStringProperty name, SimpleStringProperty gravity, SimpleStringProperty description) {
         this.name = name;
         this.gravity = gravity;
