@@ -7,12 +7,10 @@ import java.util.Map;
 public class Notice {
     private final SimpleStringProperty id;
     private final SimpleStringProperty Content;
-    private Map<String, String> readNotice;
 
-    public Notice(SimpleStringProperty id, SimpleStringProperty content, Map<String, String> readNotice) {
+    public Notice(SimpleStringProperty id, SimpleStringProperty content) {
         this.id = id;
         this.Content = content;
-        this.readNotice = readNotice;
     }
 
     public String getId() {
@@ -37,13 +35,5 @@ public class Notice {
 
     public void setContent(String content) {
         this.Content.set(content);
-    }
-
-    public Map<String, String> getReadNotice() {
-        return readNotice;
-    }
-
-    public void setReadNotice(Map<String, String> readNotice) {
-        this.readNotice = readNotice;
     }
 }
