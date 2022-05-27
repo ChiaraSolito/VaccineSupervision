@@ -20,7 +20,7 @@ public class ReactionDAOImpl implements ReactionDAO {
 
         pConnection.statement = pConnection.connection.createStatement();
         pConnection.rs = pConnection.statement.executeQuery("INSERT INTO Reaction " +
-                "VALUES('" + name + "', '" + gravity + "', " + description+ "'");
+                "VALUES('" + name + "', '" + gravity + "', '" + description + "')");
 
         pConnection.closeConnection();
     }
@@ -31,7 +31,7 @@ public class ReactionDAOImpl implements ReactionDAO {
         pConnection.openConnection();
 
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT R.name, R.gravity, R.description" +
+        pConnection.rs = pConnection.statement.executeQuery("SELECT R.name, R.gravity, R.description " +
                 "FROM Reaction R WHERE R.name = '" + name + "'");
 
         Reaction reaction = new Reaction();
