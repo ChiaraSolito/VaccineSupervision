@@ -20,7 +20,7 @@ public class RiskFactorDAOImpl implements RiskFactorDAO {
         List<RiskFactor> risks = new ArrayList<>();
 
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT RF.name, RF.risklevel, RF.description" +
+        pConnection.rs = pConnection.statement.executeQuery("SELECT RF.name, RF.risklevel, RF.description " +
                 "FROM RiskFactor RF JOIN PatientRisk PR ON PR.risk = RF.name " +
                 "WHERE PR.idpatient = '" + idPatient + "'");
 
@@ -43,7 +43,7 @@ public class RiskFactorDAOImpl implements RiskFactorDAO {
 
         pConnection.statement = pConnection.connection.createStatement();
         pConnection.rs = pConnection.statement.executeQuery("INSERT INTO RiskFactor " +
-                "VALUES('" + name + "', '" + description + "', " + riskLevel + "'");
+                "VALUES('" + name + "', '" + description + "', '" + riskLevel + "')");
 
         pConnection.closeConnection();
     }
