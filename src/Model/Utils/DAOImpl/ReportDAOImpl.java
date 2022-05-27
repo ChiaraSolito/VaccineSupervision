@@ -61,7 +61,7 @@ public class ReportDAOImpl implements ReportDAO {
     }
 
     @Override
-    public void createReport(String id, String idPatient, String reactionName, Date reportDate, Date reactionDate, String vaccination, SimpleStringProperty doctor) throws SQLException {
+    public void createReport(String id, String idPatient, String reactionName, Date reactionDate, String vaccination, SimpleStringProperty doctor) throws SQLException {
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
 
