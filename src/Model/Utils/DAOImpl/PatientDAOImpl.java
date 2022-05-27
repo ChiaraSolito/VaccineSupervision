@@ -24,7 +24,7 @@ public class PatientDAOImpl implements PatientDAO {
         List<String> patients = new ArrayList<>();
 
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT R.idpatient" +
+        pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT R.idpatient " +
                 "FROM Report R WHERE R.doctor = '" + username + "'");
 
        while(pConnection.rs.next()){
@@ -43,7 +43,7 @@ public class PatientDAOImpl implements PatientDAO {
         List<Report> reports = new ArrayList<>();
 
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT R.id, R.reportdate, R.reactiondate, R.reaction, R.idpatient, R.doctor" +
+        pConnection.rs = pConnection.statement.executeQuery("SELECT R.id, R.reportdate, R.reactiondate, R.reaction, R.idpatient, R.doctor " +
                 "FROM Report R WHERE R.idpatient = '" + idPatient +"' AND R.doctor = '" + username + "'");
 
         while (pConnection.rs.next()) {
@@ -60,7 +60,7 @@ public class PatientDAOImpl implements PatientDAO {
         }
 
         for (Report r : reports){
-            pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate" +
+            pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
                     "FROM Vaccination V JOIN Report R ON R.idpatient = V.idpatient " +
                     "WHERE R.idpatient = '" + idPatient + "' AND V.vaccinationdate BETWEEN R.reactiondate - 60 AND R.reactiondate");
 
@@ -85,7 +85,7 @@ public class PatientDAOImpl implements PatientDAO {
         pConnection.openConnection();
 
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT P.idpatient, P.birthyear, P.province, P.profession" +
+        pConnection.rs = pConnection.statement.executeQuery("SELECT P.idpatient, P.birthyear, P.province, P.profession " +
                 "FROM Patient P WHERE P.idpatient = '" + idPatient + "'");
 
         Patient p = new Patient();
@@ -96,7 +96,7 @@ public class PatientDAOImpl implements PatientDAO {
             p.setProfession(pConnection.rs.getString("P.profession"));
         }
 
-        pConnection.rs = pConnection.statement.executeQuery("SELECT RF.name, RF.risklevel, RF.description" +
+        pConnection.rs = pConnection.statement.executeQuery("SELECT RF.name, RF.risklevel, RF.description " +
                 "FROM RiskFactor RF JOIN PatientRisk PR ON PR.risk = RF.name " +
                 "WHERE PR.idpatient = '" + idPatient + "'");
 
@@ -120,7 +120,7 @@ public class PatientDAOImpl implements PatientDAO {
         List<Vaccination> vaccinations = new ArrayList<>();
 
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate" +
+        pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
                 "FROM Vaccination V WHERE R.idpatient = '" + idPatient + "'");
 
         while (pConnection.rs.next()) {
@@ -147,7 +147,7 @@ public class PatientDAOImpl implements PatientDAO {
                 "VALUES('" + idPatient + "', '" + birthYear + "', " + province + "', " + profession + "'");
 
         for (RiskFactor risk : risk_factor)  {
-            pConnection.rs = pConnection.statement.executeQuery("SELECT true WHERE EXISTS " +
+            pConnection.rs = pConnection.statement.executeQuery( "SELECT true WHERE EXISTS " +
                     "(SELECT name FROM RiskFactor WHERE name = '" + risk.getName() + "')");
             if(pConnection.rs.next()) {
                 pConnection.rs = pConnection.statement.executeQuery("INSERT INTO PatientRisk " +
@@ -170,7 +170,7 @@ public class PatientDAOImpl implements PatientDAO {
 
         int reactionNumber = 0;
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT COUNT id AS count FROM Report " +
+        pConnection.rs = pConnection.statement.executeQuery("SELECT COUNT(id) AS count FROM Report " +
                 "WHERE idpatient = '" + idPatient + "'");
 
         while(pConnection.rs.next()){
@@ -188,7 +188,7 @@ public class PatientDAOImpl implements PatientDAO {
 
         int vaccinationNumber = 0;
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT COUNT vaccine AS count FROM Vaccination " +
+        pConnection.rs = pConnection.statement.executeQuery("SELECT COUNT(vaccine) AS count FROM Vaccination " +
                 "WHERE idpatient = '" + idPatient + "'");
 
         while(pConnection.rs.next()){
