@@ -3,6 +3,7 @@ package Model.Utils.DAOImpl;
 import Model.ControlPhase;
 import Model.DataBase.DataBaseConnection;
 import Model.Utils.DAO.ControlPhaseDAO;
+import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,63 +18,86 @@ public class ControlPhaseDAOImpl implements ControlPhaseDAO {
     DataBaseConnection pConnection;
 
     @Override
-    public List<ControlPhase> getAllControls() throws SQLException {
+    public List<ControlPhase> getAllControls(){
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
 
         List<ControlPhase> controls = new ArrayList<>();
 
-        pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT C.pharmacologist, C.vaccine, C.date " +
-                "FROM controlphase C ");
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT C.pharmacologist, C.vaccine, C.date " +
+                    "FROM controlphase C ");
 
-        while (pConnection.rs.next()) {
-            controls.add(new ControlPhase(
-                    new SimpleStringProperty(pConnection.rs.getString("C.pharmacologist")),
-                    new SimpleStringProperty(pConnection.rs.getString("C.vaccine")),
-                    new SimpleStringProperty(pConnection.rs.getString("C.date"))
-            ));
+            while (pConnection.rs.next()) {
+                controls.add(new ControlPhase(
+                        new SimpleStringProperty(pConnection.rs.getString("C.pharmacologist")),
+                        new SimpleStringProperty(pConnection.rs.getString("C.vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("C.date"))
+                ));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+        } finally {
+            pConnection.closeConnection();
         }
 
-        pConnection.closeConnection();
         return controls;
     }
 
     @Override
-    public List<ControlPhase> getControls(String vaccine) throws SQLException {
-        pConnection = new DataBaseConnection();
-        pConnection.openConnection();
+    public List<ControlPhase> getControls(String vaccine) throws NullStringException {
 
         List<ControlPhase> controls = new ArrayList<>();
 
-        pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT C.pharmacologist, C.vaccine, C.date " +
-                "FROM controlphase C " +
-                "WHERE C.vaccine = '" + vaccine + "'");
-
-        while (pConnection.rs.next()) {
-            controls.add(new ControlPhase(
-                    new SimpleStringProperty(pConnection.rs.getString("C.pharmacologist")),
-                    new SimpleStringProperty(pConnection.rs.getString("C.vaccine")),
-                    new SimpleStringProperty(pConnection.rs.getString("C.date"))
-            ));
+        if (vaccine.isEmpty()) {
+            throw new NullStringException();
         }
 
-        pConnection.closeConnection();
+        try {
+            pConnection = new DataBaseConnection();
+            pConnection.openConnection();
+
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT C.pharmacologist, C.vaccine, C.date " +
+                    "FROM controlphase C " +
+                    "WHERE C.vaccine = '" + vaccine + "'");
+
+            while (pConnection.rs.next()) {
+                controls.add(new ControlPhase(
+                        new SimpleStringProperty(pConnection.rs.getString("C.pharmacologist")),
+                        new SimpleStringProperty(pConnection.rs.getString("C.vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("C.date"))
+                ));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+        } finally {
+            pConnection.closeConnection();
+        }
         return controls;
     }
 
     @Override
-    public void proposeControlPhase(Date date, String vaccine, String pharmacologist) throws SQLException {
+    public void proposeControlPhase(Date date, String vaccine, String pharmacologist) throws NullStringException {
+
+        if (vaccine.isEmpty() || pharmacologist.isEmpty()) {
+            throw new NullStringException();
+        }
+
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
 
-        pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("INSERT INTO controlphase " +
-                "VALUES('" + vaccine + "', '" + pharmacologist + "', '" + date + "')"
-        );
-
-        pConnection.closeConnection();
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("INSERT INTO controlphase " +
+                    "VALUES('" + vaccine + "', '" + pharmacologist + "', '" + date + "')"
+            );
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+        } finally {
+            pConnection.closeConnection();
+        }
 
     }
 }
