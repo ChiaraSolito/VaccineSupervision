@@ -1,19 +1,65 @@
 package Control.FarmacologistControl;
 
+import Model.Notice;
 import Model.User;
+import Model.Utils.DAOImpl.NoticeDAOImpl;
+import Model.Utils.Exceptions.NullStringException;
 import View.PharmaView.MainPagePharm;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainControllerPharm {
     private User model;
     private MainPagePharm mainPagePharm;
 
+    private NoticeDAOImpl noticesDAO;
 
-    public MainControllerPharm() {
+    public MainControllerPharm(User model) {
+        this.model = model;
+    }
+
+    public List<Notice> getUnreadNotices(){
+        noticesDAO = new NoticeDAOImpl();
+        List<Notice> notices = new ArrayList<>();
+
+        try{
+            notices = noticesDAO.getNotReadNotices(model.getUsername());
+        } catch (NullStringException nse){
+            System.err.println("String Error: " + nse.getMessage());
+        }
+        return notices;
+    }
+    public List<Notice> getNoticesList(){
+
+        noticesDAO = new NoticeDAOImpl();
+        List<Notice> notices = new ArrayList<>();
+
+        try{
+            notices = noticesDAO.getAllNotices(model.getUsername());
+        } catch (NullStringException nse){
+            System.err.println("String Error: ");
+            nse.printStackTrace();
+        }
+        return notices;
+
+    }
+
+    public void setNoticeRead(Notice notice){
+        noticesDAO = new NoticeDAOImpl();
+        try{
+            noticesDAO.setReadNotice(model.getUsername(), notice.getId());
+        } catch (NullStringException nse){
+            System.err.println("String Error: ");
+            nse.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void selectTask() {
