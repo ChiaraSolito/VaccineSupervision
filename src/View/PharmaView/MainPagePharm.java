@@ -1,10 +1,16 @@
 package View.PharmaView;
 
+import Control.DoctorControl.MainControllerDoc;
+import Control.FarmacologistControl.MainControllerPharm;
+import Model.Notice;
 import Model.User;
+import View.DoctorView.MainPageDoc;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -14,6 +20,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.List;
 
 import static javafx.geometry.Pos.*;
 
@@ -21,12 +29,16 @@ public class MainPagePharm extends Parent {
     private final User model;
     public final Stage mainPharmStage;
 
+    // Connection with the controller
+    private final MainControllerPharm controller;
+
     /*
         Costruttore
      */
     public MainPagePharm(Stage stage, User model) {
         this.model = model;
         this.mainPharmStage = stage;
+        this.controller = new MainControllerPharm(model);
     }
 
     /*
@@ -54,6 +66,8 @@ public class MainPagePharm extends Parent {
                 CornerRadii.EMPTY, new BorderWidths(2), Insets.EMPTY)));
         docInfo.setSpacing(20);
         docInfo.setPrefWidth(300);
+
+
 
         /*
             Buttons creation
@@ -85,7 +99,6 @@ public class MainPagePharm extends Parent {
         layout.setPrefWidth(300);
         menu.setPrefWidth(300);
 
-
         // Set the alignment
         BorderPane.setAlignment(docInfo, CENTER_RIGHT);
         BorderPane.setAlignment(menu, CENTER_LEFT);
@@ -98,6 +111,20 @@ public class MainPagePharm extends Parent {
         borderPane.setLeft(menu);
         BorderPane.setMargin(menu, insets);
         BorderPane.setMargin(docInfo, insets);
+
+        List<Notice> notices = controller.getUnreadNotices();
+
+        if(!notices.isEmpty()) {
+            for(Notice notice : notices){
+                Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+                dialog.setTitle("Avviso!");
+                dialog.setHeaderText("Nuovo Avviso!");
+                dialog.setContentText(notice.getContent());
+                dialog.showAndWait();
+
+                controller.setNoticeRead(notice);
+            }
+        }
 
         return borderPane;
 

@@ -12,16 +12,6 @@ public class MainControllerDoc {
     private User model;
     private MainPageDoc mainPageDoc;
 
-
-    public MainControllerDoc() {
-
-    }
-
-    private void selectTask() {
-
-
-    }
-
     private void displayErrorMessage() {
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setTitle("What the hell!");
