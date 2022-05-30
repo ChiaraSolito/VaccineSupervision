@@ -89,7 +89,7 @@ public class NoticeDAOImpl implements NoticeDAO {
     }
 
     @Override
-    public void setReadNotice(String pharm, String notice) throws SQLException, NullStringException {
+    public void setReadNotice(String pharm, String notice) throws NullStringException {
 
         if (pharm.isEmpty() || notice.isEmpty()) {
             throw new NullStringException();
@@ -112,7 +112,7 @@ public class NoticeDAOImpl implements NoticeDAO {
     }
 
     @Override
-    public void createNotice(String content) throws SQLException, NullStringException {
+    public void createNotice(String content) throws NullStringException {
 
         if (content.isEmpty()) {
             throw new NullStringException();

@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface NoticeDAO {
-    List<Notice> getAllNotices(String pharm) throws SQLException, NullStringException;
-    List<Notice> getNotReadNotices(String pharm) throws SQLException, NullStringException;
-    void setReadNotice(String pharm, String notice) throws SQLException, NullStringException;
-    void createNotice(String content) throws SQLException, NullStringException;
+    List<Notice> getAllNotices(String pharm) throws NullStringException;
+    List<Notice> getNotReadNotices(String pharm) throws NullStringException;
+    void setReadNotice(String pharm, String notice) throws NullStringException;
+    void createNotice(String content) throws NullStringException;
 }

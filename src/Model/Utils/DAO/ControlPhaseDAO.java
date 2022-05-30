@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ControlPhaseDAO {
-    List<ControlPhase> getAllControls() throws SQLException;
-    List<ControlPhase> getControls(String vaccine) throws SQLException, NullStringException;
-    void proposeControlPhase(Date date, String vaccine, String pharmacologist) throws SQLException, NullStringException;
+    List<ControlPhase> getAllControls();
+    List<ControlPhase> getControls(String vaccine) throws NullStringException;
+    void proposeControlPhase(Date date, String vaccine, String pharmacologist) throws NullStringException;
 }
