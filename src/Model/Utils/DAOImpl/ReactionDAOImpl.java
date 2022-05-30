@@ -37,9 +37,9 @@ public class ReactionDAOImpl implements ReactionDAO {
         Reaction reaction = new Reaction();
 
         while(pConnection.rs.next()){
-            reaction.setName(pConnection.rs.getString("R.name"));
-            reaction.setGravity(pConnection.rs.getString("R.gravity"));
-            reaction.setDescription(pConnection.rs.getString("R.description"));
+            reaction.setName(pConnection.rs.getString("name"));
+            reaction.setGravity(pConnection.rs.getString("gravity"));
+            reaction.setDescription(pConnection.rs.getString("description"));
         }
 
         pConnection.closeConnection();
