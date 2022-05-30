@@ -1,8 +1,8 @@
 package Model.Utils.DAOImpl;
 
 import Model.DataBase.DataBaseConnection;
-import Model.RiskFactor;
 import Model.Utils.DAO.VaccinationDAO;
+import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,68 +17,98 @@ public class VaccinationDAOImpl implements VaccinationDAO {
     DataBaseConnection pConnection;
 
     @Override
-    public void createVaccination(String idPatient, String vaccine, String typeSomministration, String vaccinationSite, Date vaccinationDate) throws SQLException {
+    public void createVaccination(String idPatient, String vaccine, String typeSomministration, String vaccinationSite, Date vaccinationDate) throws NullStringException {
+
+        if (idPatient.isEmpty() || vaccine.isEmpty() || typeSomministration.isEmpty() || vaccinationSite.isEmpty()) {
+            throw new NullStringException();
+        }
+
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
 
-        pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("INSERT INTO vaccination " +
-                        "VALUES('" + idPatient + "', '" + vaccine + "', '" + typeSomministration + "', '" + vaccinationSite + "', ' " + vaccinationDate +" ' )"
-        );
-
-        pConnection.closeConnection();
+        try{
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("INSERT INTO vaccination " +
+                            "VALUES('" + idPatient + "', '" + vaccine + "', '" + typeSomministration + "', '" + vaccinationSite + "', ' " + vaccinationDate +" ' )"
+            );
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+        } finally {
+            pConnection.closeConnection();
+        }
     }
 
     @Override
-    public List<Vaccination> getAllVaccination(String idPatient) throws SQLException {
-        pConnection = new DataBaseConnection();
-        pConnection.openConnection();
+    public List<Vaccination> getAllVaccination(String idPatient) throws NullStringException {
 
         List<Vaccination> vaccinations = new ArrayList<>();
 
-        pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
-                "FROM vaccination V " +
-                "WHERE V.idpatient = '" + idPatient + "'");
-
-        while (pConnection.rs.next()) {
-            vaccinations.add(new Vaccination(
-                    new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
-            ));
+        if (idPatient.isEmpty()) {
+            throw new NullStringException();
         }
 
-        pConnection.closeConnection();
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try{
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
+                    "FROM vaccination V " +
+                    "WHERE V.idpatient = '" + idPatient + "'");
+
+            while (pConnection.rs.next()) {
+                vaccinations.add(new Vaccination(
+                        new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
+                ));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+        } finally {
+            pConnection.closeConnection();
+        }
+
         return vaccinations;
     }
 
     @Override
-    public List<Vaccination> getTwoMonthsVaccination(String idPatient) throws SQLException {
-        pConnection = new DataBaseConnection();
-        pConnection.openConnection();
+    public List<Vaccination> getTwoMonthsVaccination(String idPatient) throws NullStringException {
 
         List<Vaccination> vaccinations = new ArrayList<>();
 
-        pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
-                "FROM vaccination V " +
-                "WHERE V.idpatient = '" + idPatient + "'" +
-                "AND V.vaccinationdate BETWEEN CURRENT_DATE - 60 AND CURRENT_DATE");
-
-        while (pConnection.rs.next()) {
-            vaccinations.add(new Vaccination(
-                    new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
-            ));
+        if (idPatient.isEmpty()) {
+            throw new NullStringException();
         }
 
-        pConnection.closeConnection();
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
+                    "FROM vaccination V " +
+                    "WHERE V.idpatient = '" + idPatient + "'" +
+                    "AND V.vaccinationdate BETWEEN CURRENT_DATE - 60 AND CURRENT_DATE");
+
+            while (pConnection.rs.next()) {
+                vaccinations.add(new Vaccination(
+                        new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
+                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
+                ));
+            }
+        } catch (SQLException sqle){
+            System.out.println("Error: " + sqle.getMessage());
+        } finally {
+            pConnection.closeConnection();
+        }
+
         return vaccinations;
     }
 }
