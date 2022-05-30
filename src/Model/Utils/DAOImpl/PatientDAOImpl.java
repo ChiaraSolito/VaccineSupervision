@@ -28,7 +28,7 @@ public class PatientDAOImpl implements PatientDAO {
                 "FROM Report R WHERE R.doctor = '" + username + "'");
 
        while(pConnection.rs.next()){
-            patients.add(pConnection.rs.getString("R.idpatient"));
+            patients.add(pConnection.rs.getString("idpatient"));
         }
 
         pConnection.closeConnection();
@@ -49,13 +49,13 @@ public class PatientDAOImpl implements PatientDAO {
         while (pConnection.rs.next()) {
             List<Vaccination> listaVuota = new ArrayList<>();
             reports.add(new Report(
-                    new SimpleStringProperty(pConnection.rs.getString("R.id")),
-                    new SimpleObjectProperty(pConnection.rs.getString("R.idpatient")),
-                    new SimpleObjectProperty(pConnection.rs.getString("R.reaction")),
-                    new SimpleStringProperty(pConnection.rs.getString("R.reportdate")),
-                    new SimpleStringProperty(pConnection.rs.getString("R.reactiondate")),
+                    new SimpleStringProperty(pConnection.rs.getString("id")),
+                    new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                    new SimpleObjectProperty(pConnection.rs.getString("reaction")),
+                    new SimpleStringProperty(pConnection.rs.getString("reportdate")),
+                    new SimpleStringProperty(pConnection.rs.getString("reactiondate")),
                     listaVuota,
-                    new SimpleStringProperty(pConnection.rs.getString("R.doctor"))
+                    new SimpleStringProperty(pConnection.rs.getString("doctor"))
             ));
         }
 
@@ -66,11 +66,11 @@ public class PatientDAOImpl implements PatientDAO {
 
             while (pConnection.rs.next()) {
                 r.addVaccination(new Vaccination(
-                        new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
+                        new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccinationdate"))
                 ));
             }
         }
@@ -90,10 +90,10 @@ public class PatientDAOImpl implements PatientDAO {
 
         Patient p = new Patient();
         while(pConnection.rs.next()){
-            p.setIdPatient(pConnection.rs.getString("P.idpatient"));
-            p.setBirthYear(pConnection.rs.getString("P.birthyear"));
-            p.setProvince(pConnection.rs.getString("P.province"));
-            p.setProfession(pConnection.rs.getString("P.profession"));
+            p.setIdPatient(pConnection.rs.getString("idpatient"));
+            p.setBirthYear(pConnection.rs.getString("birthyear"));
+            p.setProvince(pConnection.rs.getString("province"));
+            p.setProfession(pConnection.rs.getString("profession"));
         }
 
         pConnection.rs = pConnection.statement.executeQuery("SELECT RF.name, RF.risklevel, RF.description " +
@@ -102,9 +102,9 @@ public class PatientDAOImpl implements PatientDAO {
 
         while (pConnection.rs.next()) {
             p.addRiskFactor(new RiskFactor(
-                    new SimpleStringProperty(pConnection.rs.getString("RF.name")),
-                    new SimpleStringProperty(pConnection.rs.getString("RF.description")),
-                    new SimpleStringProperty(pConnection.rs.getString("RF.risklevel"))
+                    new SimpleStringProperty(pConnection.rs.getString("name")),
+                    new SimpleStringProperty(pConnection.rs.getString("description")),
+                    new SimpleStringProperty(pConnection.rs.getString("risklevel"))
             ));
         }
 
@@ -125,11 +125,11 @@ public class PatientDAOImpl implements PatientDAO {
 
         while (pConnection.rs.next()) {
             vaccinations.add(new Vaccination(
-                    new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
-                    new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
+                    new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                    new SimpleStringProperty(pConnection.rs.getString("vaccine")),
+                    new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
+                    new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),
+                    new SimpleStringProperty(pConnection.rs.getString("vaccinationdate"))
             ));
         }
 
