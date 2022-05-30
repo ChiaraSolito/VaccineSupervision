@@ -26,9 +26,9 @@ public class RiskFactorDAOImpl implements RiskFactorDAO {
 
         while (pConnection.rs.next()) {
             risks.add(new RiskFactor(
-                    new SimpleStringProperty(pConnection.rs.getString("RF.name")),
-                    new SimpleStringProperty(pConnection.rs.getString("RF.description")),
-                    new SimpleStringProperty(pConnection.rs.getString("RF.risklevel"))
+                    new SimpleStringProperty(pConnection.rs.getString("name")),
+                    new SimpleStringProperty(pConnection.rs.getString("description")),
+                    new SimpleStringProperty(pConnection.rs.getString("risklevel"))
             ));
         }
 
