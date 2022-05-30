@@ -58,11 +58,11 @@ public class VaccinationDAOImpl implements VaccinationDAO {
 
             while (pConnection.rs.next()) {
                 vaccinations.add(new Vaccination(
-                        new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
+                        new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccinationdate"))
                 ));
             }
         } catch (SQLException sqle) {
@@ -96,11 +96,11 @@ public class VaccinationDAOImpl implements VaccinationDAO {
 
             while (pConnection.rs.next()) {
                 vaccinations.add(new Vaccination(
-                        new SimpleObjectProperty(pConnection.rs.getString("V.idpatient")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.vaccine")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.typesomministration")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationsite")),
-                        new SimpleStringProperty(pConnection.rs.getString("V.vaccinationdate"))
+                        new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccinationdate"))
                 ));
             }
         } catch (SQLException sqle){
