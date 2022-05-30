@@ -31,9 +31,9 @@ public class ControlPhaseDAOImpl implements ControlPhaseDAO {
 
             while (pConnection.rs.next()) {
                 controls.add(new ControlPhase(
-                        new SimpleStringProperty(pConnection.rs.getString("C.pharmacologist")),
-                        new SimpleStringProperty(pConnection.rs.getString("C.vaccine")),
-                        new SimpleStringProperty(pConnection.rs.getString("C.date"))
+                        new SimpleStringProperty(pConnection.rs.getString("pharmacologist")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("date"))
                 ));
             }
         } catch (SQLException sqle) {
@@ -65,9 +65,9 @@ public class ControlPhaseDAOImpl implements ControlPhaseDAO {
 
             while (pConnection.rs.next()) {
                 controls.add(new ControlPhase(
-                        new SimpleStringProperty(pConnection.rs.getString("C.pharmacologist")),
-                        new SimpleStringProperty(pConnection.rs.getString("C.vaccine")),
-                        new SimpleStringProperty(pConnection.rs.getString("C.date"))
+                        new SimpleStringProperty(pConnection.rs.getString("pharmacologist")),
+                        new SimpleStringProperty(pConnection.rs.getString("vaccine")),
+                        new SimpleStringProperty(pConnection.rs.getString("date"))
                 ));
             }
         } catch (SQLException sqle) {
