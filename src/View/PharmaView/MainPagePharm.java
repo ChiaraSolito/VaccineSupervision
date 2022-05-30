@@ -112,8 +112,6 @@ public class MainPagePharm extends Parent {
         borderPane.setLeft(menu);
         BorderPane.setMargin(menu, insets);
         BorderPane.setMargin(docInfo, insets);
-
-        //readNotice();
         return borderPane;
 
     }
@@ -137,12 +135,14 @@ public class MainPagePharm extends Parent {
     }
 
 
-    public void readNotice() {
+    public Alert readNotice() {
         List<Notice> notices = controller.getUnreadNotices();
+
+        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
 
         if (!notices.isEmpty()) {
             for (Notice notice : notices) {
-                Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+
                 dialog.setTitle("Avviso!");
                 dialog.setHeaderText("Nuovo Avviso!");
                 dialog.setContentText(notice.getContent());
@@ -150,6 +150,9 @@ public class MainPagePharm extends Parent {
 
                 controller.setNoticeRead(notice);
             }
+        } else {
+            dialog = null;
         }
+        return dialog;
     }
 }

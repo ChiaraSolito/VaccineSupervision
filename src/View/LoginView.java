@@ -71,7 +71,13 @@ public class LoginView {
                     MainPagePharm main = new MainPagePharm(primaryStage, model);
                     primaryStage.setScene(new Scene(main.getView()));
                     primaryStage.setTitle("Pharmacologist Menù");
-                    primaryStage.showAndWait();
+                    primaryStage.show();
+
+                    Alert dialog = main.readNotice();
+                    if(dialog!= null) {
+                        dialog.showAndWait();
+                    }
+
                 } else{
                     displayErrorMessage();
                 }
