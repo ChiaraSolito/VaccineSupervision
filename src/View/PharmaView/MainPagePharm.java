@@ -35,10 +35,11 @@ public class MainPagePharm extends Parent {
     /*
         Costruttore
      */
-    public MainPagePharm(Stage stage, User model) {
+    public MainPagePharm(Stage stage, User model) throws FileNotFoundException {
         this.model = model;
         this.mainPharmStage = stage;
         this.controller = new MainControllerPharm(model);
+
     }
 
     /*
@@ -112,20 +113,7 @@ public class MainPagePharm extends Parent {
         BorderPane.setMargin(menu, insets);
         BorderPane.setMargin(docInfo, insets);
 
-        List<Notice> notices = controller.getUnreadNotices();
-
-        if(!notices.isEmpty()) {
-            for(Notice notice : notices){
-                Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-                dialog.setTitle("Avviso!");
-                dialog.setHeaderText("Nuovo Avviso!");
-                dialog.setContentText(notice.getContent());
-                dialog.showAndWait();
-
-                controller.setNoticeRead(notice);
-            }
-        }
-
+        //readNotice();
         return borderPane;
 
     }
@@ -146,5 +134,22 @@ public class MainPagePharm extends Parent {
     @Override
     public Node getStyleableNode() {
         return super.getStyleableNode();
+    }
+
+
+    public void readNotice() {
+        List<Notice> notices = controller.getUnreadNotices();
+
+        if (!notices.isEmpty()) {
+            for (Notice notice : notices) {
+                Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+                dialog.setTitle("Avviso!");
+                dialog.setHeaderText("Nuovo Avviso!");
+                dialog.setContentText(notice.getContent());
+                dialog.getDialogPane();
+
+                controller.setNoticeRead(notice);
+            }
+        }
     }
 }

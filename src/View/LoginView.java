@@ -1,6 +1,7 @@
 package View;
 
 import Control.LoginController;
+import Model.Notice;
 import Model.User;
 import View.DoctorView.MainPageDoc;
 import View.PharmaView.MainPagePharm;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.List;
 
 import static javafx.geometry.Pos.CENTER_RIGHT;
 
@@ -64,11 +66,12 @@ public class LoginView {
                 if(flag == 0){
                     primaryStage.setScene(new Scene(new MainPageDoc(primaryStage, model).getView()));
                     primaryStage.setTitle("Doctor Menù");
-                    primaryStage.show();
+                    primaryStage.showAndWait();
                 } else if(flag == 1) {
-                    primaryStage.setScene(new Scene(new MainPagePharm(primaryStage, model).getView()));
+                    MainPagePharm main = new MainPagePharm(primaryStage, model);
+                    primaryStage.setScene(new Scene(main.getView()));
                     primaryStage.setTitle("Pharmacologist Menù");
-                    primaryStage.show();
+                    primaryStage.showAndWait();
                 } else{
                     displayErrorMessage();
                 }

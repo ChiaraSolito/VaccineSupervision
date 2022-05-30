@@ -2,10 +2,12 @@ package View.DoctorView;
 
 import Control.DoctorControl.MainControllerDoc;
 import Model.User;
+import View.PharmaView.MainPagePharm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -67,14 +69,30 @@ public class MainPageDoc extends Parent {
         ImageView icon1 = new ImageView("pic/clipboardIcon.png");
         Text text=new Text("Lista pazienti");
         button1 = createButton(button1, icon1, text);
-        //button1.setOnAction(); //inserisci una chiamata alla vista della lista pazienti
+        //inserisci una chiamata alla vista della lista pazienti
+        button1.setOnAction(e -> {
+            mainDocStage.setScene(new Scene(new PatientsList(mainDocStage, model).getView()));
+            mainDocStage.setTitle("Lista dei pazienti.");
+            mainDocStage.show();
+
+        });
 
         //
         Button button2 = new Button();
         ImageView icon2 = new ImageView("pic/reazione.png");
         Text text2=new Text("Inserisci reazione");
         button2 = createButton(button2, icon2, text2);
-        //button2.setOnAction(); //inserire una chiamata al form inserisci reazione
+        //inserire una chiamata al form inserisci reazione
+        //button2.setOnAction((e -> {
+            //try {
+            //  mainDocStage.setScene(new Scene(new InsertReaction(mainDocStage, model).getView()));
+            //  mainDocStage.setTitle("Pharmacologist Menù");
+            //  mainDocStage.show();
+            //} catch (FileNotFoundException ex) {
+            //  throw new RuntimeException(ex);
+            //}
+        //
+        //});
 
         //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
         //ListView<String> listView = new ListView<String>(menu);

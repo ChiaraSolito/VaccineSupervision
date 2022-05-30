@@ -57,8 +57,6 @@ public class MainControllerPharm {
         } catch (NullStringException nse){
             System.err.println("String Error: ");
             nse.printStackTrace();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
