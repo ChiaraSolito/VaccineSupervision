@@ -66,7 +66,7 @@ public class LoginView {
                 if(flag == 0){
                     primaryStage.setScene(new Scene(new MainPageDoc(primaryStage, model).getView()));
                     primaryStage.setTitle("Doctor Menù");
-                    primaryStage.showAndWait();
+                    primaryStage.show();
                 } else if(flag == 1) {
                     MainPagePharm main = new MainPagePharm(primaryStage, model);
                     primaryStage.setScene(new Scene(main.getView()));
