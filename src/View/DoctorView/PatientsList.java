@@ -1,32 +1,23 @@
 package View.DoctorView;
 
-import Control.DoctorControl.MainControllerDoc;
 import Control.DoctorControl.PatientInfo;
-import Model.Patient;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Control.DoctorControl.PatientListController;
-
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static javafx.geometry.Pos.*;
 
 public class PatientsList extends Parent {
     private static User model;
@@ -78,11 +69,18 @@ public class PatientsList extends Parent {
             listHBox.add(new HBoxCell("ID Paziente: ", patient, "Info"));
         }
 
-        ListView<HBoxCell> listView = new ListView<HBoxCell>();
-        ObservableList<HBoxCell> myObservableList = FXCollections.observableList(listHBox);
-        listView.setItems(myObservableList);
+        IntegerProperty intProperty = new SimpleIntegerProperty();
+        SimpleListProperty<HBoxCell> myObservableList = new SimpleListProperty<>(FXCollections.observableArrayList(listHBox));
 
-        layout.setCenter(listView);
+        intProperty.bind(myObservableList.sizeProperty());
+        ListView<HBoxCell> listView = new ListView<HBoxCell>(myObservableList);
+
+        if(myObservableList.size() == 0){
+            Text text = new Text("Nessun paziente ancora inserito");
+            layout.setTop(text);
+        } else {
+            layout.setCenter(listView);
+        }
 
         return layout;
     }
