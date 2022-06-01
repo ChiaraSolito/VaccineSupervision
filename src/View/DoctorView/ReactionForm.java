@@ -49,21 +49,40 @@ public class ReactionForm {
 
         //Left menu: patient info
         MenuButton menuPatient = new MenuButton("Dati Paziente");
+
+        //First option: insert new patient
         MenuItem newPatientMenu = new MenuItem("Inserisci nuovo paziente");
-        VBox patientVBox = menuNewPatient();
+        VBox patientVBox = menuNewPatient(); //metodo sotto
         patientVBox.setVisible(false);
+        VBox choosePVBox = new VBox(10);
+
+
+        //Second option: choose existing patient
+        MenuItem choosePatient = new MenuItem("Scegli paziente esistente");
+        //Hidden Menu and Button
+        MenuButton patients = new MenuButton("Seleziona");
+        for (String patient : controller.getAllPatients()) {
+            patients.getItems().add(new CheckMenuItem("Paziente: " + patient));
+        }
+        choosePVBox.getChildren().add(patients);
+
+
+        //show new part and hide the other one first option
         newPatientMenu.setOnAction(e -> {
+            choosePVBox.setVisible(false);
             patientVBox.setVisible(true);
         });
 
-        MenuItem choosePatient = new MenuItem("Scegli paziente esistente");
+        //show new part and hide the other one second option
+        choosePVBox.setVisible(false);
         choosePatient.setOnAction(e -> {
-            //reactionDocStage = (Stage) someNode.getScene().getWindow();
+            patientVBox.setVisible(false);
+            choosePVBox.setVisible(true);
         });
 
         menuPatient.getItems().addAll(newPatientMenu, choosePatient);
         menuPatient.getOnShowing();
-        VBox totalMenuP = new VBox(infoMenuPatient, menuPatient, patientVBox);
+        VBox totalMenuP = new VBox(20, infoMenuPatient, menuPatient, choosePVBox, patientVBox);
 
         MenuButton menuReaction = new MenuButton("Dati Reazione");
         MenuItem newReactionMenu = new MenuItem("Inserisci nuova reazione");
@@ -75,7 +94,6 @@ public class ReactionForm {
 
 
             //newReactionLy.setRight(patientVBox);
-            reactionDocStage = (Stage) newReactionLy.getScene().getWindow();
         });
 
         MenuItem chooseReaction = new MenuItem("Scegli reazione esistente");
@@ -83,12 +101,20 @@ public class ReactionForm {
             //reactionDocStage = (Stage) someNode.getScene().getWindow();
         });
 
+        Button submitAll = new Button("Conferma invio");
+        submitAll.setOnAction(e -> {
+            if (displayConfMessage()) {
 
+            }
+        });
+
+        BorderPane.setAlignment(submitAll, Pos.BOTTOM_RIGHT);
         BorderPane.setAlignment(menuReaction, Pos.CENTER_RIGHT);
         BorderPane.setAlignment(totalMenuP, Pos.CENTER_LEFT);
 
         layout.setRight(menuReaction);
         layout.setLeft(totalMenuP);
+        layout.setBottom(submitAll);
 
         Insets insets = new Insets(10);
         BorderPane.setMargin(menuReaction, insets);
@@ -115,12 +141,17 @@ public class ReactionForm {
         return results;
     }
 
-    private void displayErrorMessage() {
-        Alert dialog = new Alert(Alert.AlertType.ERROR);
-        dialog.setTitle("Not able to Login");
-        dialog.setHeaderText("Incorrect Username or Password");
-        dialog.setContentText("You have entered incorrect username or Password.\nPlease try Again and check if you chose the right user type.");
+    private boolean displayConfMessage() {
+        Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
+        dialog.setTitle("Sei sicuro di voler continuare?");
+        dialog.setHeaderText("Dottore: " + model.getUsername());
+        dialog.setContentText("Stai inserendo un report, questa azione non è reversibile.");
         dialog.showAndWait();
+        if (dialog.getResult() == ButtonType.YES) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private VBox menuNewPatient() {
