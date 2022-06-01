@@ -40,6 +40,7 @@ public class RiskFactorDAOImpl implements RiskFactorDAO {
             }
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }
@@ -63,6 +64,7 @@ public class RiskFactorDAOImpl implements RiskFactorDAO {
                     "VALUES('" + name + "', '" + description + "', '" + riskLevel + "')");
         } catch (SQLException sqle) {
             System.err.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }

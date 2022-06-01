@@ -64,6 +64,7 @@ public class ReportDAOImpl implements ReportDAO {
             }
         } catch (SQLException sqle){
             System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }
@@ -88,6 +89,7 @@ public class ReportDAOImpl implements ReportDAO {
             );
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }

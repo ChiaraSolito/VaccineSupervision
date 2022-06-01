@@ -33,6 +33,7 @@ public class VaccinationDAOImpl implements VaccinationDAO {
             );
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }
@@ -67,6 +68,7 @@ public class VaccinationDAOImpl implements VaccinationDAO {
             }
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }
@@ -105,6 +107,7 @@ public class VaccinationDAOImpl implements VaccinationDAO {
             }
         } catch (SQLException sqle){
             System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }

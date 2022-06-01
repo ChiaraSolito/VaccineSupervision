@@ -31,6 +31,7 @@ public class ReactionDAOImpl implements ReactionDAO {
 
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }
@@ -59,6 +60,7 @@ public class ReactionDAOImpl implements ReactionDAO {
             }
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }

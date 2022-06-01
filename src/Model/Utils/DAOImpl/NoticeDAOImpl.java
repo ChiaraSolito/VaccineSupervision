@@ -43,6 +43,7 @@ public class NoticeDAOImpl implements NoticeDAO {
             }
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }
