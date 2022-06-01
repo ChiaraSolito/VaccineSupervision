@@ -7,6 +7,7 @@ import Model.RiskFactor;
 import Model.Utils.DAO.PatientDAO;
 import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -132,7 +133,7 @@ public class PatientDAOImpl implements PatientDAO {
                 p.addRiskFactor(new RiskFactor(
                         new SimpleStringProperty(pConnection.rs.getString("name")),
                         new SimpleStringProperty(pConnection.rs.getString("description")),
-                        new SimpleStringProperty(pConnection.rs.getString("risklevel"))
+                        new SimpleIntegerProperty(pConnection.rs.getInt("risklevel"))
                 ));
             }
 

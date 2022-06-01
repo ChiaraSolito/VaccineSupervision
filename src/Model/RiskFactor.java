@@ -1,14 +1,15 @@
 package Model;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class RiskFactor {
 
     private final SimpleStringProperty name;
     private final SimpleStringProperty description;
-    private final SimpleStringProperty riskLevel;
+    private final SimpleIntegerProperty riskLevel;
 
-    public RiskFactor(SimpleStringProperty name, SimpleStringProperty description, SimpleStringProperty riskLevel) {
+    public RiskFactor(SimpleStringProperty name, SimpleStringProperty description, SimpleIntegerProperty riskLevel) {
         this.name = name;
         this.description = description;
         this.riskLevel = riskLevel;
@@ -17,7 +18,7 @@ public class RiskFactor {
     public RiskFactor(){
         this.name = new SimpleStringProperty("");
         this.description = new SimpleStringProperty("");
-        this.riskLevel = new SimpleStringProperty("");
+        this.riskLevel = new SimpleIntegerProperty();
     }
 
     public String getName() {
@@ -44,15 +45,15 @@ public class RiskFactor {
         this.description.set(description);
     }
 
-    public String getRiskLevel() {
+    public int getRiskLevel() {
         return riskLevel.get();
     }
 
-    public SimpleStringProperty riskLevelProperty() {
+    public SimpleIntegerProperty riskLevelProperty() {
         return riskLevel;
     }
 
-    public void setRiskLevel(String riskLevel) {
+    public void setRiskLevel(int riskLevel) {
         this.riskLevel.set(riskLevel);
     }
 }

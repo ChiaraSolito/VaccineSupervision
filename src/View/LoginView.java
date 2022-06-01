@@ -1,7 +1,6 @@
 package View;
 
 import Control.LoginController;
-import Model.Notice;
 import Model.User;
 import View.DoctorView.MainPageDoc;
 import View.PharmaView.MainPagePharm;
@@ -24,9 +23,6 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.List;
-
-import static javafx.geometry.Pos.CENTER_RIGHT;
 
 public class LoginView {
 
@@ -63,24 +59,24 @@ public class LoginView {
         loginButton.setOnAction(evt -> {
             try {
                 int flag = controller.checkAccess();
-                if(flag == 0){
-                    primaryStage.setScene(new Scene(new MainPageDoc(primaryStage, model).getView(),700,400));
+                if (flag == 0) {
+                    primaryStage.setScene(new Scene(new MainPageDoc(primaryStage, model).getView(), 700, 400));
                     primaryStage.setResizable(false);
                     primaryStage.setTitle("Doctor Menù");
                     primaryStage.show();
-                } else if(flag == 1) {
+                } else if (flag == 1) {
                     MainPagePharm main = new MainPagePharm(primaryStage, model);
-                    primaryStage.setScene(new Scene(main.getView(),700,400));
+                    primaryStage.setScene(new Scene(main.getView(), 700, 400));
                     primaryStage.setResizable(false);
                     primaryStage.setTitle("Pharmacologist Menù");
                     primaryStage.show();
 
                     Alert dialog = main.readNotice();
-                    if(dialog!= null) {
+                    if (dialog != null) {
                         dialog.showAndWait();
                     }
 
-                } else{
+                } else {
                     displayErrorMessage();
                 }
             } catch (FileNotFoundException | SQLException e) {
@@ -103,7 +99,7 @@ public class LoginView {
 
         // Set the alignment
         BorderPane.setAlignment(imageView, Pos.CENTER_LEFT);
-        BorderPane.setAlignment(results,CENTER_RIGHT);
+        BorderPane.setAlignment(results, Pos.CENTER_RIGHT);
 
         // Create the BorderPane
         BorderPane borderPane = new BorderPane();
@@ -115,7 +111,7 @@ public class LoginView {
         BorderPane.setMargin(results, insets);
 
         primaryStage.setTitle("Drug Supervision - Login");
-        primaryStage.setScene(new Scene(borderPane, 700,400));
+        primaryStage.setScene(new Scene(borderPane, 700, 400));
         primaryStage.setResizable(false);
 
         return primaryStage;
