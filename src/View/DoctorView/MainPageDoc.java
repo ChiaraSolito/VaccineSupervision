@@ -58,8 +58,9 @@ public class MainPageDoc extends Parent {
         docInfo.setBorder(new Border(new BorderStroke( set, set, set, set,
                 BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID,
                 CornerRadii.EMPTY, new BorderWidths(2), Insets.EMPTY)));
-        docInfo.setSpacing(20);
-        docInfo.setPrefWidth(300);
+        docInfo.setPadding(insets);
+        docInfo.setSpacing(40);
+        docInfo.setPrefWidth(200);
 
         /*
             Buttons creation
