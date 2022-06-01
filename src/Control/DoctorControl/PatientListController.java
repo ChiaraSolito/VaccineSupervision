@@ -7,13 +7,6 @@ import Model.Utils.Exceptions.NullStringException;
 import View.DoctorView.MainPageDoc;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PatientListController {

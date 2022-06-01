@@ -3,7 +3,6 @@ package View.DoctorView;
 import Control.DoctorControl.MainControllerDoc;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
-import View.PharmaView.MainPagePharm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;

@@ -1,17 +1,10 @@
 package Control.DoctorControl;
 
 import Model.User;
-import View.DoctorView.PatientsList;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PatientInfo {
     
