@@ -2,17 +2,18 @@ package Model.Utils.DAO;
 import Model.Patient;
 import Model.Report;
 import Model.RiskFactor;
+import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface PatientDAO {
-    List<String> getAllPatients(String username) throws SQLException; //, IllegalRiskValueException, NullStringException;
-    List<Report> getPatientReports(String username, String idPatient) throws SQLException; //, IllegalRiskValueException, NullStringException;
-    Patient getPatient(String idPatient) throws SQLException;
-    List<Vaccination> getPatientVaccinations(String idPatient) throws SQLException;
-    void createPatient(String birthYear, String province, String profession, List<RiskFactor> risk_factor) throws SQLException;
-    int reactionsNumber(String idPatient) throws SQLException;
-    int vaccinationsNumber(String idPatient) throws SQLException;
+    List<String> getAllPatients(String username) throws NullStringException; //, IllegalRiskValueException, NullStringException;
+    List<Report> getPatientReports(String username, String idPatient) throws NullStringException; //, IllegalRiskValueException, NullStringException;
+    Patient getPatient(String idPatient) throws NullStringException;
+    List<Vaccination> getPatientVaccinations(String idPatient) throws NullStringException;
+    void createPatient(String birthYear, String province, String profession, List<RiskFactor> risk_factor) throws NullStringException;
+    int reactionsNumber(String idPatient) throws NullStringException;
+    int vaccinationsNumber(String idPatient) throws NullStringException;
 }
