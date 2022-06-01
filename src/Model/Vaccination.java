@@ -22,6 +22,14 @@ public class Vaccination {
         this.vaccinationDate = vaccinationDate;
     }
 
+    public Vaccination() {
+        this.patient = new SimpleObjectProperty<Patient>();
+        this.vaccine = new SimpleStringProperty("");
+        this.typeSomministration = new SimpleStringProperty("");
+        this.vaccinationSite = new SimpleStringProperty("");
+        this.vaccinationDate = new SimpleStringProperty("");
+    }
+
     public Patient getPatient() {
         return patient.get();
     }

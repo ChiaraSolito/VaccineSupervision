@@ -6,11 +6,16 @@ import java.util.Map;
 
 public class Notice {
     private final SimpleStringProperty id;
-    private final SimpleStringProperty Content;
+    private final SimpleStringProperty content;
 
     public Notice(SimpleStringProperty id, SimpleStringProperty content) {
         this.id = id;
-        this.Content = content;
+        this.content = content;
+    }
+
+    public Notice(){
+        this.id =  new SimpleStringProperty("");
+        this.content =  new SimpleStringProperty("");
     }
 
     public String getId() {
@@ -26,14 +31,14 @@ public class Notice {
     }
 
     public String getContent() {
-        return Content.get();
+        return content.get();
     }
 
     public SimpleStringProperty contentProperty() {
-        return Content;
+        return content;
     }
 
     public void setContent(String content) {
-        this.Content.set(content);
+        this.content.set(content);
     }
 }

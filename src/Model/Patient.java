@@ -2,15 +2,16 @@ package Model;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Patient {
-    private final SimpleStringProperty idPatient;
-    private final SimpleStringProperty birthYear;
-    private final SimpleStringProperty province;
-    private final SimpleStringProperty profession;
+    private SimpleStringProperty idPatient;
+    private SimpleStringProperty birthYear;
+    private SimpleStringProperty province;
+    private SimpleStringProperty profession;
 
-    private final List<RiskFactor> risk_factor;
+    private List<RiskFactor> risk_factor;
 
     public Patient(SimpleStringProperty idPatient, SimpleStringProperty birthYear, SimpleStringProperty province, SimpleStringProperty profession, List<RiskFactor> risk_factor) {
         this.idPatient = idPatient;
@@ -21,11 +22,11 @@ public class Patient {
     }
 
     public Patient() {
-        this.idPatient = null;
-        this.birthYear = null;
-        this.province = null;
-        this.profession = null;
-        this.risk_factor = null;
+        this.idPatient = new SimpleStringProperty("");
+        this.birthYear = new SimpleStringProperty("");
+        this.province = new SimpleStringProperty("");
+        this.profession = new SimpleStringProperty("");
+        this.risk_factor = new ArrayList<>();
     }
 
     public String getIdPatient() {

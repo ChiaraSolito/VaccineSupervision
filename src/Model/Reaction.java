@@ -9,9 +9,9 @@ public class Reaction {
     private final SimpleStringProperty description;
 
     public Reaction() {
-        this.name = null;
-        this.gravity = null;
-        this.description = null;
+        this.name =  new SimpleStringProperty("");;
+        this.gravity =  new SimpleStringProperty("");;
+        this.description =  new SimpleStringProperty("");;
     }
 
     public Reaction(SimpleStringProperty name, SimpleStringProperty gravity, SimpleStringProperty description) {

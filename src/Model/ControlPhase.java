@@ -16,6 +16,12 @@ public class ControlPhase {
         this.pharmacologist = pharmacologist;
     }
 
+    public ControlPhase(){
+        this.date = new SimpleStringProperty("");
+        this.vaccine =  new SimpleStringProperty("");
+        this.pharmacologist =  new SimpleStringProperty("");
+    }
+
     public String getReportDate() {
         return date.get();
     }

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class User {
     //Stringa per lo username
-    private StringProperty username = new SimpleStringProperty("");
+    private StringProperty username;
 
     //Stringa per la password
     private StringProperty password = new SimpleStringProperty("");
@@ -18,6 +18,8 @@ public class User {
     DataBaseConnection userConnection;
 
     public User() {
+        this.username = new SimpleStringProperty("");
+        this.password = new SimpleStringProperty("");
     }
 
     public User(String username, String password, boolean type) {

@@ -3,6 +3,7 @@ package Model;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Report {
@@ -24,6 +25,15 @@ public class Report {
         this.reactionDate = reactionDate;
         this.vaccination = vaccination;
         this.doctor = doctor;
+    }
+    public Report() {
+        this.id = new SimpleStringProperty("");
+        this.patient = new SimpleObjectProperty<Patient>();
+        this.reaction = new SimpleObjectProperty<Reaction>();
+        this.reportDate = new SimpleStringProperty("");
+        this.reactionDate = new SimpleStringProperty("");
+        this.vaccination = new ArrayList<>();
+        this.doctor = new SimpleStringProperty("");
     }
 
     public String getId() {

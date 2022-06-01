@@ -14,6 +14,12 @@ public class RiskFactor {
         this.riskLevel = riskLevel;
     }
 
+    public RiskFactor(){
+        this.name = new SimpleStringProperty("");
+        this.description = new SimpleStringProperty("");
+        this.riskLevel = new SimpleStringProperty("");
+    }
+
     public String getName() {
         return name.get();
     }
