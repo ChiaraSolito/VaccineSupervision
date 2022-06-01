@@ -2,6 +2,7 @@ package View.DoctorView;
 
 import Control.DoctorControl.MainControllerDoc;
 import Model.User;
+import Model.Utils.Exceptions.NullStringException;
 import View.PharmaView.MainPagePharm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -71,11 +72,14 @@ public class MainPageDoc extends Parent {
         button1 = createButton(button1, icon1, text);
         //inserisci una chiamata alla vista della lista pazienti
         button1.setOnAction(e -> {
-            mainDocStage.setScene(new Scene(new PatientsList(mainDocStage, model).getView(),700,400));
-            mainDocStage.setTitle("Lista dei pazienti.");
-            mainDocStage.setResizable(false);
-            mainDocStage.show();
-
+            try {
+                mainDocStage.setScene(new Scene(new PatientsList(mainDocStage, model).getView(),700,400));
+                mainDocStage.setTitle("Lista dei pazienti.");
+                mainDocStage.setResizable(false);
+                mainDocStage.show();
+            } catch (NullStringException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         //

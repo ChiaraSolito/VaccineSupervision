@@ -28,16 +28,16 @@ public class PatientListController {
         this.model = model;
     }
 
-    public List<String> getAllPatients(){
+    public List<String> getAllPatients() throws NullStringException {
         PatientDAOImpl patientDAO = new PatientDAOImpl();
         ObservableList<String> patients;
 
-        try{
+        try {
             patients = FXCollections.observableArrayList(patientDAO.getAllPatients(model.getUsername()));
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (NullStringException e) {
+            throw new NullStringException();
         }
+
         return patients;
     }
 }

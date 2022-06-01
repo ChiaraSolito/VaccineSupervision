@@ -4,6 +4,7 @@ import Control.DoctorControl.MainControllerDoc;
 import Control.DoctorControl.PatientInfo;
 import Model.Patient;
 import Model.User;
+import Model.Utils.Exceptions.NullStringException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -66,7 +67,7 @@ public class PatientsList extends Parent {
         }
     }
 
-    public Parent getView() {
+    public Parent getView() throws NullStringException {
         // Create the BorderPane
         List<String> patients = new ArrayList<>(controller.getAllPatients());
 
