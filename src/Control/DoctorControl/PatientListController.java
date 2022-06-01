@@ -12,10 +12,6 @@ import java.util.List;
 public class PatientListController {
     private User model;
 
-    private MainPageDoc mainPageDoc;
-
-    DataBaseConnection userConnection;
-
     //Costruttore
     public PatientListController(User model) {
         this.model = model;

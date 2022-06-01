@@ -73,7 +73,7 @@ public class MainPageDoc extends Parent {
         button1.setOnAction(e -> {
             try {
                 mainDocStage.setScene(new Scene(new PatientsList(mainDocStage, model).getView(),700,400));
-                mainDocStage.setTitle("Lista dei pazienti.");
+                mainDocStage.setTitle("Lista dei pazienti");
                 mainDocStage.setResizable(false);
                 mainDocStage.show();
             } catch (NullStringException ex) {
@@ -87,19 +87,16 @@ public class MainPageDoc extends Parent {
         Text text2=new Text("Inserisci reazione");
         button2 = createButton(button2, icon2, text2);
         //inserire una chiamata al form inserisci reazione
-        //button2.setOnAction((e -> {
-            //try {
-            //  mainDocStage.setScene(new Scene(new InsertReaction(mainDocStage, model).getView()));
-            //  mainDocStage.setTitle("Pharmacologist Menù");
-            //  mainDocStage.show();
-            //} catch (FileNotFoundException ex) {
-            //  throw new RuntimeException(ex);
-            //}
-        //
-        //});
-
-        //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
-        //ListView<String> listView = new ListView<String>(menu);
+        button2.setOnAction(e -> {
+            try {
+                mainDocStage.setScene(new Scene(new ReactionForm(mainDocStage, model).getView(),700,400));
+                mainDocStage.setTitle("Inserimento reazione");
+                mainDocStage.setResizable(false);
+                mainDocStage.show();
+            } catch (NullStringException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         HBox layout = new HBox(button1, button2);
         VBox menu = new VBox(20, actions, layout);
