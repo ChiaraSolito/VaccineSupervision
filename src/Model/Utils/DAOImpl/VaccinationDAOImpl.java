@@ -28,8 +28,8 @@ public class VaccinationDAOImpl implements VaccinationDAO {
 
         try{
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("INSERT INTO vaccination " +
-                            "VALUES('" + idPatient + "', '" + vaccine + "', '" + typeSomministration + "', '" + vaccinationSite + "', ' " + vaccinationDate +" ' )"
+            pConnection.statement.executeUpdate("INSERT INTO vaccination " +
+                    "VALUES('" + idPatient + "', '" + vaccine + "', '" + typeSomministration + "', '" + vaccinationSite + "', ' " + vaccinationDate + " ' )"
             );
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());

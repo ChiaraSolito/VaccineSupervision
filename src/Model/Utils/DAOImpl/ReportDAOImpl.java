@@ -84,7 +84,7 @@ public class ReportDAOImpl implements ReportDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("INSERT INTO report " +
+            pConnection.statement.executeUpdate("INSERT INTO report " +
                     "VALUES( DEFAULT , CURRENT_DATE, '" + reactionDate + "', '" + reactionName + "', '" + idPatient + "', '" + doctor + "')"
             );
         } catch (SQLException sqle) {

@@ -88,8 +88,8 @@ public class RiskFactorDAOImpl implements RiskFactorDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("INSERT INTO RiskFactor " +
-                    "VALUES('" + name + "', '" + description + "', '" + riskLevel + "')");
+            pConnection.statement.executeUpdate("INSERT INTO RiskFactor " +
+                    "VALUES('" + name + "', '" + riskLevel + "', '" + description + "')");
         } catch (SQLException sqle) {
             System.err.println("Error: " + sqle.getMessage());
             sqle.printStackTrace();

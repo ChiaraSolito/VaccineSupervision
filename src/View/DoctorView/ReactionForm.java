@@ -134,13 +134,7 @@ public class ReactionForm {
         province.setPrefWidth(300);
         profession.setPrefWidth(300);
 
-        //Hidden Menu and Button
-        MenuButton riskFactor = new MenuButton("Fattori di rischio");
-        for (String risk : controller.getAllExistingRisks()) {
-            riskFactor.getItems().add(new CheckMenuItem(risk));
-        }
         Button addRisk = new Button("Nuovo Fattore di Rischio");
-        HBox buttons = new HBox(10, riskFactor, addRisk);
 
         //Double Hidden VBoxes for new Risk Factor
         RiskFactor newRisk = new RiskFactor();
@@ -153,21 +147,31 @@ public class ReactionForm {
         TextField levelField = createBoundTextFieldInt(newRisk.riskLevelProperty());
         VBox riskLevel = new VBox(10, new Text("Livello di rischio: "), levelField);
         Button submit = new Button("Inserisci");
-        submit.setOnAction(e -> {
-            controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
-            nameField.clear();
-            descriptionField.clear();
-            levelField.clear();
-        });
 
         VBox addRiskFactor = new VBox(10, name, description, riskLevel, submit);
+
+        //Hidden Menu and Button
+        MenuButton riskFactor = new MenuButton("Fattori di rischio");
+        for (String risk : controller.getAllExistingRisks()) {
+            riskFactor.getItems().add(new CheckMenuItem(risk));
+        }
 
         addRiskFactor.setVisible(false);
         addRisk.setOnAction(e -> {
             addRiskFactor.setVisible(true);
         });
 
+        submit.setOnAction(e -> {
+            controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
+            riskFactor.getItems().add(new CheckMenuItem(newRisk.getName()));
+            nameField.clear();
+            descriptionField.clear();
+            levelField.clear();
 
+        });
+
+
+        HBox buttons = new HBox(10, riskFactor, addRisk);
         VBox patientVBox = new VBox(10, birthYear, province, profession, buttons, addRiskFactor);
         patientVBox.setPrefWidth(300);
 

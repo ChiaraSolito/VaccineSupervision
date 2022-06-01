@@ -1,14 +1,10 @@
 package Model.Utils.DAOImpl;
 
 import Model.DataBase.DataBaseConnection;
-import Model.Patient;
 import Model.Reaction;
-import Model.RiskFactor;
 import Model.Utils.DAO.ReactionDAO;
 import Model.Utils.Exceptions.NullStringException;
-import javafx.beans.property.SimpleStringProperty;
 
-import javax.xml.crypto.Data;
 import java.sql.SQLException;
 
 public class ReactionDAOImpl implements ReactionDAO {
@@ -26,7 +22,7 @@ public class ReactionDAOImpl implements ReactionDAO {
 
         try {
         pConnection.statement = pConnection.connection.createStatement();
-        pConnection.rs = pConnection.statement.executeQuery("INSERT INTO Reaction " +
+        pConnection.statement.executeUpdate("INSERT INTO Reaction " +
                 "VALUES('" + name + "', '" + gravity + "', '" + description + "')");
 
         } catch (SQLException sqle) {

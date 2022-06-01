@@ -195,7 +195,7 @@ public class PatientDAOImpl implements PatientDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("INSERT INTO Patient " +
+            pConnection.statement.executeUpdate("INSERT INTO Patient " +
                     "VALUES( DEFAULT , '" + birthYear + "', " + province + "', " + profession + "')");
 
             pConnection.rs = pConnection.statement.executeQuery("SELECT P.idpatient " +
@@ -211,12 +211,12 @@ public class PatientDAOImpl implements PatientDAO {
                 pConnection.rs = pConnection.statement.executeQuery( "SELECT true WHERE EXISTS " +
                         "(SELECT name FROM RiskFactor WHERE name = '" + risk.getName() + "')");
                 if(pConnection.rs.next()) {
-                    pConnection.rs = pConnection.statement.executeQuery("INSERT INTO PatientRisk " +
+                    pConnection.statement.executeUpdate("INSERT INTO PatientRisk " +
                             "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
                 } else {
-                    pConnection.rs = pConnection.statement.executeQuery("INSERT INTO RiskFactor " +
+                    pConnection.statement.executeUpdate("INSERT INTO RiskFactor " +
                             "VALUES('" + risk.getName() + "', '" + risk.getRiskLevel() + "', " + risk.getDescription() + "')");
-                    pConnection.rs = pConnection.statement.executeQuery("INSERT INTO PatientRisk " +
+                    pConnection.statement.executeUpdate("INSERT INTO PatientRisk " +
                             "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
                 }
             }
