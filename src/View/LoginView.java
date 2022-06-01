@@ -64,12 +64,14 @@ public class LoginView {
             try {
                 int flag = controller.checkAccess();
                 if(flag == 0){
-                    primaryStage.setScene(new Scene(new MainPageDoc(primaryStage, model).getView()));
+                    primaryStage.setScene(new Scene(new MainPageDoc(primaryStage, model).getView(),700,400));
+                    primaryStage.setResizable(false);
                     primaryStage.setTitle("Doctor Menù");
                     primaryStage.show();
                 } else if(flag == 1) {
                     MainPagePharm main = new MainPagePharm(primaryStage, model);
-                    primaryStage.setScene(new Scene(main.getView()));
+                    primaryStage.setScene(new Scene(main.getView(),700,400));
+                    primaryStage.setResizable(false);
                     primaryStage.setTitle("Pharmacologist Menù");
                     primaryStage.show();
 

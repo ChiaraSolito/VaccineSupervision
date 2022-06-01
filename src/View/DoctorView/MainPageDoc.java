@@ -71,8 +71,9 @@ public class MainPageDoc extends Parent {
         button1 = createButton(button1, icon1, text);
         //inserisci una chiamata alla vista della lista pazienti
         button1.setOnAction(e -> {
-            mainDocStage.setScene(new Scene(new PatientsList(mainDocStage, model).getView()));
+            mainDocStage.setScene(new Scene(new PatientsList(mainDocStage, model).getView(),700,400));
             mainDocStage.setTitle("Lista dei pazienti.");
+            mainDocStage.setResizable(false);
             mainDocStage.show();
 
         });
