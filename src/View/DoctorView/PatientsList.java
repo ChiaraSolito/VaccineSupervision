@@ -1,6 +1,6 @@
 package View.DoctorView;
 
-import Control.DoctorControl.PatientInfo;
+import Control.DoctorControl.PatientInfoController;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
 import javafx.beans.property.IntegerProperty;
@@ -48,10 +48,14 @@ public class PatientsList extends Parent {
 
             button.setText(buttonText);
             button.setOnAction(e -> {
-                listDocStage.setScene(new Scene(new PatientInfo(listDocStage, model).getView(),700,400));
-                listDocStage.setTitle("Informazioni paziente");
-                listDocStage.setResizable(false);
-                listDocStage.show();
+                try {
+                    listDocStage.setScene(new Scene(new PatientInfo(listDocStage, model, id).getView(),700,400));
+                    listDocStage.setTitle("Informazioni paziente");
+                    listDocStage.setResizable(false);
+                    listDocStage.show();
+                } catch (NullStringException ex) {
+                    throw new RuntimeException(ex);
+                }
             });
 
             this.getChildren().addAll(label, button);
