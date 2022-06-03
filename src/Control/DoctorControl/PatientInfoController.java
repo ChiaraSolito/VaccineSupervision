@@ -4,6 +4,7 @@ import Model.Patient;
 import Model.Report;
 import Model.User;
 import Model.Utils.DAOImpl.PatientDAOImpl;
+import Model.Utils.DAOImpl.VaccinationDAOImpl;
 import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
 import View.DoctorView.PatientInfo;
@@ -29,10 +30,9 @@ public class PatientInfoController {
 
     public Patient getPatient(String patient) throws NullStringException {
         PatientDAOImpl patientDAO = new PatientDAOImpl();
-        Patient p = new Patient();
+        Patient p;
 
         try {
-            //patient = FXCollections.observableArrayList(patientDAO.getPatient(model.getUsername()));
             p = patientDAO.getPatient(patient);
         } catch (NullStringException e) {
             throw new NullStringException();
@@ -59,7 +59,6 @@ public class PatientInfoController {
         List<Vaccination> vaccinations;
 
         try {
-            //patient = FXCollections.observableArrayList(patientDAO.getPatient(model.getUsername()));
             vaccinations = patientDAO.getPatientVaccinations(patient);
         } catch (NullStringException e) {
             throw new NullStringException();
@@ -67,5 +66,19 @@ public class PatientInfoController {
 
         return vaccinations;
     }
+
+    public List<Vaccination> getPatientTwoMonthsVaccination(String patient) throws NullStringException {
+        VaccinationDAOImpl vaccinationDAO = new VaccinationDAOImpl();
+        List<Vaccination> vaccinations;
+
+        try {
+            vaccinations = vaccinationDAO.getTwoMonthsVaccination(patient);
+        } catch (NullStringException e) {
+            throw new NullStringException();
+        }
+
+        return vaccinations;
+    }
+
 
 }
