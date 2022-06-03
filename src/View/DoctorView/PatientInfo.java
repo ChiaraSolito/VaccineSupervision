@@ -8,7 +8,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class PatientInfo {
     private static User model;
@@ -39,7 +42,6 @@ public class PatientInfo {
 
     public static class HBoxCell extends HBox {
         Label label = new Label();
-        Button button = new Button();
 
         HBoxCell(String labelText, String name, String labelText2, int gravity, String labelText3, String description) {
             super();
@@ -125,7 +127,7 @@ public class PatientInfo {
         reactionDateColumn.setCellValueFactory(new PropertyValueFactory<>("reactionDate"));
         TableColumn<Report, String> reportDateColumn = new TableColumn<>("Data report");
         reportDateColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
-        //TableColumn<Report, String> vaccinationColumn = new TableColumn<>("Vaccinazione");
+        TableColumn<Report, String> vaccinationColumn = new TableColumn<>("Vaccinazioni ultimi due mesi");
         //vaccinationColumn.setCellValueFactory(new PropertyValueFactory<>("vaccination"));
 
         reportsInfo.getColumns().add(idColumn);
@@ -140,7 +142,7 @@ public class PatientInfo {
         reportsInfo.setPlaceholder(new Label("No rows to display"));
 
 
-        //Create the TabPane
+        //Create the VBox
         TabPane tabpane = new TabPane();
         Tab tab1 = new Tab("Informazioni personali", personalInfo);
         Tab tab2 = new Tab("Vaccinazioni"  , vaccinationsInfo);
@@ -151,7 +153,24 @@ public class PatientInfo {
         tabpane.getTabs().add(tab2);
         tabpane.getTabs().add(tab3);
 
-        VBox layout = new VBox(tabpane);
+        Button backButton = new Button();
+        backButton.setText("Indietro");
+        backButton.setOnAction(e -> {
+            try {
+                patientInfoDocStage.setScene(new Scene(new PatientsList(patientInfoDocStage, model).getView(),700,400));
+                patientInfoDocStage.setTitle("Lista dei pazienti");
+                patientInfoDocStage.setResizable(false);
+                patientInfoDocStage.show();
+            } catch (NullStringException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        BorderPane layout = new BorderPane();
+        layout.setTop(backButton);
+        layout.setAlignment(backButton, Pos.CENTER_RIGHT);
+        layout.setMargin(backButton, new Insets(5, 5, 5, 5));
+        layout.setCenter(tabpane);
 
         return layout;
     }
