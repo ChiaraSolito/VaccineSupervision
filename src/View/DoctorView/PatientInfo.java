@@ -7,6 +7,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -18,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -58,7 +60,7 @@ public class PatientInfo {
         Patient patient = controller.getPatient(id);
         List<Report> reports = new ArrayList<>(controller.getPatientReports(id));
         List<Vaccination> vaccinations = new ArrayList<>(controller.getPatientVaccinations(id));
-        List<Vaccination> twoMonthsVaccinations = new ArrayList<>(controller.getPatientTwoMonthsVaccination(id));
+        ObservableList<Vaccination> twoMonthsVaccinations =FXCollections.observableArrayList(controller.getPatientTwoMonthsVaccination(id));
         List<RiskFactor> riskFactorList = new ArrayList<>((controller.getPatient(id)).getAllRiskFactor());
 
         // Create the GridPane for personalInfo
@@ -106,11 +108,7 @@ public class PatientInfo {
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("vaccinationDate"));
         dateColumn.setPrefWidth(175);
 
-        vaccinationsInfo.getColumns().add(vaccineColumn);
-        vaccinationsInfo.getColumns().add(typeSomministrationColumn);
-        vaccinationsInfo.getColumns().add(siteColumn);
-        vaccinationsInfo.getColumns().add(dateColumn);
-
+        vaccinationsInfo.getColumns().addAll(vaccineColumn, typeSomministrationColumn, siteColumn, dateColumn);
         for (Vaccination vaccination : vaccinations){
             vaccinationsInfo.getItems().add(vaccination);
         }
@@ -127,18 +125,25 @@ public class PatientInfo {
         reactionDateColumn.setCellValueFactory(new PropertyValueFactory<>("reactionDate"));
         TableColumn<Report, String> reportDateColumn = new TableColumn<>("Data report");
         reportDateColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
-        TableColumn<Report, String> vaccinationColumn = new TableColumn<>("Vaccinazioni ultimi due mesi");
+
+        TableColumn<Vaccination, String> vaccinationColumn = new TableColumn<>("Vaccinazioni ultimi due mesi");
         //vaccinationColumn.setCellValueFactory(new PropertyValueFactory<>("vaccination"));
+        //vaccinationColumn.setCellValueFactory();
+        TableColumn<Vaccination, String> vaccineNameColumn = new TableColumn<>("Vaccino");
+        vaccineNameColumn.setCellValueFactory(new PropertyValueFactory<>("vaccine"));
+        TableColumn<Vaccination, String> typeNameColumn = new TableColumn<>("Tipo somm.");
+        typeNameColumn.setCellValueFactory(new PropertyValueFactory<>("typeSomministration"));
+        TableColumn<Vaccination, String> siteNameColumn = new TableColumn<>("Sede");
+        siteNameColumn.setCellValueFactory(new PropertyValueFactory<>("vaccinationSite"));
+        TableColumn<Vaccination, Date> dateNameColumn = new TableColumn<>("Data");
+        dateNameColumn.setCellValueFactory(new PropertyValueFactory<>("vaccinationDate"));
 
-        reportsInfo.getColumns().add(idColumn);
-        reportsInfo.getColumns().add(reactionColumn);
-        reportsInfo.getColumns().add(reactionDateColumn);
-        reportsInfo.getColumns().add(reportDateColumn);
-        //reportsInfo.getColumns().add(vaccinationColumn);
+        vaccinationColumn.getColumns().addAll(vaccineNameColumn, typeNameColumn, siteNameColumn, dateNameColumn);
+        reportsInfo.getColumns().addAll(idColumn, reactionColumn, reactionDateColumn, reportDateColumn, vaccinationColumn);
 
-        for (Report report : reports){
-            reportsInfo.getItems().add(report);
-        }
+//        for (Report report : reports){
+//            reportsInfo.getItems().add(report);
+//        }
         reportsInfo.setPlaceholder(new Label("No rows to display"));
 
 
