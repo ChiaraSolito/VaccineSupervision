@@ -62,13 +62,13 @@ public class LoginView {
                 if (flag == 0) {
                     primaryStage.setScene(new Scene(new MainPageDoc(primaryStage, model).getView(), 700, 400));
                     primaryStage.setResizable(false);
-                    primaryStage.setTitle("Doctor Menù");
+                    primaryStage.setTitle("Menù Principale");
                     primaryStage.show();
                 } else if (flag == 1) {
                     MainPagePharm main = new MainPagePharm(primaryStage, model);
                     primaryStage.setScene(new Scene(main.getView(), 700, 400));
                     primaryStage.setResizable(false);
-                    primaryStage.setTitle("Pharmacologist Menù");
+                    primaryStage.setTitle("Menù Principale");
                     primaryStage.show();
 
                     Alert dialog = main.readNotice();

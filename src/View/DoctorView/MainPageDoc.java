@@ -17,7 +17,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import static javafx.geometry.Pos.*;
+
+import static javafx.geometry.Pos.CENTER_LEFT;
+import static javafx.geometry.Pos.CENTER_RIGHT;
 
 public class MainPageDoc extends Parent {
     private final User model;
@@ -90,7 +92,7 @@ public class MainPageDoc extends Parent {
         //inserire una chiamata al form inserisci reazione
         button2.setOnAction(e -> {
             try {
-                mainDocStage.setScene(new Scene(new ReactionForm(mainDocStage, model).getView(),700,400));
+                mainDocStage.setScene(new Scene(new ReportForm(mainDocStage, model).getView(), 700, 400));
                 mainDocStage.setTitle("Inserimento reazione");
                 mainDocStage.setResizable(false);
                 mainDocStage.show();

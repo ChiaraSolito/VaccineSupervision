@@ -1,20 +1,22 @@
 package Model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Reaction {
 
     private final SimpleStringProperty name;
-    private final SimpleStringProperty gravity;
+    private final SimpleIntegerProperty gravity;
     private final SimpleStringProperty description;
 
     public Reaction() {
-        this.name =  new SimpleStringProperty("");;
-        this.gravity =  new SimpleStringProperty("");;
-        this.description =  new SimpleStringProperty("");;
+        this.name = new SimpleStringProperty("");
+        this.gravity = new SimpleIntegerProperty();
+        this.description = new SimpleStringProperty("");
     }
 
-    public Reaction(SimpleStringProperty name, SimpleStringProperty gravity, SimpleStringProperty description) {
+    public Reaction(SimpleStringProperty name, SimpleIntegerProperty gravity, SimpleStringProperty description) {
         this.name = name;
         this.gravity = gravity;
         this.description = description;
@@ -32,15 +34,15 @@ public class Reaction {
         this.name.set(name);
     }
 
-    public String getGravity() {
+    public int getGravity() {
         return gravity.get();
     }
 
-    public SimpleStringProperty gravityProperty() {
+    public IntegerProperty gravityProperty() {
         return gravity;
     }
 
-    public void setGravity(String gravity) {
+    public void setGravity(int gravity) {
         this.gravity.set(gravity);
     }
 

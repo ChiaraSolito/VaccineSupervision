@@ -2,6 +2,7 @@ package Control.DoctorControl;
 
 import Model.User;
 import Model.Utils.DAOImpl.PatientDAOImpl;
+import Model.Utils.DAOImpl.ReactionDAOImpl;
 import Model.Utils.DAOImpl.RiskFactorDAOImpl;
 import Model.Utils.Exceptions.NullStringException;
 import javafx.collections.FXCollections;
@@ -51,4 +52,12 @@ public class ReactionFormController {
     }
 
 
+    public List<String> getAllExistingReactions() {
+        ReactionDAOImpl reactionDAO = new ReactionDAOImpl();
+        ObservableList<String> reactions;
+
+        reactions = FXCollections.observableArrayList(reactionDAO.getAllReactions());
+
+        return reactions;
+    }
 }

@@ -14,7 +14,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -60,7 +63,7 @@ public class PatientInfo {
         Patient patient = controller.getPatient(id);
         List<Report> reports = new ArrayList<>(controller.getPatientReports(id));
         List<Vaccination> vaccinations = new ArrayList<>(controller.getPatientVaccinations(id));
-        ObservableList<Vaccination> twoMonthsVaccinations =FXCollections.observableArrayList(controller.getPatientTwoMonthsVaccination(id));
+        ObservableList<Vaccination> twoMonthsVaccinations = FXCollections.observableArrayList(controller.getPatientTwoMonthsVaccination(id));
         List<RiskFactor> riskFactorList = new ArrayList<>((controller.getPatient(id)).getAllRiskFactor());
 
         // Create the GridPane for personalInfo
@@ -85,7 +88,7 @@ public class PatientInfo {
 
         intProperty.bind(myObservableList.sizeProperty());
         ListView<HBoxCell> riskFactorListView = new ListView<HBoxCell>(myObservableList);
-        if(myObservableList.size() == 0){
+        if (myObservableList.size() == 0) {
             Text text = new Text("Nessun fattore di rischio ancora inserito");
         }
         personalInfo.add(riskFactorListView, 1, 4, 1, 1);
@@ -109,7 +112,7 @@ public class PatientInfo {
         dateColumn.setPrefWidth(175);
 
         vaccinationsInfo.getColumns().addAll(vaccineColumn, typeSomministrationColumn, siteColumn, dateColumn);
-        for (Vaccination vaccination : vaccinations){
+        for (Vaccination vaccination : vaccinations) {
             vaccinationsInfo.getItems().add(vaccination);
         }
         vaccinationsInfo.setPlaceholder(new Label("No rows to display"));
@@ -150,8 +153,8 @@ public class PatientInfo {
         //Create the VBox
         TabPane tabpane = new TabPane();
         Tab tab1 = new Tab("Informazioni personali", personalInfo);
-        Tab tab2 = new Tab("Vaccinazioni"  , vaccinationsInfo);
-        Tab tab3 = new Tab("Segnalazioni" , reportsInfo);
+        Tab tab2 = new Tab("Vaccinazioni", vaccinationsInfo);
+        Tab tab3 = new Tab("Segnalazioni", reportsInfo);
         tabpane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         tabpane.getTabs().add(tab1);
@@ -162,7 +165,7 @@ public class PatientInfo {
         backButton.setText("Indietro");
         backButton.setOnAction(e -> {
             try {
-                patientInfoDocStage.setScene(new Scene(new PatientsList(patientInfoDocStage, model).getView(),700,400));
+                patientInfoDocStage.setScene(new Scene(new PatientsList(patientInfoDocStage, model).getView(), 700, 400));
                 patientInfoDocStage.setTitle("Lista dei pazienti");
                 patientInfoDocStage.setResizable(false);
                 patientInfoDocStage.show();

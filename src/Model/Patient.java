@@ -1,5 +1,5 @@
 package Model;
-import javafx.beans.property.SimpleObjectProperty;
+
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ public class Patient {
 
     private List<RiskFactor> risk_factor;
 
-    public Patient(SimpleStringProperty idPatient, SimpleStringProperty birthYear, SimpleStringProperty province, SimpleStringProperty profession, List<RiskFactor> risk_factor) {
-        this.idPatient = idPatient;
+    public Patient(SimpleStringProperty birthYear, SimpleStringProperty province, SimpleStringProperty profession, List<RiskFactor> risk_factor) {
+        this.idPatient = new SimpleStringProperty("");
         this.birthYear = birthYear;
         this.province = province;
         this.profession = profession;
