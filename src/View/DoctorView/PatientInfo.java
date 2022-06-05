@@ -46,19 +46,21 @@ public class PatientInfo {
         this.id = id;
     }
 
-    public static class HBoxCell extends HBox {
-        Label label = new Label();
+    private class TableObject{
+        String id;
+        String reaction;
+        String reportDate;
+        String reactionDate;
+        String twoMonthsVaccinations;
 
-        HBoxCell(String labelText, String name, String labelText2, int gravity, String labelText3, String description) {
-            super();
-
-            label.setText(labelText + name + labelText2 + gravity + labelText3 + description);
-            label.setMaxWidth(Double.MAX_VALUE);
-            HBox.setHgrow(label, Priority.ALWAYS);
-
+        private TableObject(String id, String reaction, String reportDate, String reactionDate, String twoMonthsVaccinations){
+            this.id = id;
+            this.reaction = reaction;
+            this.reportDate = reportDate;
+            this.reactionDate = reactionDate;
+            this.twoMonthsVaccinations = twoMonthsVaccinations;
         }
     }
-
 
     public Parent getView() throws NullStringException {
         Patient patient = controller.getPatient(id);
@@ -83,7 +85,6 @@ public class PatientInfo {
        for (RiskFactor riskfactor : riskFactorList) {
             riskFactorsListView.getItems().add(riskfactor.getName());
         }
-
         personalInfo.add(riskFactorsListView, 0, 4, 2, 1);
         personalInfo.setHgap(10);
         personalInfo.setVgap(10);
@@ -113,39 +114,32 @@ public class PatientInfo {
 
         //Create the TableView for reports
         TableView reportsInfo = new TableView<>();
-        TableColumn<Report, String> idColumn = new TableColumn<>("Codice report");
-        //idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        TableColumn<Report, String> reactionColumn = new TableColumn<>("Reazione");
-        //reactionColumn.setCellValueFactory(new PropertyValueFactory<>("reaction"));
-        TableColumn<Report, String> reactionDateColumn = new TableColumn<>("Data reazione");
-        //reactionDateColumn.setCellValueFactory(new PropertyValueFactory<>("reactionDate"));
-        TableColumn<Report, String> reportDateColumn = new TableColumn<>("Data report");
-        //reportDateColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
-        TableColumn<Vaccination, String> vaccinationColumn = new TableColumn<>("Vaccinazioni ultimi due mesi");
+        TableColumn<TableObject, String> idColumn = new TableColumn<>("Codice report");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setPrefWidth(100);
+        TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
+        reactionColumn.setCellValueFactory(new PropertyValueFactory<>("reaction"));
+        reactionColumn.setPrefWidth(100);
+        TableColumn<TableObject, String> reactionDateColumn = new TableColumn<>("Data reazione");
+        reactionDateColumn.setCellValueFactory(new PropertyValueFactory<>("reactionDate"));
+        reactionDateColumn.setPrefWidth(100);
+        TableColumn<TableObject, String> reportDateColumn = new TableColumn<>("Data report");
+        reportDateColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
+        reportDateColumn.setPrefWidth(100);
+        TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni ultimi due mesi");
+        vaccinationColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
+        vaccinationColumn.setPrefWidth(300);
 
-/*
-        TableColumn<Vaccination, String> vaccineNameColumn = new TableColumn<>("Vaccino");
-        vaccineNameColumn.setCellValueFactory(new PropertyValueFactory<>("vaccine"));
-        TableColumn<Vaccination, String> typeNameColumn = new TableColumn<>("Tipo somm.");
-        typeNameColumn.setCellValueFactory(new PropertyValueFactory<>("typeSomministration"));
-        TableColumn<Vaccination, String> siteNameColumn = new TableColumn<>("Sede");
-        siteNameColumn.setCellValueFactory(new PropertyValueFactory<>("vaccinationSite"));
-        TableColumn<Vaccination, Date> dateNameColumn = new TableColumn<>("Data");
-        dateNameColumn.setCellValueFactory(new PropertyValueFactory<>("vaccinationDate"));
-*/
-
-//        vaccinationColumn.getColumns().addAll(vaccineNameColumn, typeNameColumn, siteNameColumn, dateNameColumn);
         reportsInfo.getColumns().addAll(idColumn, reactionColumn, reactionDateColumn, reportDateColumn, vaccinationColumn);
 
-/*
-        for (Report report : reports){
+/*        for (Report report : reports){
             List<Vaccination> twoMonthsVaccinations = new ArrayList<>(controller.getPatientTwoMonthsVaccination(id));
             String vaccinationString = twoMonthsVaccinations.stream().map(Vaccination::toString).collect(Collectors.joining("\n "));
-
-            reportsInfo.getItems().add(report.getId(), report.getReaction().getName(), report.getReactionDate(), report.getReportDate(), vaccinationString);
-        }
+            Reaction reaction = report.getReaction();
+            String name = reaction.getName();
+            reportsInfo.getItems().add(new TableObject(report.getId(), name, report.getReactionDate(), report.getReportDate(), vaccinationString));
+        }*/
         reportsInfo.setPlaceholder(new Label("No rows to display"));
-*/
 
 
         //Create the VBox
