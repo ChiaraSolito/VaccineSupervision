@@ -89,4 +89,9 @@ public class Vaccination {
     public void setVaccinationDate(String vaccinationDate) {
         this.vaccinationDate.set(vaccinationDate);
     }
+
+    @Override
+    public String toString() {
+        return vaccine + ", " + typeSomministration + ", " + vaccinationSite + ", " + vaccinationDate;
+    }
 }
