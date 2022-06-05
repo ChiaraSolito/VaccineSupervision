@@ -68,30 +68,23 @@ public class PatientInfo {
 
         // Create the GridPane for personalInfo
         GridPane personalInfo = new GridPane();
-        personalInfo.add(new Text("Codice paziente: "), 0, 0, 1, 1);
+        personalInfo.add(new Text("Codice paziente "), 0, 0, 1, 1);
         personalInfo.add(new Text(patient.getIdPatient()), 1, 0, 1, 1);
-        personalInfo.add(new Text("Anno di nascita: "), 0, 1, 1, 1);
+        personalInfo.add(new Text("Anno di nascita "), 0, 1, 1, 1);
         personalInfo.add(new Text(patient.getBirthYear()), 1, 1, 1, 1);
-        personalInfo.add(new Text("Provincia: "), 2, 0, 1, 1);
+        personalInfo.add(new Text("Provincia "), 2, 0, 1, 1);
         personalInfo.add(new Text(patient.getProvince()), 3, 0, 1, 1);
-        personalInfo.add(new Text("Professione: "), 2, 1, 1, 1);
+        personalInfo.add(new Text("Professione "), 2, 1, 1, 1);
         personalInfo.add(new Text(patient.getProfession()), 3, 1, 1, 1);
-        personalInfo.add(new Text("Fattori di rischio: "), 0, 2, 1, 1);
+        personalInfo.add(new Text("Fattori di rischio "), 0, 3, 1, 1);
         personalInfo.setPadding(new Insets(10, 10, 10, 30));
 
-        List<HBoxCell> listHBoxRF = new ArrayList<>();
-        for (RiskFactor riskfactor : riskFactorList) {
-            listHBoxRF.add(new HBoxCell("Nome: ", riskfactor.getName(), "Gravità: ", riskfactor.getRiskLevel(), "Descrizione: ", riskfactor.getDescription()));
+        ListView riskFactorsListView = new ListView();
+       for (RiskFactor riskfactor : riskFactorList) {
+            riskFactorsListView.getItems().add(riskfactor.getName());
         }
-        IntegerProperty intProperty = new SimpleIntegerProperty();
-        SimpleListProperty<HBoxCell> myObservableList = new SimpleListProperty<>(FXCollections.observableArrayList(listHBoxRF));
 
-        intProperty.bind(myObservableList.sizeProperty());
-        ListView<HBoxCell> riskFactorListView = new ListView<HBoxCell>(myObservableList);
-        if (myObservableList.size() == 0) {
-            Text text = new Text("Nessun fattore di rischio ancora inserito");
-        }
-        personalInfo.add(riskFactorListView, 1, 4, 1, 1);
+        personalInfo.add(riskFactorsListView, 0, 4, 2, 1);
         personalInfo.setHgap(10);
         personalInfo.setVgap(10);
 
@@ -130,8 +123,6 @@ public class PatientInfo {
         reportDateColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
 
         TableColumn<Vaccination, String> vaccinationColumn = new TableColumn<>("Vaccinazioni ultimi due mesi");
-        //vaccinationColumn.setCellValueFactory(new PropertyValueFactory<>("vaccination"));
-        //vaccinationColumn.setCellValueFactory();
         TableColumn<Vaccination, String> vaccineNameColumn = new TableColumn<>("Vaccino");
         vaccineNameColumn.setCellValueFactory(new PropertyValueFactory<>("vaccine"));
         TableColumn<Vaccination, String> typeNameColumn = new TableColumn<>("Tipo somm.");
@@ -144,9 +135,11 @@ public class PatientInfo {
         vaccinationColumn.getColumns().addAll(vaccineNameColumn, typeNameColumn, siteNameColumn, dateNameColumn);
         reportsInfo.getColumns().addAll(idColumn, reactionColumn, reactionDateColumn, reportDateColumn, vaccinationColumn);
 
-//        for (Report report : reports){
-//            reportsInfo.getItems().add(report);
-//        }
+/*
+        for (Vaccination vaccination : vaccinations){
+            reportsInfo.getItems().add(vaccination);
+        }
+*/
         reportsInfo.setPlaceholder(new Label("No rows to display"));
 
 
@@ -175,10 +168,10 @@ public class PatientInfo {
         });
 
         BorderPane layout = new BorderPane();
-        layout.setTop(backButton);
-        layout.setAlignment(backButton, Pos.CENTER_RIGHT);
-        layout.setMargin(backButton, new Insets(5, 5, 5, 5));
         layout.setCenter(tabpane);
+        layout.setBottom(backButton);
+        layout.setAlignment(backButton, Pos.CENTER_LEFT);
+        layout.setMargin(backButton, new Insets(5, 5, 5, 5));
 
         return layout;
     }
