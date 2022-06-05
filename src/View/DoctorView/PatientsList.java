@@ -7,6 +7,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,6 +18,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Control.DoctorControl.PatientListController;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +89,23 @@ public class PatientsList extends Parent {
         } else {
             layout.setCenter(listView);
         }
+
+        Button backButton = new Button();
+        backButton.setText("Indietro");
+        backButton.setOnAction(e -> {
+            try {
+                listDocStage.setScene(new Scene(new MainPageDoc(listDocStage, model).getView(), 700, 400));
+                listDocStage.setTitle("Menù principale");
+                listDocStage.setResizable(false);
+                listDocStage.show();
+            } catch (FileNotFoundException ex){
+                throw new RuntimeException(ex);
+            }
+        });
+        layout.setBottom(backButton);
+        layout.setAlignment(backButton, Pos.CENTER_LEFT);
+        layout.setMargin(backButton, new Insets(5, 5, 5, 5));
+
 
         return layout;
     }
