@@ -6,6 +6,7 @@ import Model.Utils.Exceptions.NullStringException;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -114,31 +115,38 @@ public class PatientInfo {
 
         //Create the TableView for reports
         TableView reportsInfo = new TableView<>();
-        TableColumn<TableObject, String> idColumn = new TableColumn<>("Codice report");
+        TableColumn<Report, String> idColumn = new TableColumn<>("Codice report");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setPrefWidth(100);
-        TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
+        TableColumn<Report, String> reactionColumn = new TableColumn<>("Reazione");
         reactionColumn.setCellValueFactory(new PropertyValueFactory<>("reaction"));
         reactionColumn.setPrefWidth(100);
-        TableColumn<TableObject, String> reactionDateColumn = new TableColumn<>("Data reazione");
+        TableColumn<Report, String> reactionDateColumn = new TableColumn<>("Data reazione");
         reactionDateColumn.setCellValueFactory(new PropertyValueFactory<>("reactionDate"));
         reactionDateColumn.setPrefWidth(100);
-        TableColumn<TableObject, String> reportDateColumn = new TableColumn<>("Data report");
+        TableColumn<Report, String> reportDateColumn = new TableColumn<>("Data report");
         reportDateColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
         reportDateColumn.setPrefWidth(100);
-        TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni ultimi due mesi");
+/*
+        TableColumn<Report, String> vaccinationColumn = new TableColumn<>("Vaccinazioni ultimi due mesi");
         vaccinationColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
         vaccinationColumn.setPrefWidth(300);
+*/
 
-        reportsInfo.getColumns().addAll(idColumn, reactionColumn, reactionDateColumn, reportDateColumn, vaccinationColumn);
+        reportsInfo.getColumns().addAll(idColumn, reactionColumn, reactionDateColumn, reportDateColumn);
 
-/*        for (Report report : reports){
-            List<Vaccination> twoMonthsVaccinations = new ArrayList<>(controller.getPatientTwoMonthsVaccination(id));
+        for (Report report : reports){
+/*            List<Vaccination> twoMonthsVaccinations = new ArrayList<>(controller.getPatientTwoMonthsVaccination(id));
             String vaccinationString = twoMonthsVaccinations.stream().map(Vaccination::toString).collect(Collectors.joining("\n "));
-            Reaction reaction = report.getReaction();
-            String name = reaction.getName();
-            reportsInfo.getItems().add(new TableObject(report.getId(), name, report.getReactionDate(), report.getReportDate(), vaccinationString));
-        }*/
+            System.out.println(vaccinationString);
+            //Reaction reaction = report.getReaction();
+            //System.out.println(reaction);
+            //String name = reaction.getName();
+            //System.out.println(name);
+            TableObject object = new TableObject(report.getId(), "name reaction", report.getReactionDate(), report.getReportDate(), "vaccinationString");
+            reportsInfo.getItems().add(object);*/
+            reportsInfo.getItems().add(report);
+        }
         reportsInfo.setPlaceholder(new Label("No rows to display"));
 
 
