@@ -4,6 +4,7 @@ import Control.DoctorControl.MainControllerDoc;
 import Control.FarmacologistControl.MainControllerPharm;
 import Model.Notice;
 import Model.User;
+import Model.Utils.Exceptions.NullStringException;
 import View.DoctorView.MainPageDoc;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -85,6 +86,16 @@ public class MainPagePharm extends Parent {
         ImageView icon2 = new ImageView("pic/notice.png");
         Text text2=new Text("Avvisi già letti");
         button2 = createButton(button2, icon2, text2);
+        button2.setOnAction(e -> {
+            try {
+                mainPharmStage.setScene(new Scene(new ReadNoticeList(mainPharmStage, model).getView(), 700, 400));
+                mainPharmStage.setTitle("Lista avvisi");
+                mainPharmStage.setResizable(false);
+                mainPharmStage.show();
+            } catch (NullStringException ex){
+                throw new RuntimeException(ex);
+            }
+        });
 
         Button button3 = new Button();
         ImageView icon3 = new ImageView("pic/control.png");
