@@ -77,7 +77,7 @@ public class VaccinationDAOImpl implements VaccinationDAO {
     }
 
     @Override
-    public List<Vaccination> getTwoMonthsVaccination(String idPatient) throws NullStringException {
+    public List<Vaccination> getTwoMonthsVaccination(String idPatient, String reactionDate) throws NullStringException {
 
         List<Vaccination> vaccinations = new ArrayList<>();
 
@@ -92,9 +92,9 @@ public class VaccinationDAOImpl implements VaccinationDAO {
 
             pConnection.statement = pConnection.connection.createStatement();
             pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
-                    "FROM vaccination V " +
+                    "FROM vaccination V JOIN Report R ON R.idpatient = V.idpatient " +
                     "WHERE V.idpatient = '" + idPatient + "'" +
-                    "AND V.vaccinationdate BETWEEN CURRENT_DATE - 60 AND CURRENT_DATE");
+                    "AND V.vaccinationdate BETWEEN " + reactionDate + " - 60 AND " + reactionDate);
 
             while (pConnection.rs.next()) {
                 vaccinations.add(new Vaccination(

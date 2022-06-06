@@ -67,12 +67,12 @@ public class PatientInfoController {
         return vaccinations;
     }
 
-    public List<Vaccination> getPatientTwoMonthsVaccination(String patient) throws NullStringException {
+    public List<Vaccination> getPatientTwoMonthsVaccination(String patient, String reactionDate) throws NullStringException {
         VaccinationDAOImpl vaccinationDAO = new VaccinationDAOImpl();
         List<Vaccination> vaccinations;
 
         try {
-            vaccinations = vaccinationDAO.getTwoMonthsVaccination(patient);
+            vaccinations = vaccinationDAO.getTwoMonthsVaccination(patient, reactionDate);
         } catch (NullStringException e) {
             throw new NullStringException();
         }
