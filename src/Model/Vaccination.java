@@ -92,6 +92,6 @@ public class Vaccination {
 
     @Override
     public String toString() {
-        return vaccine + ", " + typeSomministration + ", " + vaccinationSite + ", " + vaccinationDate;
+        return vaccine.get() + ", " + typeSomministration.get() + ", " + vaccinationSite.get() + ", " + vaccinationDate.get();
     }
 }
