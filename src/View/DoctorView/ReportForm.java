@@ -7,6 +7,7 @@ import Model.RiskFactor;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
@@ -34,6 +35,7 @@ public class ReportForm {
     private static Stage reportDocStage;
 
     private static Patient patient;
+    private static Reaction reaction;
 
     /*
     Costruttore
@@ -42,7 +44,6 @@ public class ReportForm {
         this.model = model;
         this.reportDocStage = stage;
         controller = new ReactionFormController(model);
-        patient = new Patient();
     }
 
     Parent getView() throws NullStringException {
@@ -89,10 +90,14 @@ public class ReportForm {
 
         //MenuButton to choose exising Risk Factors
         //the menu is under the other New Risk because you can insert and then choose - DO NOT CHANGE POSITION
+        List<RiskFactor> addedRisks = new ArrayList<>();
         MenuButton riskFactor = new MenuButton("Fattori di rischio");
         for (String risk : controller.getAllExistingRisks()) {
             CheckMenuItem sub = new CheckMenuItem(risk);
             riskFactor.getItems().add(sub);
+            sub.setOnAction(a -> {
+                addedRisks.add(controller.getRisk(risk));
+            });
         }
 
         //Regulate the visibility of menus
@@ -104,7 +109,11 @@ public class ReportForm {
         //insert new risk and clears textfields
         submit.setOnAction(e -> {
             controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
-            riskFactor.getItems().add(new CheckMenuItem(newRisk.getName()));
+            CheckMenuItem risk = new CheckMenuItem(newRisk.getName());
+            riskFactor.getItems().add(risk);
+            risk.setOnAction(a -> {
+                addedRisks.add(controller.getRisk(newRisk.getName()));
+            });
             nameField.clear();
             descriptionField.clear();
             levelField.clear();
@@ -129,10 +138,14 @@ public class ReportForm {
 
         //Hidden Menu
         ToggleGroup group = new ToggleGroup();
-        for (String patient : controller.getAllPatients()) {
-            RadioMenuItem sub = new RadioMenuItem("Paziente: " + patient);
+
+        for (String getPatient : controller.getAllPatients()) {
+            RadioMenuItem sub = new RadioMenuItem("Paziente: " + getPatient);
             choosePatient.getItems().add(sub);
             sub.setToggleGroup(group);
+            sub.setOnAction(a -> {
+                patient = controller.getPatient(getPatient);
+            });
         }
 
         //Show new Patient menù
@@ -197,10 +210,13 @@ public class ReportForm {
         });
 
         ToggleGroup group2 = new ToggleGroup();
-        for (String reaction : controller.getAllExistingReactions()) {
-            RadioMenuItem sub = new RadioMenuItem("Reazione: " + reaction);
+        for (String getReaction : controller.getAllExistingReactions()) {
+            RadioMenuItem sub = new RadioMenuItem("Reazione: " + getReaction);
             reactions.getItems().add(sub);
             sub.setToggleGroup(group2);
+            sub.setOnAction(a -> {
+                reaction = controller.getReaction(getReaction);
+            });
         }
 
         VBox totalMenuP = new VBox(20, newReactiontMenu, newReactionVBOX);
@@ -225,13 +241,16 @@ public class ReportForm {
         ScrollPane sp2 = new ScrollPane();
         sp2.setContent(layout2);
 
+
         //Create the TabPane
         TabPane tabpane = new TabPane();
         Tab tab1 = new Tab("Dati Paziente", sp1);
         Tab tab2 = new Tab("Dati Reazione", sp2);
+        //Tab tab3 = new Tab("Dati vaccinazione", sp3);
         tabpane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabpane.getTabs().add(tab1);
         tabpane.getTabs().add(tab2);
+        //tabpane.getTabs().add(tab3);
 
         Button backButton = new Button();
         backButton.setText("Indietro");
@@ -259,27 +278,29 @@ public class ReportForm {
                     dialog.setContentText("Inserisci tutti i dati necessari prima di andare avanti");
                     dialog.showAndWait();
                 } else {
-                    List<RiskFactor> risks = new ArrayList<>();
-                    Patient chosenPatient = new Patient(new SimpleStringProperty(birthYearTextField.getText()), new SimpleStringProperty(provinceTextField.getText()),
-                            new SimpleStringProperty(professionTextField.getText()), risks);
+                    patient = new Patient(new SimpleStringProperty(birthYearTextField.getText()), new SimpleStringProperty(provinceTextField.getText()),
+                            new SimpleStringProperty(professionTextField.getText()), addedRisks);
                 }
-            }
-            if (group2.getSelectedToggle() == null) {
-                if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
-                        || gravityFieldReact.getText().isEmpty()) {
-                    Dialog dialog = new Alert(Alert.AlertType.ERROR);
-                    dialog.setTitle("Errore!");
-                    dialog.setHeaderText("Hai dimenticato qualcosa.");
-                    dialog.setContentText("Inserisci tutti i dati necessari prima di andare avanti");
-                    dialog.showAndWait();
+            } else {
+                if (group2.getSelectedToggle() == null) {
+                    if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
+                            || gravityFieldReact.getText().isEmpty()) {
+                        Dialog dialog = new Alert(Alert.AlertType.ERROR);
+                        dialog.setTitle("Errore!");
+                        dialog.setHeaderText("Hai dimenticato qualcosa.");
+                        dialog.setContentText("Inserisci tutti i dati necessari prima di andare avanti");
+                        dialog.showAndWait();
+                    } else {
+                        if (displayConfMessage()) {
+                            reaction = new Reaction(new SimpleStringProperty(nameFieldReact.getText()),
+                                    new SimpleIntegerProperty(Integer.valueOf(gravityFieldReact.getText())), new SimpleStringProperty(descriptionField.getText()));
+                            //Report report = new Report(patient, reaction, );
+                        }
+                    }
                 } else {
                     if (displayConfMessage()) {
 
                     }
-                }
-            } else {
-                if (displayConfMessage()) {
-
                 }
             }
         });

@@ -98,4 +98,39 @@ public class RiskFactorDAOImpl implements RiskFactorDAO {
         }
 
     }
+
+    public RiskFactor getRisk(String name) throws NullStringException {
+
+        RiskFactor risk = null;
+
+        if (name.isEmpty()) {
+            throw new NullStringException();
+        }
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT RF.name, RF.risklevel, RF.description " +
+                    "FROM RiskFactor RF " +
+                    "WHERE RF.name = '" + name + "'");
+
+            while (pConnection.rs.next()) {
+                risk = new RiskFactor(
+                        new SimpleStringProperty(pConnection.rs.getString("name")),
+                        new SimpleStringProperty(pConnection.rs.getString("description")),
+                        new SimpleIntegerProperty(pConnection.rs.getInt("risklevel"))
+                );
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return risk;
+    }
+
 }
