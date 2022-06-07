@@ -27,7 +27,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("SELECT R.noticeid, N.content FROM readnotice R " +
+            pConnection.rs = pConnection.statement.executeQuery("SELECT R.noticeid, N.content, N.noticedate FROM readnotice R " +
                     "JOIN notice N ON N.id = R.noticeid " +
                     "WHERE R.noticeid IN (" +
                     "SELECT R1.noticeid" +
@@ -37,8 +37,8 @@ public class NoticeDAOImpl implements NoticeDAO {
             while (pConnection.rs.next()) {
                 notices.add(new Notice(
                         new SimpleStringProperty(pConnection.rs.getString("id")),
-                        new SimpleStringProperty(pConnection.rs.getString("content"))
-
+                        new SimpleStringProperty(pConnection.rs.getString("content")),
+                        new SimpleStringProperty(pConnection.rs.getString("noticedate"))
                 ));
             }
         } catch (SQLException sqle) {
@@ -64,7 +64,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("SELECT R.noticeid, N.content FROM readnotice R " +
+            pConnection.rs = pConnection.statement.executeQuery("SELECT R.noticeid, N.content, N.noticedate FROM readnotice R " +
                     "JOIN notice N ON N.id = R.noticeid " +
                     "WHERE R.noticeid NOT IN (" +
                     "SELECT R1.noticeid" +
@@ -74,8 +74,8 @@ public class NoticeDAOImpl implements NoticeDAO {
             while (pConnection.rs.next()) {
                 notRead.add(new Notice(
                         new SimpleStringProperty(pConnection.rs.getString("noticeid")),
-                        new SimpleStringProperty(pConnection.rs.getString("content"))
-
+                        new SimpleStringProperty(pConnection.rs.getString("content")),
+                        new SimpleStringProperty(pConnection.rs.getString("noticedate"))
                 ));
             }
 
@@ -126,7 +126,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         try {
             pConnection.statement = pConnection.connection.createStatement();
             pConnection.rs = pConnection.statement.executeQuery("INSERT INTO notice " +
-                    "VALUES( DEFAULT , '" + content + "' )"
+                    "VALUES( DEFAULT , '" + content + "', CURRENT_DATE)"
             );
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
