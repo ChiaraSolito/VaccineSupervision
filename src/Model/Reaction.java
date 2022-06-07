@@ -22,9 +22,7 @@ public class Reaction {
         this.description = description;
     }
 
-    public String getName() {
-        return name.get();
-    }
+    public String getName() { return name.get(); }
 
     public SimpleStringProperty nameProperty() {
         return name;

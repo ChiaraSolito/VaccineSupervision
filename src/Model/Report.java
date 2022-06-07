@@ -9,13 +9,13 @@ import java.util.List;
 public class Report {
     private final SimpleStringProperty id;
     private final SimpleObjectProperty<Patient> patient;
-    private final SimpleObjectProperty<Reaction> reaction;
+    private final SimpleStringProperty reaction;
     private final SimpleStringProperty reportDate;
     private final SimpleStringProperty reactionDate;
     private final List<Vaccination> vaccination;
     private final SimpleStringProperty doctor;
 
-    public Report(SimpleStringProperty id, SimpleObjectProperty<Patient> patient, SimpleObjectProperty<Reaction> reaction,
+    public Report(SimpleStringProperty id, SimpleObjectProperty<Patient> patient, SimpleStringProperty reaction,
                   SimpleStringProperty reportDate, SimpleStringProperty reactionDate,
                   List<Vaccination> vaccination, SimpleStringProperty doctor) {
         this.id = id;
@@ -29,7 +29,7 @@ public class Report {
     public Report() {
         this.id = new SimpleStringProperty("");
         this.patient = new SimpleObjectProperty<Patient>();
-        this.reaction = new SimpleObjectProperty<Reaction>();
+        this.reaction = new SimpleStringProperty("");
         this.reportDate = new SimpleStringProperty("");
         this.reactionDate = new SimpleStringProperty("");
         this.vaccination = new ArrayList<>();
@@ -44,9 +44,7 @@ public class Report {
         return id;
     }
 
-    public void setId(String id) {
-        this.id.set(id);
-    }
+    public void setId(String id) { this.id.set(id); }
 
     public Patient getPatient() {
         return patient.get();
@@ -56,21 +54,13 @@ public class Report {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient.set(patient);
-    }
+    public void setPatient(Patient patient) { this.patient.set(patient); }
 
-    public Reaction getReaction() {
-        return reaction.get();
-    }
+    public String getReaction() { return reaction.get(); }
 
-    public SimpleObjectProperty<Reaction> reactionProperty() {
-        return reaction;
-    }
+    public SimpleStringProperty reactionProperty() { return reaction; }
 
-    public void setReaction(Reaction reaction) {
-        this.reaction.set(reaction);
-    }
+    public void setReaction(String reaction) { this.reaction.set(reaction); }
 
     public String getReportDate() {
         return reportDate.get();
@@ -80,9 +70,7 @@ public class Report {
         return reportDate;
     }
 
-    public void setReportDate(String reportDate) {
-        this.reportDate.set(reportDate);
-    }
+    public void setReportDate(String reportDate) { this.reportDate.set(reportDate); }
 
     public String getReactionDate() {
         return reactionDate.get();
@@ -92,9 +80,7 @@ public class Report {
         return reactionDate;
     }
 
-    public void setReactionDate(String reactionDate) {
-        this.reactionDate.set(reactionDate);
-    }
+    public void setReactionDate(String reactionDate) { this.reactionDate.set(reactionDate); }
 
     public List<Vaccination> vaccinationProperty() {
         return vaccination;
