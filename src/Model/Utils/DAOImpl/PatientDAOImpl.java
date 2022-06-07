@@ -69,7 +69,7 @@ public class PatientDAOImpl implements PatientDAO {
                 reports.add(new Report(
                         new SimpleStringProperty(pConnection.rs.getString("id")),
                         new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
-                        new SimpleObjectProperty(pConnection.rs.getString("reaction")),
+                        new SimpleStringProperty(pConnection.rs.getString("reaction")),
                         new SimpleStringProperty(pConnection.rs.getString("reportdate")),
                         new SimpleStringProperty(pConnection.rs.getString("reactiondate")),
                         listaVuota,
