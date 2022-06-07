@@ -3,12 +3,7 @@ package View.DoctorView;
 import Control.DoctorControl.PatientInfoController;
 import Model.*;
 import Model.Utils.Exceptions.NullStringException;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.property.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -17,13 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,20 +39,37 @@ public class PatientInfo {
         this.id = id;
     }
 
-    private class TableObject{
-        String id;
-        String reaction;
-        String reportDate;
-        String reactionDate;
-        String twoMonthsVaccinations;
+    public class TableObject{
+        private SimpleStringProperty id;
+        private SimpleStringProperty reaction;
+        private SimpleStringProperty reportDate;
+        private SimpleStringProperty reactionDate;
+        private SimpleStringProperty twoMonthsVaccinations;
 
-        private TableObject(String id, String reaction, String reportDate, String reactionDate, String twoMonthsVaccinations){
+        public TableObject(SimpleStringProperty id, SimpleStringProperty reaction, SimpleStringProperty reportDate,
+                           SimpleStringProperty reactionDate, SimpleStringProperty twoMonthsVaccinations){
             this.id = id;
             this.reaction = reaction;
             this.reportDate = reportDate;
             this.reactionDate = reactionDate;
             this.twoMonthsVaccinations = twoMonthsVaccinations;
         }
+
+        public String getId() { return id.get(); }
+        public SimpleStringProperty idProperty() { return id; }
+        public void setId(String id) { this.id.set(id); }
+        public String getReaction() { return reaction.get(); }
+        public SimpleStringProperty reactionProperty() { return reaction; }
+        public void setReaction(String reaction) { this.reaction.set(reaction); }
+        public String getReportDate() { return reportDate.get(); }
+        public SimpleStringProperty reportDateProperty() { return reportDate; }
+        public void setReportDate(String reportDate) { this.reportDate.set(reportDate); }
+        public String getReactionDate() { return reactionDate.get(); }
+        public SimpleStringProperty reactionDateProperty() { return reactionDate; }
+        public void setReactionDate(String reactionDate) { this.reactionDate.set(reactionDate); }
+        public String getTwoMonthsVaccinations() { return twoMonthsVaccinations.get(); }
+        public SimpleStringProperty twoMonthsVaccinationsProperty() { return twoMonthsVaccinations; }
+        public void setTwoMonthsVaccinations(String twoMonthsVaccinations) { this.twoMonthsVaccinations.set(twoMonthsVaccinations); }
     }
 
     public Parent getView() throws NullStringException {
@@ -114,52 +123,45 @@ public class PatientInfo {
 
 
         //Create the TableView for reports
-        TableView reportsInfo = new TableView<>();
-        TableColumn<Report, String> idColumn = new TableColumn<>("Codice report");
+        GridPane reportsInfo2 = new GridPane();
+        TableView reportsInfo = new TableView();
+        TableColumn<TableObject, String> idColumn = new TableColumn<>("Codice report");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setPrefWidth(100);
-        TableColumn<Report, String> reactionColumn = new TableColumn<>("Reazione");
+        TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
         reactionColumn.setCellValueFactory(new PropertyValueFactory<>("reaction"));
         reactionColumn.setPrefWidth(100);
-        TableColumn<Report, String> reactionDateColumn = new TableColumn<>("Data reazione");
-        reactionDateColumn.setCellValueFactory(new PropertyValueFactory<>("reactionDate"));
-        reactionDateColumn.setPrefWidth(100);
-        TableColumn<Report, String> reportDateColumn = new TableColumn<>("Data report");
+        TableColumn<TableObject, String> reportDateColumn = new TableColumn<>("Data report");
         reportDateColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
         reportDateColumn.setPrefWidth(100);
-/*
-        TableColumn<Report, String> vaccinationColumn = new TableColumn<>("Vaccinazioni ultimi due mesi");
-        vaccinationColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
+        TableColumn<TableObject, String> reactionDateColumn = new TableColumn<>("Data reazione");
+        reactionDateColumn.setCellValueFactory(new PropertyValueFactory<>("reactionDate"));
+        reactionDateColumn.setPrefWidth(100);
+        TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni due mesi precedenti alla reazione");
+        vaccinationColumn.setCellValueFactory(new PropertyValueFactory<>("twoMonthsVaccinations"));
         vaccinationColumn.setPrefWidth(300);
-*/
 
-        reportsInfo.getColumns().addAll(idColumn, reactionColumn, reactionDateColumn, reportDateColumn);
-
+        reportsInfo.getColumns().addAll(idColumn, reactionColumn, reportDateColumn, reactionDateColumn, vaccinationColumn);
         for (Report report : reports){
-/*            List<Vaccination> twoMonthsVaccinations = new ArrayList<>(controller.getPatientTwoMonthsVaccination(id));
-            String vaccinationString = twoMonthsVaccinations.stream().map(Vaccination::toString).collect(Collectors.joining("\n "));
-            System.out.println(vaccinationString);
-            //Reaction reaction = report.getReaction();
-            //System.out.println(reaction);
-            //String name = reaction.getName();
-            //System.out.println(name);
-            TableObject object = new TableObject(report.getId(), "name reaction", report.getReactionDate(), report.getReportDate(), "vaccinationString");
-            reportsInfo.getItems().add(object);*/
-            reportsInfo.getItems().add(report);
+            List<Vaccination> twoMonthsVaccinations = new ArrayList<>(controller.getPatientTwoMonthsVaccination(id, report.getReactionDate()));
+            System.out.println(twoMonthsVaccinations);
+            String vaccinationString = twoMonthsVaccinations.stream().map(Vaccination::toString).collect(Collectors.joining("\n"));
+            SimpleStringProperty vaccinationSimpleString = new SimpleStringProperty(vaccinationString);
+            TableObject obj = new TableObject(report.idProperty(), report.reactionProperty(), report.reportDateProperty(), report.reactionDateProperty(), vaccinationSimpleString);
+            reportsInfo.getItems().add(obj);
+            twoMonthsVaccinations.clear();
+            System.out.println(twoMonthsVaccinations);
         }
         reportsInfo.setPlaceholder(new Label("No rows to display"));
 
 
-        //Create the VBox
+        //Create the TabPane
         TabPane tabpane = new TabPane();
         Tab tab1 = new Tab("Informazioni personali", personalInfo);
         Tab tab2 = new Tab("Vaccinazioni", vaccinationsInfo);
         Tab tab3 = new Tab("Segnalazioni", reportsInfo);
         tabpane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-
-        tabpane.getTabs().add(tab1);
-        tabpane.getTabs().add(tab2);
-        tabpane.getTabs().add(tab3);
+        tabpane.getTabs().addAll(tab1, tab2, tab3);
 
         Button backButton = new Button();
         backButton.setText("Indietro");
