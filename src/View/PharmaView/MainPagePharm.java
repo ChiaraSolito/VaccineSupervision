@@ -1,11 +1,9 @@
 package View.PharmaView;
 
-import Control.DoctorControl.MainControllerDoc;
 import Control.FarmacologistControl.MainControllerPharm;
 import Model.Notice;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
-import View.DoctorView.MainPageDoc;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,10 +19,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import java.sql.SQLException;
 import java.util.List;
 
-import static javafx.geometry.Pos.*;
+import static javafx.geometry.Pos.CENTER_LEFT;
+import static javafx.geometry.Pos.CENTER_RIGHT;
 
 public class MainPagePharm extends Parent {
     private final User model;
@@ -151,7 +149,6 @@ public class MainPagePharm extends Parent {
         List<Notice> notices = controller.getUnreadNotices();
 
         Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-
         if (!notices.isEmpty()) {
             for (Notice notice : notices) {
 

@@ -8,6 +8,7 @@ import View.PharmaView.MainPagePharm;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,6 @@ public class MainControllerPharm {
     public List<Notice> getUnreadNotices(){
         noticesDAO = new NoticeDAOImpl();
         List<Notice> notices = new ArrayList<>();
-
         try{
             notices = noticesDAO.getNotReadNotices(model.getUsername());
         } catch (NullStringException nse){

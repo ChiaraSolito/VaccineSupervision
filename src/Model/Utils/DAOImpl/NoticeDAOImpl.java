@@ -64,16 +64,15 @@ public class NoticeDAOImpl implements NoticeDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("SELECT R.noticeid, N.content, N.noticedate FROM readnotice R " +
-                    "JOIN notice N ON N.id = R.noticeid " +
-                    "WHERE R.noticeid NOT IN (" +
-                    "SELECT R1.noticeid" +
-                    "    FROM readnotice R1 " +
-                    "    WHERE pharmid = '" + pharm + "')");
+            pConnection.rs = pConnection.statement.executeQuery("SELECT N.id, N.content, N.noticedate FROM notice N " +
+                    "WHERE N.id NOT IN (" +
+                    "SELECT R1.noticeid " +
+                    "FROM readnotice R1 " +
+                    "WHERE R1.pharmid = '" + pharm + "')");
 
             while (pConnection.rs.next()) {
                 notRead.add(new Notice(
-                        new SimpleStringProperty(pConnection.rs.getString("noticeid")),
+                        new SimpleStringProperty(pConnection.rs.getString("id")),
                         new SimpleStringProperty(pConnection.rs.getString("content")),
                         new SimpleStringProperty(pConnection.rs.getString("noticedate"))
                 ));
@@ -101,7 +100,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("INSERT INTO readnotice " +
+            pConnection.statement.executeUpdate("INSERT INTO readnotice " +
                     "VALUES( '" + notice + "', '" + pharm + "' )"
             );
         } catch (SQLException sqle) {
