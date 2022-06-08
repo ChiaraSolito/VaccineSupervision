@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class VaccinationDAOImpl implements VaccinationDAO {
@@ -17,16 +16,16 @@ public class VaccinationDAOImpl implements VaccinationDAO {
     DataBaseConnection pConnection;
 
     @Override
-    public void createVaccination(String idPatient, String vaccine, String typeSomministration, String vaccinationSite, Date vaccinationDate) throws NullStringException {
+    public void createVaccination(String idPatient, String vaccine, String typeSomministration, String vaccinationSite, String vaccinationDate) throws NullStringException {
 
-        if (idPatient.isEmpty() || vaccine.isEmpty() || typeSomministration.isEmpty() || vaccinationSite.isEmpty()) {
+        if (idPatient.isEmpty() || vaccine.isEmpty() || typeSomministration.isEmpty() || vaccinationSite.isEmpty() || vaccinationDate.isEmpty()) {
             throw new NullStringException();
         }
 
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
 
-        try{
+        try {
             pConnection.statement = pConnection.connection.createStatement();
             pConnection.statement.executeUpdate("INSERT INTO vaccination " +
                     "VALUES('" + idPatient + "', '" + vaccine + "', '" + typeSomministration + "', '" + vaccinationSite + "', ' " + vaccinationDate + " ' )"

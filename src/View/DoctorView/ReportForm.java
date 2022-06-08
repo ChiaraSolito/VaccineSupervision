@@ -1,10 +1,7 @@
 package View.DoctorView;
 
 import Control.DoctorControl.ReactionFormController;
-import Model.Patient;
-import Model.Reaction;
-import Model.RiskFactor;
-import Model.User;
+import Model.*;
 import Model.Utils.Exceptions.NullStringException;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -23,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +34,7 @@ public class ReportForm {
 
     private static Patient patient;
     private static Reaction reaction;
+    private static Report report;
 
     /*
     Costruttore
@@ -44,6 +43,9 @@ public class ReportForm {
         this.model = model;
         this.reportDocStage = stage;
         controller = new ReactionFormController(model);
+        patient = new Patient();
+        reaction = new Reaction();
+        report = new Report();
     }
 
     Parent getView() throws NullStringException {
@@ -175,6 +177,7 @@ public class ReportForm {
         ScrollPane sp1 = new ScrollPane();
         sp1.setContent(layout1);
 
+        //SECOND TAB
         BorderPane layout2 = new BorderPane();
 
         //Header
@@ -182,11 +185,22 @@ public class ReportForm {
         Text infoMenuReaction2 = new Text("scegliere la modalità di inserimento");
         VBox infoMenuReaction = new VBox(10, infoMenuReaction1, infoMenuReaction2);
 
-        //Left menu: patient info
+        //Second tab layout
         // First option: insert new reaction
         Button newReactiontMenu = new Button("Inserisci nuova reazione");
         //Hidden VBoxes for new Reaction
         Reaction newReaction = new Reaction();
+
+        //Date is always visible
+        DatePicker datePickerR = new DatePicker();
+        datePickerR.setOnAction(e -> {
+            LocalDate date = datePickerR.getValue();
+            report.setReactionDate(date.toString());
+        });
+        VBox dateReact = new VBox(20, new Text("Data della reazione:"), datePickerR);
+
+
+        //Other text fields
         TextField nameFieldReact = createBoundTextField(newReaction.nameProperty());
         VBox nameV = new VBox(10, new Text("Nome: "), nameFieldReact);
         TextField descriptionFieldReact = createBoundTextField(newReaction.descriptionProperty());
@@ -226,9 +240,10 @@ public class ReportForm {
             group2.selectToggle(null);
         });
 
+        HBox priorInfo = new HBox(20, dateReact, infoMenuReaction);
         //On top are the informations
-        layout2.setTop(infoMenuReaction);
-        BorderPane.setMargin(infoMenuReaction, insets);
+        layout2.setTop(priorInfo);
+        BorderPane.setMargin(priorInfo, insets);
         //Center right and left the two buttons
         BorderPane.setAlignment(totalMenuP, Pos.CENTER_LEFT);
         layout2.setLeft(totalMenuP);
@@ -242,15 +257,73 @@ public class ReportForm {
         sp2.setContent(layout2);
 
 
+        //THIRD TAB
+        BorderPane layout3 = new BorderPane();
+
+        //Header
+        Text infoMenuVaccination = new Text("Inserimento dei dati riguardanti le vaccinazioni: ");
+
+        //Third tab layout
+        //Hidden VBoxes for new Vaccination
+        // First option: insert new reaction
+        Button vaccinationsButton = new Button("Inserisci nuova vaccinazione");
+        List<Vaccination> vaccinations = new ArrayList<>();
+
+        Vaccination newVaccination = new Vaccination();
+        TextField vaccineField = createBoundTextField(newVaccination.vaccineProperty());
+        VBox vaccineV = new VBox(10, new Text("Nome: "), vaccineField);
+        TextField typeSomministrationField = createBoundTextField(newVaccination.typeSomministrationProperty());
+        VBox typeV = new VBox(10, new Text("Tipo della Somministrazione: "), typeSomministrationField);
+        TextField siteField = createBoundTextField(newVaccination.vaccinationSiteProperty());
+        VBox siteV = new VBox(10, new Text("Sito della vaccinazione: "), siteField);
+        DatePicker datePickerV = new DatePicker();
+        datePickerV.setOnAction(e -> {
+            LocalDate date = datePickerV.getValue();
+            newVaccination.setVaccinationDate(date.toString());
+        });
+        VBox dateVacc = new VBox(20, new Text("Data della vaccinazione:"), datePickerV);
+        Button submitVacc = new Button("Inserisci");
+
+        //insert new risk and clears textfields
+        submitVacc.setOnAction(e -> {
+            //controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
+            Vaccination vaccination = new Vaccination();
+            vaccination.setVaccine(newVaccination.getVaccine());
+            vaccination.setVaccinationDate(newVaccination.getVaccinationDate());
+            vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
+            vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
+            vaccinations.add(vaccination);
+            vaccineField.clear();
+            typeSomministrationField.clear();
+            siteField.clear();
+            datePickerV.cancelEdit();
+        });
+
+        //Get everything in a VBox
+        VBox vaccinationVBOX = new VBox(10, vaccineV, typeV, siteV, dateVacc, submitVacc);
+        vaccinationVBOX.setPrefWidth(300);
+
+        //On top are the informations
+        layout3.setTop(infoMenuVaccination);
+        BorderPane.setMargin(infoMenuVaccination, insets);
+        //Center right and left the two buttons
+        BorderPane.setAlignment(vaccinationVBOX, Pos.CENTER);
+        layout3.setCenter(vaccinationVBOX);
+        BorderPane.setMargin(vaccinationVBOX, insets);
+        vaccinationVBOX.setVisible(true);
+
+        ScrollPane sp3 = new ScrollPane();
+        sp3.setContent(layout3);
+
         //Create the TabPane
         TabPane tabpane = new TabPane();
         Tab tab1 = new Tab("Dati Paziente", sp1);
         Tab tab2 = new Tab("Dati Reazione", sp2);
-        //Tab tab3 = new Tab("Dati vaccinazione", sp3);
+        Tab tab3 = new Tab("Dati vaccinazione", sp3);
         tabpane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabpane.getTabs().add(tab1);
         tabpane.getTabs().add(tab2);
-        //tabpane.getTabs().add(tab3);
+        tabpane.getTabs().add(tab3);
 
         Button backButton = new Button();
         backButton.setText("Indietro");
@@ -268,39 +341,43 @@ public class ReportForm {
         //Create button to submit
         Button submitAll = new Button("Conferma invio");
 
+
         //Controls to submit everything in the correct way
         submitAll.setOnAction(e -> {
+            boolean flagPatient;
+            boolean flagReaction;
             if (group.getSelectedToggle() == null) {
+                flagPatient = true;
                 if (birthYearTextField.getText().isEmpty() || provinceTextField.getText().isEmpty() || professionTextField.getText().isEmpty()) {
-                    Dialog dialog = new Alert(Alert.AlertType.ERROR);
-                    dialog.setTitle("Errore!");
-                    dialog.setHeaderText("Hai dimenticato qualcosa.");
-                    dialog.setContentText("Inserisci tutti i dati necessari prima di andare avanti");
-                    dialog.showAndWait();
+                    displayErrorMessage();
                 } else {
                     patient = new Patient(new SimpleStringProperty(birthYearTextField.getText()), new SimpleStringProperty(provinceTextField.getText()),
                             new SimpleStringProperty(professionTextField.getText()), addedRisks);
                 }
             } else {
-                if (group2.getSelectedToggle() == null) {
-                    if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
-                            || gravityFieldReact.getText().isEmpty()) {
-                        Dialog dialog = new Alert(Alert.AlertType.ERROR);
-                        dialog.setTitle("Errore!");
-                        dialog.setHeaderText("Hai dimenticato qualcosa.");
-                        dialog.setContentText("Inserisci tutti i dati necessari prima di andare avanti");
-                        dialog.showAndWait();
+                flagPatient = false;
+            }
+            if (group2.getSelectedToggle() == null) {
+                flagReaction = true;
+                if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
+                        || gravityFieldReact.getText().isEmpty() || datePickerR.getValue().equals(null)) {
+                    displayErrorMessage();
+                } else {
+                    if (vaccineField.getText().isEmpty() || typeSomministrationField.getText().isEmpty() ||
+                            siteField.getText().isEmpty() || datePickerV.getValue().equals(null)) {
                     } else {
-                        if (displayConfMessage()) {
+                        if (displayConfMessage().getResult() == ButtonType.OK) {
                             reaction = new Reaction(new SimpleStringProperty(nameFieldReact.getText()),
                                     new SimpleIntegerProperty(Integer.valueOf(gravityFieldReact.getText())), new SimpleStringProperty(descriptionField.getText()));
-                            //Report report = new Report(patient, reaction, );
+                            controller.createReport(patient, reaction, vaccinations, "CURRENT_DATE", flagPatient, flagReaction);
+                            System.out.println(patient.getProfession() + reaction.getName() + vaccinations + flagPatient + flagReaction);
                         }
                     }
-                } else {
-                    if (displayConfMessage()) {
-
-                    }
+                }
+            } else {
+                flagReaction = false;
+                if (displayConfMessage().getResult() == ButtonType.OK) {
+                    controller.createReport(patient, reaction, vaccinations, "CURRENT_DATE", flagPatient, flagReaction);
                 }
             }
         });
@@ -325,16 +402,21 @@ public class ReportForm {
         return results;
     }
 
-    private boolean displayConfMessage() {
+    private Dialog displayConfMessage() {
         Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
         dialog.setTitle("Sei sicuro di voler continuare?");
         dialog.setHeaderText("Dottore: " + model.getUsername());
         dialog.setContentText("Stai inserendo un report, questa azione non è reversibile.");
         dialog.showAndWait();
-        if (dialog.getResult() == ButtonType.YES) {
-            return true;
-        } else {
-            return false;
-        }
+
+        return dialog;
+    }
+
+    private void displayErrorMessage() {
+        Dialog dialog = new Alert(Alert.AlertType.ERROR);
+        dialog.setTitle("Errore!");
+        dialog.setHeaderText("Hai dimenticato qualcosa.");
+        dialog.setContentText("Inserisci tutti i dati necessari prima di andare avanti");
+        dialog.showAndWait();
     }
 }

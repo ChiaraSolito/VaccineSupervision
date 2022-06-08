@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ReportDAOImpl implements ReportDAO {
@@ -73,9 +72,9 @@ public class ReportDAOImpl implements ReportDAO {
     }
 
     @Override
-    public void createReport(String idPatient, String reactionName, Date reactionDate, String vaccination, String doctor) throws NullStringException {
+    public void createReport(String idPatient, String reactionName, String reactionDate, String doctor) throws NullStringException {
 
-        if (idPatient.isEmpty() || reactionName.isEmpty() || vaccination.isEmpty() || doctor.isEmpty() ) {
+        if (idPatient.isEmpty() || reactionName.isEmpty() || reactionDate.isEmpty() || doctor.isEmpty()) {
             throw new NullStringException();
         }
 

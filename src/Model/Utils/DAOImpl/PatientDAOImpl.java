@@ -184,33 +184,32 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public void createPatient(String birthYear, String province, String profession, List<RiskFactor> risk_factor) throws NullStringException {
+    public String createPatient(String birthYear, String province, String profession, List<RiskFactor> risk_factor) throws NullStringException {
 
-        if (birthYear.isEmpty() || province.isEmpty() || profession.isEmpty() || risk_factor.isEmpty()){
+        if (birthYear.isEmpty() || province.isEmpty() || profession.isEmpty() || risk_factor.isEmpty()) {
             throw new NullStringException();
         }
 
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
+        String idCurrent = "";
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
             pConnection.statement.executeUpdate("INSERT INTO Patient " +
-                    "VALUES( DEFAULT , '" + birthYear + "', " + province + "', " + profession + "')");
+                    "VALUES( DEFAULT , '" + birthYear + "', '" + province + "', '" + profession + "')");
 
-            pConnection.rs = pConnection.statement.executeQuery("SELECT P.idpatient " +
-                    "FROM patient P WHERE P.idPatient = nextval(P.idpatient) - 1");
+            pConnection.rs = pConnection.statement.executeQuery("SELECT MAX(P.idpatient) " +
+                    "FROM patient P");
 
-            String idCurrent = "";
-
-            while(pConnection.rs.next()){
-                idCurrent = pConnection.rs.getString("P.idPatient");
+            while (pConnection.rs.next()) {
+                idCurrent = pConnection.rs.getString("idPatient");
             }
 
-            for (RiskFactor risk : risk_factor)  {
-                pConnection.rs = pConnection.statement.executeQuery( "SELECT true WHERE EXISTS " +
+            for (RiskFactor risk : risk_factor) {
+                pConnection.rs = pConnection.statement.executeQuery("SELECT true WHERE EXISTS " +
                         "(SELECT name FROM RiskFactor WHERE name = '" + risk.getName() + "')");
-                if(pConnection.rs.next()) {
+                if (pConnection.rs.next()) {
                     pConnection.statement.executeUpdate("INSERT INTO PatientRisk " +
                             "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
                 } else {
@@ -227,7 +226,7 @@ public class PatientDAOImpl implements PatientDAO {
         } finally {
             pConnection.closeConnection();
         }
-
+        return idCurrent;
     }
 
     @Override

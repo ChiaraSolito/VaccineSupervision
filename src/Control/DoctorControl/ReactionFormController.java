@@ -1,12 +1,7 @@
 package Control.DoctorControl;
 
-import Model.Patient;
-import Model.Reaction;
-import Model.RiskFactor;
-import Model.User;
-import Model.Utils.DAOImpl.PatientDAOImpl;
-import Model.Utils.DAOImpl.ReactionDAOImpl;
-import Model.Utils.DAOImpl.RiskFactorDAOImpl;
+import Model.*;
+import Model.Utils.DAOImpl.*;
 import Model.Utils.Exceptions.NullStringException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +23,7 @@ public class ReactionFormController {
         try {
             patients = FXCollections.observableArrayList(patientDAO.getAllPatients(model.getUsername()));
         } catch (NullStringException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error patient: " + e.getMessage());
         }
 
         return patients;
@@ -49,7 +44,7 @@ public class ReactionFormController {
         try {
             riskDAO.createRiskFactor(name, description, riskLevel);
         } catch (NullStringException exc) {
-            System.out.println("Error: " + exc.getMessage());
+            System.out.println("Error risk null: " + exc.getMessage());
         }
 
     }
@@ -82,7 +77,7 @@ public class ReactionFormController {
         try {
             risk = riskDAO.getRisk(name);
         } catch (NullStringException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error risk null: " + e.getMessage());
         }
         return risk;
     }
@@ -94,8 +89,44 @@ public class ReactionFormController {
         try {
             reaction = reactionDAO.getReaction(name);
         } catch (NullStringException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error reaction null: " + e.getMessage());
         }
         return reaction;
+    }
+
+    public void createReport(Patient patient, Reaction reaction, List<Vaccination> vaccinations, String reportDate, boolean flagPatient, boolean flagReaction) {
+        ReportDAOImpl reportDAO = new ReportDAOImpl();
+        PatientDAOImpl patientDAO = new PatientDAOImpl();
+        ReactionDAOImpl reactionDAO = new ReactionDAOImpl();
+        VaccinationDAOImpl vaccinationDAO = new VaccinationDAOImpl();
+        String idPatient = patient.getIdPatient();
+
+        if (flagPatient) {
+            try {
+                idPatient = patientDAO.createPatient(patient.getBirthYear(), patient.getProvince(), patient.getProfession(), patient.getAllRiskFactor());
+                System.out.println(idPatient);
+            } catch (NullStringException e) {
+                System.out.println("Error idpatient null: " + e.getMessage());
+            }
+        }
+        if (flagReaction) {
+            try {
+                reactionDAO.createReaction(reaction.getName(), reaction.getGravity(), reaction.getDescription());
+            } catch (NullStringException e) {
+                System.out.println("Error reaction null: " + e.getMessage());
+            }
+        }
+        for (Vaccination vaccination : vaccinations) {
+            try {
+                vaccinationDAO.createVaccination(idPatient, vaccination.getVaccine(), vaccination.getTypeSomministration(), vaccination.getVaccinationSite(), vaccination.getVaccinationDate());
+            } catch (NullStringException e) {
+                System.out.println("Error vaccination null: " + e.getMessage());
+            }
+        }
+        try {
+            reportDAO.createReport(idPatient, reaction.getName(), reportDate, model.getUsername());
+        } catch (NullStringException e) {
+            System.out.println("Error report null: " + e.getMessage());
+        }
     }
 }
