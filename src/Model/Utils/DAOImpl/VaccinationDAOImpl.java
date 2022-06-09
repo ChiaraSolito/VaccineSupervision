@@ -90,9 +90,9 @@ public class VaccinationDAOImpl implements VaccinationDAO {
         try {
 
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
                     "FROM vaccination V JOIN Report R ON R.idpatient = V.idpatient " +
-                    "WHERE V.idpatient = '" + idPatient + "'" +
+                    "WHERE V.idpatient = '" + idPatient + "' " +
                     "AND V.vaccinationdate BETWEEN date '" + reactionDate + "' - 60 AND date '" + reactionDate + "'");
 
             while (pConnection.rs.next()) {

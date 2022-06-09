@@ -143,14 +143,11 @@ public class PatientInfo {
 
         reportsInfo.getColumns().addAll(idColumn, reactionColumn, reportDateColumn, reactionDateColumn, vaccinationColumn);
         for (Report report : reports){
-            List<Vaccination> twoMonthsVaccinations = new ArrayList<>(controller.getPatientTwoMonthsVaccination(id, report.getReactionDate()));
-            System.out.println(twoMonthsVaccinations);
+            List<Vaccination> twoMonthsVaccinations = controller.getPatientTwoMonthsVaccination(id, report.getReactionDate());
             String vaccinationString = twoMonthsVaccinations.stream().map(Vaccination::toString).collect(Collectors.joining("\n"));
             SimpleStringProperty vaccinationSimpleString = new SimpleStringProperty(vaccinationString);
             TableObject obj = new TableObject(report.idProperty(), report.reactionProperty(), report.reportDateProperty(), report.reactionDateProperty(), vaccinationSimpleString);
             reportsInfo.getItems().add(obj);
-            twoMonthsVaccinations.clear();
-            System.out.println(twoMonthsVaccinations);
         }
         reportsInfo.setPlaceholder(new Label("No rows to display"));
 
