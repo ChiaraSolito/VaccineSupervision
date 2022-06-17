@@ -36,7 +36,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 
             while (pConnection.rs.next()) {
                 notices.add(new Notice(
-                        new SimpleStringProperty(pConnection.rs.getString("id")),
+                        new SimpleStringProperty(pConnection.rs.getString("noticeid")),
                         new SimpleStringProperty(pConnection.rs.getString("content")),
                         new SimpleStringProperty(pConnection.rs.getString("noticedate"))
                 ));

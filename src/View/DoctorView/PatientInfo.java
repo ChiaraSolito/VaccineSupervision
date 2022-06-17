@@ -123,7 +123,6 @@ public class PatientInfo {
 
 
         //Create the TableView for reports
-        GridPane reportsInfo2 = new GridPane();
         TableView reportsInfo = new TableView();
         TableColumn<TableObject, String> idColumn = new TableColumn<>("Codice report");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));

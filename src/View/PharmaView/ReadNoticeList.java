@@ -3,6 +3,7 @@ package View.PharmaView;
 import Control.DoctorControl.PatientListController;
 import Control.FarmacologistControl.ReadNoticeListController;
 import Model.Notice;
+import Model.Report;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
@@ -45,20 +46,28 @@ public class ReadNoticeList extends Parent {
 
 
     public Parent getView() throws NullStringException {
+        List<Notice> notices = new ArrayList<>(controller.getReadNotice());
+
         // Create the BorderPane
         BorderPane layout = new BorderPane();
 
         TableView noticeList = new TableView<>();
         TableColumn<Notice, String> idColumn = new TableColumn<>("Codice avviso");
-        idColumn.setPrefWidth(175);
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setPrefWidth(125);
         TableColumn<Notice, String> contentColumn = new TableColumn<>("Content");
-        contentColumn.setPrefWidth(175);
-        //TableColumn<Notice, String> siteColumn = new TableColumn<>("Data avviso");
-        //siteColumn.setPrefWidth(175);
+        contentColumn.setCellValueFactory(new PropertyValueFactory<>("content"));
+        contentColumn.setPrefWidth(450);
+        TableColumn<Notice, String> dateColumn = new TableColumn<>("Data avviso");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("noticeDate"));
+        dateColumn.setPrefWidth(125);
 
-        noticeList.getColumns().addAll(idColumn, contentColumn);
+        noticeList.getColumns().addAll(idColumn, dateColumn, contentColumn);
+        for (Notice notice : notices) {
+            noticeList.getItems().add(notice);
+        }
         noticeList.setPlaceholder(new Label("No rows to display"));
-
+        layout.setTop(noticeList);
 
         Button backButton = new Button();
         backButton.setText("Indietro");
