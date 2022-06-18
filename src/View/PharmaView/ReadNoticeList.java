@@ -13,6 +13,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -23,6 +24,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -46,12 +48,12 @@ public class ReadNoticeList extends Parent {
 
 
     public Parent getView() throws NullStringException {
-        List<Notice> notices = new ArrayList<>(controller.getReadNotice());
+        ObservableList<Notice> notices = FXCollections.observableArrayList(controller.getReadNotice());
+        //List<Notice> notices = new ArrayList<>(controller.getReadNotice());
 
         // Create the BorderPane
         BorderPane layout = new BorderPane();
-
-        TableView noticeList = new TableView<>();
+        TableView<Notice> noticeList = new TableView<>();
         TableColumn<Notice, String> idColumn = new TableColumn<>("Codice avviso");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setPrefWidth(125);
@@ -62,12 +64,29 @@ public class ReadNoticeList extends Parent {
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("noticeDate"));
         dateColumn.setPrefWidth(125);
 
+        contentColumn.setCellFactory(new Callback<TableColumn<Notice,String>, TableCell<Notice,String>>() {
+            @Override
+            public TableCell<Notice, String> call( TableColumn<Notice, String> param) {
+                final TableCell<Notice, String> cell = new TableCell<Notice, String>() {
+                    private Text text;
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!isEmpty()) {
+                            text = new Text(item.toString());
+                            text.setWrappingWidth(425); // Setting the wrapping width to the Text
+                            setGraphic(text);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+
         noticeList.getColumns().addAll(idColumn, dateColumn, contentColumn);
-        for (Notice notice : notices) {
-            noticeList.getItems().add(notice);
-        }
+        noticeList.setItems(notices);
         noticeList.setPlaceholder(new Label("No rows to display"));
-        layout.setTop(noticeList);
+        layout.setCenter(noticeList);
 
         Button backButton = new Button();
         backButton.setText("Indietro");
