@@ -39,39 +39,6 @@ public class PatientInfo {
         this.id = id;
     }
 
-    public class TableObject{
-        private SimpleStringProperty id;
-        private SimpleStringProperty reaction;
-        private SimpleStringProperty reportDate;
-        private SimpleStringProperty reactionDate;
-        private SimpleStringProperty twoMonthsVaccinations;
-
-        public TableObject(SimpleStringProperty id, SimpleStringProperty reaction, SimpleStringProperty reportDate,
-                           SimpleStringProperty reactionDate, SimpleStringProperty twoMonthsVaccinations){
-            this.id = id;
-            this.reaction = reaction;
-            this.reportDate = reportDate;
-            this.reactionDate = reactionDate;
-            this.twoMonthsVaccinations = twoMonthsVaccinations;
-        }
-
-        public String getId() { return id.get(); }
-        public SimpleStringProperty idProperty() { return id; }
-        public void setId(String id) { this.id.set(id); }
-        public String getReaction() { return reaction.get(); }
-        public SimpleStringProperty reactionProperty() { return reaction; }
-        public void setReaction(String reaction) { this.reaction.set(reaction); }
-        public String getReportDate() { return reportDate.get(); }
-        public SimpleStringProperty reportDateProperty() { return reportDate; }
-        public void setReportDate(String reportDate) { this.reportDate.set(reportDate); }
-        public String getReactionDate() { return reactionDate.get(); }
-        public SimpleStringProperty reactionDateProperty() { return reactionDate; }
-        public void setReactionDate(String reactionDate) { this.reactionDate.set(reactionDate); }
-        public String getTwoMonthsVaccinations() { return twoMonthsVaccinations.get(); }
-        public SimpleStringProperty twoMonthsVaccinationsProperty() { return twoMonthsVaccinations; }
-        public void setTwoMonthsVaccinations(String twoMonthsVaccinations) { this.twoMonthsVaccinations.set(twoMonthsVaccinations); }
-    }
-
     public Parent getView() throws NullStringException {
         Patient patient = controller.getPatient(id);
         List<Report> reports = new ArrayList<>(controller.getPatientReports(id));
@@ -181,4 +148,36 @@ public class PatientInfo {
         return layout;
     }
 
+    public class TableObject{
+        private SimpleStringProperty id;
+        private SimpleStringProperty reaction;
+        private SimpleStringProperty reportDate;
+        private SimpleStringProperty reactionDate;
+        private SimpleStringProperty twoMonthsVaccinations;
+
+        public TableObject(SimpleStringProperty id, SimpleStringProperty reaction, SimpleStringProperty reportDate,
+                           SimpleStringProperty reactionDate, SimpleStringProperty twoMonthsVaccinations){
+            this.id = id;
+            this.reaction = reaction;
+            this.reportDate = reportDate;
+            this.reactionDate = reactionDate;
+            this.twoMonthsVaccinations = twoMonthsVaccinations;
+        }
+
+        public String getId() { return id.get(); }
+        public SimpleStringProperty idProperty() { return id; }
+        public void setId(String id) { this.id.set(id); }
+        public String getReaction() { return reaction.get(); }
+        public SimpleStringProperty reactionProperty() { return reaction; }
+        public void setReaction(String reaction) { this.reaction.set(reaction); }
+        public String getReportDate() { return reportDate.get(); }
+        public SimpleStringProperty reportDateProperty() { return reportDate; }
+        public void setReportDate(String reportDate) { this.reportDate.set(reportDate); }
+        public String getReactionDate() { return reactionDate.get(); }
+        public SimpleStringProperty reactionDateProperty() { return reactionDate; }
+        public void setReactionDate(String reactionDate) { this.reactionDate.set(reactionDate); }
+        public String getTwoMonthsVaccinations() { return twoMonthsVaccinations.get(); }
+        public SimpleStringProperty twoMonthsVaccinationsProperty() { return twoMonthsVaccinations; }
+        public void setTwoMonthsVaccinations(String twoMonthsVaccinations) { this.twoMonthsVaccinations.set(twoMonthsVaccinations); }
+    }
 }

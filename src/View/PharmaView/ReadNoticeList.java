@@ -49,7 +49,6 @@ public class ReadNoticeList extends Parent {
 
     public Parent getView() throws NullStringException {
         ObservableList<Notice> notices = FXCollections.observableArrayList(controller.getReadNotice());
-        //List<Notice> notices = new ArrayList<>(controller.getReadNotice());
 
         // Create the BorderPane
         BorderPane layout = new BorderPane();
