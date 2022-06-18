@@ -4,13 +4,10 @@ import Model.ControlPhase;
 import Model.DataBase.DataBaseConnection;
 import Model.Utils.DAO.ControlPhaseDAO;
 import Model.Utils.Exceptions.NullStringException;
-import Model.Vaccination;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ControlPhaseDAOImpl implements ControlPhaseDAO {
@@ -81,7 +78,7 @@ public class ControlPhaseDAOImpl implements ControlPhaseDAO {
     }
 
     @Override
-    public void proposeControlPhase(Date date, String vaccine, String pharmacologist) throws NullStringException {
+    public void proposeControlPhase(String date, String vaccine, String pharmacologist) throws NullStringException {
 
         if (vaccine.isEmpty() || pharmacologist.isEmpty()) {
             throw new NullStringException();
@@ -92,8 +89,8 @@ public class ControlPhaseDAOImpl implements ControlPhaseDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("INSERT INTO controlphase " +
-                    "VALUES('" + vaccine + "', '" + pharmacologist + "', '" + date + "')"
+            pConnection.statement.executeUpdate("INSERT INTO controlphase " +
+                    "VALUES('" + pharmacologist + "', '" + vaccine + "', '" + date + "')"
             );
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());

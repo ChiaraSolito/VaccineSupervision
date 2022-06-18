@@ -31,9 +31,7 @@ public class ReactionFormController {
 
     public List<String> getAllExistingRisks() {
         RiskFactorDAOImpl riskDAO = new RiskFactorDAOImpl();
-        ObservableList<String> risks;
-
-        risks = FXCollections.observableArrayList(riskDAO.getAllExistingRisks());
+        ObservableList<String> risks = FXCollections.observableArrayList(riskDAO.getAllExistingRisks());
 
         return risks;
     }

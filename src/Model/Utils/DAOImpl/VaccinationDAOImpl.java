@@ -104,7 +104,7 @@ public class VaccinationDAOImpl implements VaccinationDAO {
                         new SimpleStringProperty(pConnection.rs.getString("vaccinationdate"))
                 ));
             }
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
             sqle.printStackTrace();
         } finally {
@@ -112,5 +112,30 @@ public class VaccinationDAOImpl implements VaccinationDAO {
         }
 
         return vaccinations;
+    }
+
+    public List<String> getAllVaccines() {
+
+        List<String> vaccines = new ArrayList<>();
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT vaccine " +
+                    "FROM vaccination ");
+            while (pConnection.rs.next()) {
+                vaccines.add(pConnection.rs.getString("vaccine"));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return vaccines;
     }
 }

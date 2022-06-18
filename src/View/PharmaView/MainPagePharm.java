@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -76,37 +77,53 @@ public class MainPagePharm extends Parent {
         //Lista pazienti
         Button button1 = new Button();
         ImageView icon1 = new ImageView("pic/clipboardIcon.png");
-        Text text=new Text("Accedi a Segnalazioni");
+        Text text = new Text("Accedi a Segnalazioni");
         button1 = createButton(button1, icon1, text);
+        button1.setPrefWidth(75);
+        button1.setTextAlignment(TextAlignment.CENTER);
 
         //
         Button button2 = new Button();
         ImageView icon2 = new ImageView("pic/notice.png");
-        Text text2=new Text("Avvisi già letti");
+        Text text2 = new Text("Avvisi già letti");
         button2 = createButton(button2, icon2, text2);
+        button2.setPrefWidth(75);
+        button2.setTextAlignment(TextAlignment.CENTER);
         button2.setOnAction(e -> {
             try {
                 mainPharmStage.setScene(new Scene(new ReadNoticeList(mainPharmStage, model).getView(), 700, 400));
                 mainPharmStage.setTitle("Lista avvisi");
                 mainPharmStage.setResizable(false);
                 mainPharmStage.show();
-            } catch (NullStringException ex){
+            } catch (NullStringException ex) {
                 throw new RuntimeException(ex);
             }
         });
 
         Button button3 = new Button();
         ImageView icon3 = new ImageView("pic/control.png");
-        Text text3=new Text("Attiva fase controllo");
+        Text text3 = new Text("Proponi fase controllo");
         button3 = createButton(button3, icon3, text3);
-        //inserire il setOnAction per la fase controllo
+        button3.setPrefWidth(75);
+        button3.setTextAlignment(TextAlignment.CENTER);
+        //setOnAction per la fase controllo
+        button3.setOnAction(e -> {
+            try {
+                mainPharmStage.setScene(new Scene(new ControlPhaseForm(mainPharmStage, model).getView(), 700, 400));
+                mainPharmStage.setTitle("Proponi fase controllo");
+                mainPharmStage.setResizable(false);
+                mainPharmStage.show();
+            } catch (NullStringException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
         //ListView<String> listView = new ListView<String>(menu);
 
         HBox layout = new HBox(button1, button2, button3);
         VBox menu = new VBox(20, actions, layout);
-        layout.setSpacing(20);
+        layout.setSpacing(10);
         layout.setPrefWidth(300);
         menu.setPrefWidth(300);
 
