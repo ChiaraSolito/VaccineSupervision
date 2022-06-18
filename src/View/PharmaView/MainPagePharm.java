@@ -82,6 +82,16 @@ public class MainPagePharm extends Parent {
         button1 = createButton(button1, icon1, text);
         button1.setPrefWidth(75);
         button1.setTextAlignment(TextAlignment.CENTER);
+        button1.setOnAction(e -> {
+            try {
+                mainPharmStage.setScene(new Scene(new ReportList(mainPharmStage, model).getView(), 700, 400));
+                mainPharmStage.setTitle("Lista segnalazioni");
+                mainPharmStage.setResizable(false);
+                mainPharmStage.show();
+            } catch (NullStringException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         //
         Button button2 = new Button();

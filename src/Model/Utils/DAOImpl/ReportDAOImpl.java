@@ -1,6 +1,7 @@
 package Model.Utils.DAOImpl;
 
 import Model.DataBase.DataBaseConnection;
+import Model.Patient;
 import Model.Report;
 import Model.Utils.DAO.ReportDAO;
 import Model.Utils.Exceptions.NullStringException;
@@ -47,9 +48,10 @@ public class ReportDAOImpl implements ReportDAO {
             }
 
             for (Report r : reports) {
+                String id = r.getPatient().getIdPatient();
                 pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
                         "FROM Vaccination V JOIN Report R ON R.idpatient = V.idpatient " +
-                        "WHERE R.idpatient = '" + r.getPatient() + "' AND V.vaccinationdate BETWEEN R.reactiondate - 60 AND R.reactiondate");
+                        "WHERE R.idpatient = '" + id + "' AND V.vaccinationdate BETWEEN R.reactiondate - 60 AND R.reactiondate");
 
                 while (pConnection.rs.next()) {
                     r.addVaccination(new Vaccination(
