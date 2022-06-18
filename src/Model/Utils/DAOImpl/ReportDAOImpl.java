@@ -80,11 +80,16 @@ public class ReportDAOImpl implements ReportDAO {
 
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
+        int idReport = 0;
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT max(id) FROM report");
+            while (pConnection.rs.next()) {
+                idReport = pConnection.rs.getInt("max") + 1;
+            }
             pConnection.statement.executeUpdate("INSERT INTO report " +
-                    "VALUES( DEFAULT , CURRENT_DATE, '" + reactionDate + "', '" + reactionName + "', '" + idPatient + "', '" + doctor + "')"
+                    "VALUES( DEFAULT , DEFAULT, '" + reactionDate + "', '" + reactionName + "', '" + idPatient + "', '" + doctor + "')"
             );
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());

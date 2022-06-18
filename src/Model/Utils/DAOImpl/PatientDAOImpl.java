@@ -203,7 +203,7 @@ public class PatientDAOImpl implements PatientDAO {
                     "FROM patient P");
 
             while (pConnection.rs.next()) {
-                idCurrent = pConnection.rs.getString("idPatient");
+                idCurrent = pConnection.rs.getString("max");
             }
 
             for (RiskFactor risk : risk_factor) {

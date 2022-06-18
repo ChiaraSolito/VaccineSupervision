@@ -94,7 +94,7 @@ public class ReactionFormController {
         return reaction;
     }
 
-    public void createReport(Patient patient, Reaction reaction, List<Vaccination> vaccinations, String reportDate, boolean flagPatient, boolean flagReaction) {
+    public void createReport(Patient patient, Reaction reaction, List<Vaccination> vaccinations, String reactionDate, boolean flagPatient, boolean flagReaction) {
         ReportDAOImpl reportDAO = new ReportDAOImpl();
         PatientDAOImpl patientDAO = new PatientDAOImpl();
         ReactionDAOImpl reactionDAO = new ReactionDAOImpl();
@@ -104,7 +104,6 @@ public class ReactionFormController {
         if (flagPatient) {
             try {
                 idPatient = patientDAO.createPatient(patient.getBirthYear(), patient.getProvince(), patient.getProfession(), patient.getAllRiskFactor());
-                System.out.println(idPatient);
             } catch (NullStringException e) {
                 System.out.println("Error idpatient null: " + e.getMessage());
             }
@@ -124,7 +123,7 @@ public class ReactionFormController {
             }
         }
         try {
-            reportDAO.createReport(idPatient, reaction.getName(), reportDate, model.getUsername());
+            reportDAO.createReport(idPatient, reaction.getName(), reactionDate, model.getUsername());
         } catch (NullStringException e) {
             System.out.println("Error report null: " + e.getMessage());
         }
