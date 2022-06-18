@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -44,7 +45,7 @@ public class LoginView {
     /*
         Crea la view effettiva
      */
-    public Stage getView() throws FileNotFoundException {
+    public Parent getView() throws FileNotFoundException {
 
         Insets insets = new Insets(30);
 
@@ -110,11 +111,7 @@ public class LoginView {
         BorderPane.setMargin(imageView, insets);
         BorderPane.setMargin(results, insets);
 
-        primaryStage.setTitle("Drug Supervision - Login");
-        primaryStage.setScene(new Scene(borderPane, 700, 400));
-        primaryStage.setResizable(false);
-
-        return primaryStage;
+        return borderPane;
     }
 
     /*

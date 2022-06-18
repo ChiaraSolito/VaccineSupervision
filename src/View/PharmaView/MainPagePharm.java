@@ -4,6 +4,7 @@ import Control.FarmacologistControl.MainControllerPharm;
 import Model.Notice;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
+import View.LoginView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -118,9 +119,6 @@ public class MainPagePharm extends Parent {
             }
         });
 
-        //ObservableList<Button> menu = FXCollections.observableArrayList(button1);
-        //ListView<String> listView = new ListView<String>(menu);
-
         HBox layout = new HBox(button1, button2, button3);
         VBox menu = new VBox(20, actions, layout);
         layout.setSpacing(10);
@@ -134,11 +132,28 @@ public class MainPagePharm extends Parent {
         // Create the BorderPane
         BorderPane borderPane = new BorderPane();
 
+        Button logout = new Button("Logout");
+        logout.setOnAction(e -> {
+            try {
+                mainPharmStage.setTitle("Drug Supervision - Login");
+                mainPharmStage.setScene(new Scene(new LoginView(mainPharmStage, new User()).getView(), 700, 400));
+                mainPharmStage.setResizable(false);
+                mainPharmStage.show();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+
+        });
+
         // Set the Location
         borderPane.setRight(docInfo);
         borderPane.setLeft(menu);
         BorderPane.setMargin(menu, insets);
         BorderPane.setMargin(docInfo, insets);
+        //Down on the right is the button
+        BorderPane.setAlignment(logout, Pos.BOTTOM_RIGHT);
+        borderPane.setBottom(logout);
+        BorderPane.setMargin(logout, insets);
         return borderPane;
 
     }

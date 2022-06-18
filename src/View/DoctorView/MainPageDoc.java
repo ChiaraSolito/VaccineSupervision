@@ -3,6 +3,7 @@ package View.DoctorView;
 import Control.DoctorControl.MainControllerDoc;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
+import View.LoginView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -26,7 +27,7 @@ public class MainPageDoc extends Parent {
 
     private final MainControllerDoc controller;
 
-    private final Stage mainDocStage;
+    private Stage mainDocStage;
 
     /*
         Costruttore
@@ -107,6 +108,18 @@ public class MainPageDoc extends Parent {
         layout.setPrefWidth(300);
         menu.setPrefWidth(300);
 
+        Button logout = new Button("Logout");
+        logout.setOnAction(e -> {
+            try {
+                mainDocStage.setTitle("Drug Supervision - Login");
+                mainDocStage.setScene(new Scene(new LoginView(mainDocStage, new User()).getView(), 700, 400));
+                mainDocStage.setResizable(false);
+                mainDocStage.show();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+
+        });
 
         // Set the alignment
         BorderPane.setAlignment(docInfo, CENTER_RIGHT);
@@ -120,6 +133,10 @@ public class MainPageDoc extends Parent {
         borderPane.setLeft(menu);
         BorderPane.setMargin(menu, insets);
         BorderPane.setMargin(docInfo, insets);
+        //Down on the right is the button
+        BorderPane.setAlignment(logout, Pos.BOTTOM_RIGHT);
+        borderPane.setBottom(logout);
+        BorderPane.setMargin(logout, insets);
 
         return borderPane;
 
