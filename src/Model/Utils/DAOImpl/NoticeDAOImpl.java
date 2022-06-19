@@ -27,7 +27,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("SELECT R.noticeid, N.content, N.noticedate FROM readnotice R " +
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT R.noticeid, N.content, N.noticedate FROM readnotice R " +
                     "JOIN notice N ON N.id = R.noticeid " +
                     "WHERE R.noticeid IN (" +
                     "SELECT R1.noticeid" +
