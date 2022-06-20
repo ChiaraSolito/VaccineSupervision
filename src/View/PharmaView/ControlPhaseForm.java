@@ -55,7 +55,10 @@ public class ControlPhaseForm {
             RadioMenuItem sub = new RadioMenuItem("Vaccino: " + vaccine);
             chooseVaccine.getItems().add(sub);
             sub.setToggleGroup(group);
-            sub.setOnAction(a -> controlPhase.setVaccine(vaccine));
+            sub.setOnAction(a -> {
+                controlPhase.setVaccine(vaccine);
+                chooseVaccine.setText("Vaccino: " + vaccine);
+            });
         }
 
         Text header = new Text("Scegliere il vaccino da proporre per la fase di controllo");

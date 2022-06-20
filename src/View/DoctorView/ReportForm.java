@@ -224,7 +224,10 @@ public class ReportForm {
             RadioMenuItem sub = new RadioMenuItem("Reazione: " + getReaction);
             reactions.getItems().add(sub);
             sub.setToggleGroup(group2);
-            sub.setOnAction(a -> reaction = controller.getReaction(getReaction));
+            sub.setOnAction(a -> {
+                reaction = controller.getReaction(getReaction);
+                reactions.setText("Reazione: " + getReaction);
+            });
         }
 
         VBox totalMenuP = new VBox(20, newReactionMenu, newReactionVBOX);
