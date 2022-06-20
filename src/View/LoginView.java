@@ -5,16 +5,13 @@ import Model.User;
 import View.DoctorView.MainPageDoc;
 import View.PharmaView.MainPagePharm;
 import View.Utils.Alerts;
-import javafx.beans.property.StringProperty;
+import View.Utils.BoundField;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -51,8 +48,8 @@ public class LoginView {
         Insets insets = new Insets(30);
 
         //Login Form - two HBoxes with corrected insets
-        HBox userHBox = new HBox(25, new Text("User ID: "), createBoundTextField(model.userProperty()));
-        HBox passwordHBox = new HBox(10, new Text("Password: "), createBoundPasswordField(model.passwordProperty()));
+        HBox userHBox = new HBox(25, new Text("User ID: "), BoundField.createBoundTextField(model.userProperty()));
+        HBox passwordHBox = new HBox(10, new Text("Password: "), BoundField.createBoundPasswordField(model.passwordProperty()));
         userHBox.setPrefWidth(300);
         passwordHBox.setPrefWidth(300);
 
@@ -115,21 +112,4 @@ public class LoginView {
         return borderPane;
     }
 
-    /*
-        Metodo per il binding del Password Field
-     */
-    private Node createBoundPasswordField(StringProperty boundProperty) {
-        PasswordField results = new PasswordField();
-        results.textProperty().bindBidirectional(boundProperty);
-        return results;
-    }
-
-    /*
-        Metodo per il binding del Text Field
-     */
-    private Node createBoundTextField(StringProperty boundProperty) {
-        TextField results = new TextField("");
-        results.textProperty().bindBidirectional(boundProperty);
-        return results;
-    }
 }

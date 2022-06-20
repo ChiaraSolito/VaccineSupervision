@@ -4,8 +4,7 @@ import Control.DoctorControl.ReactionFormController;
 import Model.*;
 import Model.Utils.Exceptions.NullStringException;
 import View.Utils.Alerts;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
+import View.Utils.BoundField;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -16,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.converter.NumberStringConverter;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
@@ -62,11 +60,11 @@ public class ReportForm {
         Button newPatientMenu = new Button("Inserisci nuovo paziente");
 
         //Hidden VBoxes to insert Patient informations
-        TextField birthYearTextField = createBoundTextField(patient.birthYearProperty());
+        TextField birthYearTextField = BoundField.createBoundTextField(patient.birthYearProperty());
         VBox birthYear = new VBox(10, new Text("Anno Nascita: "), birthYearTextField);
-        TextField provinceTextField = createBoundTextField(patient.provinceProperty());
+        TextField provinceTextField = BoundField.createBoundTextField(patient.provinceProperty());
         VBox province = new VBox(10, new Text("Provincia: "), provinceTextField);
-        TextField professionTextField = createBoundTextField(patient.professionProperty());
+        TextField professionTextField = BoundField.createBoundTextField(patient.professionProperty());
         VBox profession = new VBox(10, new Text("Professione: "), professionTextField);
 
         //Widths of VBoxes
@@ -79,13 +77,13 @@ public class ReportForm {
 
         //Double Hidden VBoxes for new Risk Factor
         RiskFactor newRisk = new RiskFactor();
-        TextField nameField = createBoundTextField(newRisk.nameProperty());
+        TextField nameField = BoundField.createBoundTextField(newRisk.nameProperty());
         VBox name = new VBox(10, new Text("Nome: "), nameField);
 
-        TextField descriptionField = createBoundTextField(newRisk.descriptionProperty());
+        TextField descriptionField = BoundField.createBoundTextField(newRisk.descriptionProperty());
         VBox description = new VBox(10, new Text("Descrizione: "), descriptionField);
 
-        TextField levelField = createBoundTextFieldInt(newRisk.riskLevelProperty());
+        TextField levelField = BoundField.createBoundTextFieldInt(newRisk.riskLevelProperty());
         VBox riskLevel = new VBox(10, new Text("Livello di rischio: "), levelField);
         Button submit = new Button("Inserisci");
 
@@ -197,11 +195,11 @@ public class ReportForm {
 
 
         //Other text fields
-        TextField nameFieldReact = createBoundTextField(newReaction.nameProperty());
+        TextField nameFieldReact = BoundField.createBoundTextField(newReaction.nameProperty());
         VBox nameV = new VBox(10, new Text("Nome: "), nameFieldReact);
-        TextField descriptionFieldReact = createBoundTextField(newReaction.descriptionProperty());
+        TextField descriptionFieldReact = BoundField.createBoundTextField(newReaction.descriptionProperty());
         VBox descriptionV = new VBox(10, new Text("Descrizione: "), descriptionFieldReact);
-        TextField gravityFieldReact = createBoundTextFieldInt(newReaction.gravityProperty());
+        TextField gravityFieldReact = BoundField.createBoundTextFieldInt(newReaction.gravityProperty());
         VBox gravityV = new VBox(10, new Text("Livello di gravità: "), gravityFieldReact);
 
         //Get everything in a VBox
@@ -266,11 +264,11 @@ public class ReportForm {
         List<Vaccination> vaccinations = new ArrayList<>();
 
         Vaccination newVaccination = new Vaccination();
-        TextField vaccineField = createBoundTextField(newVaccination.vaccineProperty());
+        TextField vaccineField = BoundField.createBoundTextField(newVaccination.vaccineProperty());
         VBox vaccineV = new VBox(10, new Text("Nome: "), vaccineField);
-        TextField typeSomministrationField = createBoundTextField(newVaccination.typeSomministrationProperty());
+        TextField typeSomministrationField = BoundField.createBoundTextField(newVaccination.typeSomministrationProperty());
         VBox typeV = new VBox(10, new Text("Tipo della Somministrazione: "), typeSomministrationField);
-        TextField siteField = createBoundTextField(newVaccination.vaccinationSiteProperty());
+        TextField siteField = BoundField.createBoundTextField(newVaccination.vaccinationSiteProperty());
         VBox siteV = new VBox(10, new Text("Sito della vaccinazione: "), siteField);
         DatePicker datePickerV = new DatePicker();
         datePickerV.setOnAction(e -> {
@@ -405,17 +403,5 @@ public class ReportForm {
         VBox layout = new VBox(10, tabpane, buttonsFinal);
         VBox.setMargin(buttonsFinal, insets);
         return layout;
-    }
-
-    private TextField createBoundTextField(StringProperty boundProperty) {
-        TextField results = new TextField("");
-        results.textProperty().bindBidirectional(boundProperty);
-        return results;
-    }
-
-    private TextField createBoundTextFieldInt(IntegerProperty boundProperty) {
-        TextField results = new TextField("");
-        results.textProperty().bindBidirectional(boundProperty, new NumberStringConverter());
-        return results;
     }
 }
