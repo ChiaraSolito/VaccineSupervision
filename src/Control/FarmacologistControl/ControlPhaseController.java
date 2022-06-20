@@ -29,4 +29,30 @@ public class ControlPhaseController {
             System.err.println("Error: " + e.getMessage());
         }
     }
+
+    public int getTotalNumberControlPhase(String vaccine) {
+        ControlPhaseDAOImpl controlPhaseDAO = new ControlPhaseDAOImpl();
+        int totalNumber = 0;
+
+        try {
+            totalNumber = controlPhaseDAO.getTotalNumberControlPhase(vaccine);
+        } catch (NullStringException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+        return totalNumber;
+    }
+
+    public int getSixMonthsNumberControlPhase(String vaccine) {
+        ControlPhaseDAOImpl controlPhaseDAO = new ControlPhaseDAOImpl();
+        int sixMonthsNumber = 0;
+
+        try {
+            sixMonthsNumber = controlPhaseDAO.getSixMonthsNumberControlPhase(vaccine);
+        } catch (NullStringException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+        return sixMonthsNumber;
+    }
 }
