@@ -12,12 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 
 public class ControlPhaseForm {
     private final User model;
@@ -43,6 +41,9 @@ public class ControlPhaseForm {
 
         //set initial variables for control phase
         controlPhase.setPharmacologist(model.getUsername());
+        //SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        //System.out.println(formatter.format(Calendar.getInstance().getTime()));
+        //controlPhase.setReportDate(String.valueOf(Calendar.getInstance().get(Calendar.DATE)));
 
         //Second option: choose existing patient
         MenuButton chooseVaccine = new MenuButton("Scegli vaccino da porre sotto controllo");
@@ -57,20 +58,10 @@ public class ControlPhaseForm {
             sub.setOnAction(a -> controlPhase.setVaccine(vaccine));
         }
 
-
-        //Date is always visible
-        DatePicker datePickerR = new DatePicker();
-        datePickerR.setOnAction(e -> {
-            LocalDate date = datePickerR.getValue();
-            controlPhase.setReportDate(date.toString());
-        });
-        VBox dateReact = new VBox(20, new Text("Data della reazione:"), datePickerR);
-
-        VBox content = new VBox(10, chooseVaccine, dateReact);
         Text header = new Text("Scegliere il vaccino da proporre per la fase di controllo");
         Button submit = new Button("Conferma");
         submit.setOnAction(e -> {
-            if (group.getSelectedToggle() == null || datePickerR.getValue() == null) {
+            if (group.getSelectedToggle() == null) {
                 Alerts.displayErrorMessage(model);
             } else {
                 if (Alerts.displayConfMessage(model).getResult() == ButtonType.OK) {
@@ -86,6 +77,9 @@ public class ControlPhaseForm {
                 }
             }
         });
+
+        //TABLE VIEW
+        TableView vaccineTable = new TableView();
 
         Button backButton = new Button();
         backButton.setText("Indietro");
@@ -107,10 +101,15 @@ public class ControlPhaseForm {
         BorderPane.setAlignment(header, Pos.TOP_CENTER);
         layout.setTop(header);
         BorderPane.setMargin(header, insets);
-        //Center for the vaccine
-        BorderPane.setAlignment(content, Pos.CENTER);
-        layout.setCenter(content);
-        BorderPane.setMargin(content, insets);
+        //Center left for the vaccine
+        BorderPane.setAlignment(chooseVaccine, Pos.CENTER_LEFT);
+        layout.setLeft(chooseVaccine);
+        BorderPane.setMargin(chooseVaccine, insets);
+
+        //Center right for the table
+        BorderPane.setAlignment(vaccineTable, Pos.CENTER_RIGHT);
+        layout.setRight(vaccineTable);
+        BorderPane.setMargin(vaccineTable, insets);
 
         HBox buttons = new HBox(500, backButton, submit);
         BorderPane.setAlignment(buttons, Pos.BOTTOM_CENTER);

@@ -9,5 +9,5 @@ public interface ControlPhaseDAO {
     List<ControlPhase> getAllControls();
     List<ControlPhase> getControls(String vaccine) throws NullStringException;
 
-    void proposeControlPhase(String date, String vaccine, String pharmacologist) throws NullStringException;
+    void proposeControlPhase(String vaccine, String pharmacologist) throws NullStringException;
 }

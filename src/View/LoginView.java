@@ -4,6 +4,7 @@ import Control.LoginController;
 import Model.User;
 import View.DoctorView.MainPageDoc;
 import View.PharmaView.MainPagePharm;
+import View.Utils.Alerts;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -50,7 +51,7 @@ public class LoginView {
         Insets insets = new Insets(30);
 
         //Login Form - two HBoxes with corrected insets
-        HBox userHBox = new HBox(10, new Text("User ID: "), createBoundTextField(model.userProperty()));
+        HBox userHBox = new HBox(25, new Text("User ID: "), createBoundTextField(model.userProperty()));
         HBox passwordHBox = new HBox(10, new Text("Password: "), createBoundPasswordField(model.passwordProperty()));
         userHBox.setPrefWidth(300);
         passwordHBox.setPrefWidth(300);
@@ -78,7 +79,7 @@ public class LoginView {
                     }
 
                 } else {
-                    displayErrorMessage();
+                    Alerts.displayLoginError();
                 }
             } catch (FileNotFoundException | SQLException e) {
                 throw new RuntimeException(e);
@@ -130,13 +131,5 @@ public class LoginView {
         TextField results = new TextField("");
         results.textProperty().bindBidirectional(boundProperty);
         return results;
-    }
-
-    private void displayErrorMessage() {
-        Alert dialog = new Alert(Alert.AlertType.ERROR);
-        dialog.setTitle("Not able to Login");
-        dialog.setHeaderText("Incorrect Username or Password");
-        dialog.setContentText("You have entered incorrect username or Password.\nPlease try Again and check if you chose the right user type.");
-        dialog.showAndWait();
     }
 }

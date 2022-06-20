@@ -24,7 +24,7 @@ public class ControlPhaseController {
         ControlPhaseDAOImpl controlPhaseDAO = new ControlPhaseDAOImpl();
 
         try {
-            controlPhaseDAO.proposeControlPhase(controlPhase.getReportDate(), controlPhase.getVaccine(), controlPhase.getPharmacologist());
+            controlPhaseDAO.proposeControlPhase(controlPhase.getVaccine(), controlPhase.getPharmacologist());
         } catch (NullStringException e) {
             System.err.println("Error: " + e.getMessage());
         }

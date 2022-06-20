@@ -78,7 +78,7 @@ public class ControlPhaseDAOImpl implements ControlPhaseDAO {
     }
 
     @Override
-    public void proposeControlPhase(String date, String vaccine, String pharmacologist) throws NullStringException {
+    public void proposeControlPhase(String vaccine, String pharmacologist) throws NullStringException {
 
         if (vaccine.isEmpty() || pharmacologist.isEmpty()) {
             throw new NullStringException();
@@ -90,7 +90,7 @@ public class ControlPhaseDAOImpl implements ControlPhaseDAO {
         try {
             pConnection.statement = pConnection.connection.createStatement();
             pConnection.statement.executeUpdate("INSERT INTO controlphase " +
-                    "VALUES('" + pharmacologist + "', '" + vaccine + "', '" + date + "')"
+                    "VALUES('" + pharmacologist + "', '" + vaccine + "', CURRENT_DATE)"
             );
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());

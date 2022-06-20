@@ -21,7 +21,10 @@ import javafx.util.converter.NumberStringConverter;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 public class ReportForm {
     private final User model;
@@ -111,7 +114,6 @@ public class ReportForm {
             nameField.clear();
             descriptionField.clear();
             levelField.clear();
-
         });
 
         //Get everything in a VBox
@@ -137,7 +139,10 @@ public class ReportForm {
             RadioMenuItem sub = new RadioMenuItem("Paziente: " + getPatient);
             choosePatient.getItems().add(sub);
             sub.setToggleGroup(group);
-            sub.setOnAction(a -> patient = controller.getPatient(getPatient));
+            sub.setOnAction(a -> {
+                patient = controller.getPatient(getPatient);
+                choosePatient.setText("Paziente: " + getPatient);
+            });
         }
 
         //Show new Patient menù
@@ -146,6 +151,7 @@ public class ReportForm {
         newPatientMenu.setOnAction(e -> {
             newPatientVBOX.setVisible(true);
             group.selectToggle(null);
+            choosePatient.setText("Scegli paziente esistente");
         });
 
         VBox rightVBOX = new VBox(20, choosePatient, addRiskFactor);
@@ -331,53 +337,61 @@ public class ReportForm {
 
         //Controls to submit everything in the correct way
         submitAll.setOnAction(e -> {
-            boolean flagPatient;
+            int counter = 0;
+            boolean patientFlag = false;
             if (group.getSelectedToggle() == null) {
-                flagPatient = true;
-                if (birthYearTextField.getText().isEmpty() || provinceTextField.getText().isEmpty() || professionTextField.getText().isEmpty()) {
+                if ((birthYearTextField.getText().isEmpty() || provinceTextField.getText().isEmpty()
+                        || professionTextField.getText().isEmpty() || vaccinations.isEmpty()) && counter == 0) {
                     Alerts.displayErrorMessage(model);
+                    counter = 1;
                 } else {
-                    patient.setBirthYear(birthYearTextField.getText());
-                    patient.setProvince(provinceTextField.getText());
-                    patient.setProfession(professionTextField.getText());
-                    for (RiskFactor risk : addedRisks) {
-                        patient.addRiskFactor(risk);
+                    if ((parseInt(birthYearTextField.getText()) < 1900 || parseInt(birthYearTextField.getText()) > Calendar.getInstance().get(Calendar.YEAR)) && counter == 0) {
+                        Alerts.displayNotAcceptedPatient(model);
+                        counter = 1;
+                    } else {
+                        patient.setBirthYear(birthYearTextField.getText());
+                        patient.setProvince(provinceTextField.getText());
+                        patient.setProfession(professionTextField.getText());
+                        for (RiskFactor risk : addedRisks) {
+                            patient.addRiskFactor(risk);
+                        }
+                        patientFlag = true;
                     }
                 }
-            } else {
-                flagPatient = false;
             }
             if (group2.getSelectedToggle() == null) {
                 if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
                         || gravityFieldReact.getText().isEmpty() || datePickerR.getValue() == null) {
-                    Alerts.displayErrorMessage(model);
-                } else {
-                    if (Alerts.displayConfMessage(model).getResult() == ButtonType.OK) {
-                        reaction.setName(nameFieldReact.getText());
-                        reaction.setGravity(Integer.parseInt(gravityFieldReact.getText()));
-                        reaction.setDescription((descriptionFieldReact.getText()));
-                        controller.createReport(patient, reaction, vaccinations, datePickerR.getValue().toString(), flagPatient, true);
-                        try {
-                            reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
-                            reportDocStage.setTitle("Menù Principale");
-                            reportDocStage.setResizable(false);
-                            reportDocStage.show();
-                        } catch (FileNotFoundException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                    if (counter == 0) {
+                        Alerts.displayErrorMessage(model);
+                        counter = 1;
                     }
+                } else {
+                    reaction.setName(nameFieldReact.getText());
+                    reaction.setGravity(parseInt(gravityFieldReact.getText()));
+                    reaction.setDescription((descriptionFieldReact.getText()));
+                    controller.createReaction(reaction);
                 }
             } else {
-                if (Alerts.displayConfMessage(model).getResult() == ButtonType.OK) {
-                    controller.createReport(patient, reaction, vaccinations, datePickerR.getValue().toString(), flagPatient, false);
-                    try {
-                        reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
-                        reportDocStage.setTitle("Menù Principale");
-                        reportDocStage.setResizable(false);
-                        reportDocStage.show();
-                    } catch (FileNotFoundException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                if (datePickerR.getValue() == null && counter == 0) {
+                    Alerts.displayErrorMessage(model);
+                    counter = 1;
+                }
+            }
+
+            if (counter == 0 && Alerts.displayConfMessage(model).getResult() == ButtonType.OK) {
+                if (patientFlag) {
+                    patient.setIdPatient(controller.createPatient(patient));
+                }
+                controller.addVaccination(patient, vaccinations);
+                controller.createReport(patient, reaction, datePickerR.getValue().toString());
+                try {
+                    reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
+                    reportDocStage.setTitle("Menù Principale");
+                    reportDocStage.setResizable(false);
+                    reportDocStage.show();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });

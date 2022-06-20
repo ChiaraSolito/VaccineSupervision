@@ -76,12 +76,10 @@ public class MainPagePharm extends Parent {
             Buttons creation
          */
         //Lista pazienti
-        Button button1 = new Button();
         ImageView icon1 = new ImageView("pic/clipboardIcon.png");
         Text text = new Text("Accedi a Segnalazioni");
-        button1 = createButton(button1, icon1, text);
+        Button button1 = createButton(new Button(), icon1, text);
         button1.setPrefWidth(75);
-        button1.setTextAlignment(TextAlignment.CENTER);
         button1.setOnAction(e -> {
             try {
                 mainPharmStage.setScene(new Scene(new ReportList(mainPharmStage, model).getView(), 700, 400));
@@ -94,12 +92,10 @@ public class MainPagePharm extends Parent {
         });
 
         //
-        Button button2 = new Button();
         ImageView icon2 = new ImageView("pic/notice.png");
         Text text2 = new Text("Avvisi già letti");
-        button2 = createButton(button2, icon2, text2);
+        Button button2 = createButton(new Button(), icon2, text2);
         button2.setPrefWidth(75);
-        button2.setTextAlignment(TextAlignment.CENTER);
         button2.setOnAction(e -> {
             try {
                 mainPharmStage.setScene(new Scene(new ReadNoticeList(mainPharmStage, model).getView(), 700, 400));
@@ -111,12 +107,10 @@ public class MainPagePharm extends Parent {
             }
         });
 
-        Button button3 = new Button();
         ImageView icon3 = new ImageView("pic/control.png");
         Text text3 = new Text("Proponi fase controllo");
-        button3 = createButton(button3, icon3, text3);
+        Button button3 = createButton(new Button(), icon3, text3);
         button3.setPrefWidth(75);
-        button3.setTextAlignment(TextAlignment.CENTER);
         //setOnAction per la fase controllo
         button3.setOnAction(e -> {
             try {
@@ -170,12 +164,13 @@ public class MainPagePharm extends Parent {
 
     private Button createButton(Button button, ImageView icon, Text text) {
         text.setWrappingWidth(100);
-        VBox vBox = new VBox(5, icon,text);
+        text.setTextAlignment(TextAlignment.CENTER);
+        VBox vBox = new VBox(5, icon, text);
         vBox.setAlignment(Pos.CENTER);
         button.setGraphic(vBox);
 
-        button.setMinHeight(100);
-        button.setMinWidth(100);
+        button.setMinHeight(120);
+        button.setMinWidth(120);
         icon.setFitWidth(30);
         icon.setFitHeight(30);
         return button;

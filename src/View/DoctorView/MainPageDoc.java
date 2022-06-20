@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -65,10 +66,9 @@ public class MainPageDoc extends Parent {
             Buttons creation
          */
         //Lista pazienti
-        Button button1 = new Button();
         ImageView icon1 = new ImageView("pic/clipboardIcon.png");
-        Text text=new Text("Lista pazienti");
-        button1 = createButton(button1, icon1, text);
+        Text text = new Text("Lista pazienti");
+        Button button1 = createButton(new Button(), icon1, text);
         //inserisci una chiamata alla vista della lista pazienti
         button1.setOnAction(e -> {
             try {
@@ -82,10 +82,9 @@ public class MainPageDoc extends Parent {
         });
 
         //
-        Button button2 = new Button();
         ImageView icon2 = new ImageView("pic/reazione.png");
-        Text text2=new Text("Inserisci reazione");
-        button2 = createButton(button2, icon2, text2);
+        Text text2 = new Text("Inserisci reazione");
+        Button button2 = createButton(new Button(), icon2, text2);
         //inserire una chiamata al form inserisci reazione
         button2.setOnAction(e -> {
             try {
@@ -140,12 +139,13 @@ public class MainPageDoc extends Parent {
 
     private Button createButton(Button button, ImageView icon, Text text) {
         text.setWrappingWidth(100);
-        VBox vBox = new VBox(5, icon,text);
+        text.setTextAlignment(TextAlignment.CENTER);
+        VBox vBox = new VBox(5, icon, text);
         vBox.setAlignment(Pos.CENTER);
         button.setGraphic(vBox);
 
-        button.setMinHeight(100);
-        button.setMinWidth(50);
+        button.setMinHeight(120);
+        button.setMinWidth(120);
         icon.setFitWidth(30);
         icon.setFitHeight(30);
         return button;
