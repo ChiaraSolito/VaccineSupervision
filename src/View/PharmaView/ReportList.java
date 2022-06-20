@@ -1,24 +1,17 @@
 package View.PharmaView;
 
-import Control.FarmacologistControl.ControlPhaseController;
 import Control.FarmacologistControl.ReportListController;
 import Model.*;
 import Model.Utils.Exceptions.NullStringException;
-import View.DoctorView.PatientInfo;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -98,13 +91,13 @@ public class ReportList {
         return layout;
     }
 
-    public class TableObject{
-        private SimpleStringProperty id;
-        private SimpleStringProperty reaction;
-        private SimpleStringProperty reportDate;
-        private SimpleStringProperty reactionDate;
-        private SimpleStringProperty doctor;
-        private SimpleStringProperty twoMonthsVaccinations;
+    public static class TableObject{
+        private final SimpleStringProperty id;
+        private final SimpleStringProperty reaction;
+        private final SimpleStringProperty reportDate;
+        private final SimpleStringProperty reactionDate;
+        private final SimpleStringProperty doctor;
+        private final SimpleStringProperty twoMonthsVaccinations;
 
         public TableObject(SimpleStringProperty id, SimpleStringProperty doctor, SimpleStringProperty reaction, SimpleStringProperty reportDate,
                            SimpleStringProperty reactionDate, SimpleStringProperty twoMonthsVaccinations){
@@ -119,21 +112,11 @@ public class ReportList {
         public String getId() { return id.get(); }
         public SimpleStringProperty idProperty() { return id; }
         public void setId(String id) { this.id.set(id); }
-        public String getReaction() { return reaction.get(); }
         public SimpleStringProperty reactionProperty() { return reaction; }
-        public void setReaction(String reaction) { this.reaction.set(reaction); }
-        public String getReportDate() { return reportDate.get(); }
         public SimpleStringProperty reportDateProperty() { return reportDate; }
-        public void setReportDate(String reportDate) { this.reportDate.set(reportDate); }
-        public String getReactionDate() { return reactionDate.get(); }
         public SimpleStringProperty reactionDateProperty() { return reactionDate; }
-        public void setReactionDate(String reactionDate) { this.reactionDate.set(reactionDate); }
-        public String getDoctor() { return doctor.get(); }
         public SimpleStringProperty doctorProperty() { return doctor; }
-        public void setDoctor(String doctor) { this.doctor.set(doctor); }
-        public String getTwoMonthsVaccinations() { return twoMonthsVaccinations.get(); }
         public SimpleStringProperty twoMonthsVaccinationsProperty() { return twoMonthsVaccinations; }
-        public void setTwoMonthsVaccinations(String twoMonthsVaccinations) { this.twoMonthsVaccinations.set(twoMonthsVaccinations); }
     }
 
 }

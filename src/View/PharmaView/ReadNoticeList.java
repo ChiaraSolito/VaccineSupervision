@@ -29,9 +29,9 @@ public class ReadNoticeList extends Parent {
     /*
         Costruttore
      */
-    public ReadNoticeList(Stage stage, User model) {
-        this.model = model;
-        this.noticeListPharmStage = stage;
+    public ReadNoticeList(Stage stage, User modelRD) {
+        model = modelRD;
+        noticeListPharmStage = stage;
         controller = new ReadNoticeListController(model);
     }
 
@@ -52,22 +52,20 @@ public class ReadNoticeList extends Parent {
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("noticeDate"));
         dateColumn.setPrefWidth(125);
 
-        contentColumn.setCellFactory(new Callback<TableColumn<Notice,String>, TableCell<Notice,String>>() {
+        contentColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Notice, String> call( TableColumn<Notice, String> param) {
-                final TableCell<Notice, String> cell = new TableCell<Notice, String>() {
-                    private Text text;
+                return new TableCell<>() {
                     @Override
                     public void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!isEmpty()) {
-                            text = new Text(item.toString());
+                            Text text = new Text(item);
                             text.setWrappingWidth(425); // Setting the wrapping width to the Text
                             setGraphic(text);
                         }
                     }
                 };
-                return cell;
             }
         });
 

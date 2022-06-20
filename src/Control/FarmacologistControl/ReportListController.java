@@ -12,14 +12,13 @@ import java.util.List;
 
 public class ReportListController {
     private final User model;
-    private ReportDAOImpl reportDAO;
 
     public ReportListController(User model) {
         this.model = model;
     }
 
     public List<Report> getReportList(){
-        reportDAO = new ReportDAOImpl();
+        ReportDAOImpl reportDAO = new ReportDAOImpl();
         List<Report> reports = new ArrayList<>();
 
         try{

@@ -32,11 +32,11 @@ public class PatientInfo {
     /*
         Costruttore
      */
-    public PatientInfo(Stage stage, User model, String id) {
-        this.model = model;
-        this.patientInfoDocStage = stage;
-        controller = new PatientInfoController(model);
-        this.id = id;
+    public PatientInfo(Stage stage, User modelPI, String idPI) {
+        model = modelPI;
+        patientInfoDocStage = stage;
+        controller = new PatientInfoController(modelPI);
+        id = idPI;
     }
 
     public Parent getView() throws NullStringException {
@@ -148,12 +148,12 @@ public class PatientInfo {
         return layout;
     }
 
-    public class TableObject{
-        private SimpleStringProperty id;
-        private SimpleStringProperty reaction;
-        private SimpleStringProperty reportDate;
-        private SimpleStringProperty reactionDate;
-        private SimpleStringProperty twoMonthsVaccinations;
+    public static class TableObject{
+        private final SimpleStringProperty id;
+        private final SimpleStringProperty reaction;
+        private final SimpleStringProperty reportDate;
+        private final SimpleStringProperty reactionDate;
+        private final SimpleStringProperty twoMonthsVaccinations;
 
         public TableObject(SimpleStringProperty id, SimpleStringProperty reaction, SimpleStringProperty reportDate,
                            SimpleStringProperty reactionDate, SimpleStringProperty twoMonthsVaccinations){
@@ -167,17 +167,9 @@ public class PatientInfo {
         public String getId() { return id.get(); }
         public SimpleStringProperty idProperty() { return id; }
         public void setId(String id) { this.id.set(id); }
-        public String getReaction() { return reaction.get(); }
         public SimpleStringProperty reactionProperty() { return reaction; }
-        public void setReaction(String reaction) { this.reaction.set(reaction); }
-        public String getReportDate() { return reportDate.get(); }
         public SimpleStringProperty reportDateProperty() { return reportDate; }
-        public void setReportDate(String reportDate) { this.reportDate.set(reportDate); }
-        public String getReactionDate() { return reactionDate.get(); }
         public SimpleStringProperty reactionDateProperty() { return reactionDate; }
-        public void setReactionDate(String reactionDate) { this.reactionDate.set(reactionDate); }
-        public String getTwoMonthsVaccinations() { return twoMonthsVaccinations.get(); }
         public SimpleStringProperty twoMonthsVaccinationsProperty() { return twoMonthsVaccinations; }
-        public void setTwoMonthsVaccinations(String twoMonthsVaccinations) { this.twoMonthsVaccinations.set(twoMonthsVaccinations); }
     }
 }
