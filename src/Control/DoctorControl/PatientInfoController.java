@@ -73,5 +73,29 @@ public class PatientInfoController {
         return vaccinations;
     }
 
+    public int getNumberVaccination(String patient) throws NullStringException {
+        PatientDAOImpl patientDAO = new PatientDAOImpl();
+        int numberVaccinations;
 
+        try {
+            numberVaccinations = patientDAO.vaccinationsNumber(patient);
+        } catch (NullStringException e) {
+            throw new NullStringException();
+        }
+
+        return numberVaccinations;
+    }
+
+    public int getNumberReport(String patient) throws NullStringException {
+        PatientDAOImpl patientDAO = new PatientDAOImpl();
+        int numberReports;
+
+        try {
+            numberReports = patientDAO.reactionsNumber(patient);
+        } catch (NullStringException e) {
+            throw new NullStringException();
+        }
+
+        return numberReports;
+    }
 }

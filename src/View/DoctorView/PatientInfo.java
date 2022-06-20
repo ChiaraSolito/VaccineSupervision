@@ -43,9 +43,11 @@ public class PatientInfo {
         Patient patient = controller.getPatient(id);
         List<Report> reports = new ArrayList<>(controller.getPatientReports(id));
         List<Vaccination> vaccinations = new ArrayList<>(controller.getPatientVaccinations(id));
-        List<RiskFactor> riskFactorList = new ArrayList<>((controller.getPatient(id)).getAllRiskFactor());
+        List<RiskFactor> riskFactorList = new ArrayList<>(patient.getAllRiskFactor());
 
         // Create the GridPane for personalInfo
+        int numberVaccinations = controller.getNumberVaccination(patient.getIdPatient());
+        int numberReports = controller.getNumberReport(patient.getIdPatient());
         GridPane personalInfo = new GridPane();
         personalInfo.add(new Text("Codice paziente "), 0, 0, 1, 1);
         personalInfo.add(new Text(patient.getIdPatient()), 1, 0, 1, 1);
@@ -55,6 +57,10 @@ public class PatientInfo {
         personalInfo.add(new Text(patient.getProvince()), 3, 0, 1, 1);
         personalInfo.add(new Text("Professione "), 2, 1, 1, 1);
         personalInfo.add(new Text(patient.getProfession()), 3, 1, 1, 1);
+        personalInfo.add(new Text("Numero vaccinazioni "), 0, 2, 1, 1);
+        personalInfo.add(new Text(Integer.toString(numberVaccinations)), 1, 2, 1, 1);
+        personalInfo.add(new Text("Numero segnalazioni "), 2, 2, 1, 1);
+        personalInfo.add(new Text(Integer.toString(numberReports)), 3, 2, 1, 1);
         personalInfo.add(new Text("Fattori di rischio "), 0, 3, 1, 1);
         personalInfo.setPadding(new Insets(10, 10, 10, 30));
 
