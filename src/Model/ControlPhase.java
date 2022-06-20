@@ -1,9 +1,7 @@
 package Model;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.util.List;
 
 public class ControlPhase {
     private final SimpleStringProperty date;

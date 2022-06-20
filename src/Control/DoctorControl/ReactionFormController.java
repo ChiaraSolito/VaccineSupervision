@@ -9,14 +9,14 @@ import javafx.collections.ObservableList;
 import java.util.List;
 
 public class ReactionFormController {
-    private User model;
+    private final User model;
 
     //Costruttore
     public ReactionFormController(User model) {
         this.model = model;
     }
 
-    public List<String> getAllPatients() throws NullStringException {
+    public List<String> getAllPatients() {
         PatientDAOImpl patientDAO = new PatientDAOImpl();
         ObservableList<String> patients = null;
 
@@ -31,9 +31,7 @@ public class ReactionFormController {
 
     public List<String> getAllExistingRisks() {
         RiskFactorDAOImpl riskDAO = new RiskFactorDAOImpl();
-        ObservableList<String> risks = FXCollections.observableArrayList(riskDAO.getAllExistingRisks());
-
-        return risks;
+        return FXCollections.observableArrayList(riskDAO.getAllExistingRisks());
     }
 
     public void addRisk(String name, String description, int riskLevel) {

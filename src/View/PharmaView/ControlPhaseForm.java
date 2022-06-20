@@ -33,7 +33,7 @@ public class ControlPhaseForm {
     public ControlPhaseForm(Stage stage, User model) {
         this.model = model;
         this.controlPhaseStage = stage;
-        controller = new ControlPhaseController(model);
+        controller = new ControlPhaseController();
         this.controlPhase = new ControlPhase();
     }
 

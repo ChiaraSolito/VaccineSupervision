@@ -3,7 +3,6 @@ package Model.Utils.DAO;
 import Model.Notice;
 import Model.Utils.Exceptions.NullStringException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface NoticeDAO {

@@ -1,9 +1,7 @@
 package Control.FarmacologistControl;
 
-import Model.Notice;
 import Model.Report;
 import Model.User;
-import Model.Utils.DAOImpl.NoticeDAOImpl;
 import Model.Utils.DAOImpl.ReportDAOImpl;
 import Model.Utils.DAOImpl.VaccinationDAOImpl;
 import Model.Utils.Exceptions.NullStringException;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportListController {
-    private User model;
+    private final User model;
     private ReportDAOImpl reportDAO;
 
     public ReportListController(User model) {

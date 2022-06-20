@@ -2,8 +2,6 @@ package Model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-import java.util.Map;
-
 public class Notice {
     private final SimpleStringProperty id;
     private final SimpleStringProperty content;

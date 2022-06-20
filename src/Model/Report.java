@@ -28,7 +28,7 @@ public class Report {
     }
     public Report() {
         this.id = new SimpleStringProperty("");
-        this.patient = new SimpleObjectProperty<Patient>();
+        this.patient = new SimpleObjectProperty<>();
         this.reaction = new SimpleStringProperty("");
         this.reportDate = new SimpleStringProperty("");
         this.reactionDate = new SimpleStringProperty("");

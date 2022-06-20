@@ -1,6 +1,5 @@
 package View.DoctorView;
 
-import Control.DoctorControl.MainControllerDoc;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
 import View.LoginView;
@@ -25,9 +24,7 @@ import static javafx.geometry.Pos.CENTER_RIGHT;
 public class MainPageDoc extends Parent {
     private final User model;
 
-    private final MainControllerDoc controller;
-
-    private Stage mainDocStage;
+    private final Stage mainDocStage;
 
     /*
         Costruttore
@@ -35,7 +32,6 @@ public class MainPageDoc extends Parent {
     public MainPageDoc(Stage stage, User model) {
         this.model = model;
         this.mainDocStage = stage;
-        controller = new MainControllerDoc();
     }
 
     /*

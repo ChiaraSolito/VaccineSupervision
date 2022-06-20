@@ -1,17 +1,9 @@
 package View.PharmaView;
 
-import Control.DoctorControl.PatientListController;
 import Control.FarmacologistControl.ReadNoticeListController;
 import Model.Notice;
-import Model.Report;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
-import Model.Vaccination;
-import View.DoctorView.MainPageDoc;
-import View.DoctorView.PatientsList;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -20,15 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ReadNoticeList extends Parent {
     private static User model;

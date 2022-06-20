@@ -2,16 +2,10 @@ package View.Utils;
 
 import Model.User;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Dialog;
 
 public class Alerts {
-    private User model;
 
-    public Alerts(User model) {
-        this.model = model;
-    }
-
-    public static Dialog displayConfMessage(User model) {
+    public static Alert displayConfMessage(User model) {
         Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
         dialog.setTitle("Sei sicuro di voler continuare?");
         dialog.setHeaderText("Utente: " + model.getUsername());
@@ -22,7 +16,7 @@ public class Alerts {
     }
 
     public static void displayErrorMessage(User model) {
-        Dialog dialog = new Alert(Alert.AlertType.ERROR);
+        Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setTitle("Errore!");
         dialog.setHeaderText("Utente: " + model.getUsername());
         dialog.setContentText("Hai dimenticato qualcosa. Inserisci tutti i dati necessari prima di andare avanti.");

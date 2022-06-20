@@ -31,7 +31,7 @@ public class LoginView {
 
     private final User model;
 
-    private LoginController controller;
+    private final LoginController controller;
 
     /*
         Costruttore

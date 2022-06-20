@@ -1,16 +1,13 @@
 package Model;
 
 import Model.DataBase.DataBaseConnection;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.BooleanPropertyBase;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import java.sql.SQLException;
 
 public class User {
     //Stringa per lo username
-    private StringProperty username;
+    private StringProperty username = new SimpleStringProperty("");
 
     //Stringa per la password
     private StringProperty password = new SimpleStringProperty("");
@@ -18,11 +15,12 @@ public class User {
     DataBaseConnection userConnection;
 
     public User() {
-        this.username = new SimpleStringProperty("");
-        this.password = new SimpleStringProperty("");
     }
 
     public User(String username, String password, boolean type) {
+        this.username = new SimpleStringProperty(username);
+        this.password = new SimpleStringProperty(password);
+        this.type = new SimpleBooleanProperty(type);
     }
 
     public User getUser(String username) throws SQLException {

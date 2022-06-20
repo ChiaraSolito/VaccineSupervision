@@ -3,8 +3,6 @@ package Model;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.util.List;
-
 public class Vaccination {
     private final SimpleObjectProperty<Patient> patient;
     private final SimpleStringProperty vaccine;
@@ -23,7 +21,7 @@ public class Vaccination {
     }
 
     public Vaccination() {
-        this.patient = new SimpleObjectProperty<Patient>();
+        this.patient = new SimpleObjectProperty<>();
         this.vaccine = new SimpleStringProperty("");
         this.typeSomministration = new SimpleStringProperty("");
         this.vaccinationSite = new SimpleStringProperty("");

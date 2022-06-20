@@ -10,10 +10,8 @@ public class DataBaseConnection {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/VaccineSupervisionDB", "postgres", "postgres");
-        } catch (SQLException psql) {
+        } catch (SQLException | ClassNotFoundException psql) {
             System.out.println("Error: " + psql.getMessage());
-        } catch (ClassNotFoundException cnfe) {
-            System.out.println("Error: " + cnfe.getMessage());
         }
     }
 

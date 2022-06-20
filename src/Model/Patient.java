@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Patient {
-    private SimpleStringProperty idPatient;
-    private SimpleStringProperty birthYear;
-    private SimpleStringProperty province;
-    private SimpleStringProperty profession;
+    private final SimpleStringProperty idPatient;
+    private final SimpleStringProperty birthYear;
+    private final SimpleStringProperty province;
+    private final SimpleStringProperty profession;
 
-    private List<RiskFactor> risk_factor;
+    private final List<RiskFactor> risk_factor;
 
     public Patient(SimpleStringProperty birthYear, SimpleStringProperty province, SimpleStringProperty profession, List<RiskFactor> risk_factor) {
         this.idPatient = new SimpleStringProperty("");

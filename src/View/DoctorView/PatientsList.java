@@ -1,6 +1,6 @@
 package View.DoctorView;
 
-import Control.DoctorControl.PatientInfoController;
+import Control.DoctorControl.PatientListController;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
 import javafx.beans.property.IntegerProperty;
@@ -14,10 +14,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import Control.DoctorControl.PatientListController;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class PatientsList extends Parent {
         SimpleListProperty<HBoxCell> myObservableList = new SimpleListProperty<>(FXCollections.observableArrayList(listHBox));
 
         intProperty.bind(myObservableList.sizeProperty());
-        ListView<HBoxCell> listView = new ListView<HBoxCell>(myObservableList);
+        ListView<HBoxCell> listView = new ListView<>(myObservableList);
 
         if(myObservableList.size() == 0){
             Text text = new Text("Nessun paziente ancora inserito");
