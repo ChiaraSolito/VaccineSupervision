@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportForm {
-
     private final User model;
 
     private static ReactionFormController controller;
