@@ -38,7 +38,7 @@ public class ReportDAOImpl implements ReportDAO {
                 List<Vaccination> listaVuota = new ArrayList<>();
                 reports.add(new Report(
                         new SimpleStringProperty(pConnection.rs.getString("id")),
-                        new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("idpatient")),
                         new SimpleStringProperty(pConnection.rs.getString("reaction")),
                         new SimpleStringProperty(pConnection.rs.getString("reportdate")),
                         new SimpleStringProperty(pConnection.rs.getString("reactiondate")),
@@ -48,7 +48,7 @@ public class ReportDAOImpl implements ReportDAO {
             }
 
             for (Report r : reports) {
-                String id = r.getPatient().getIdPatient();
+                String id = r.getPatient();
                 pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
                         "FROM Vaccination V JOIN Report R ON R.idpatient = V.idpatient " +
                         "WHERE R.idpatient = '" + id + "' AND V.vaccinationdate BETWEEN R.reactiondate - 60 AND R.reactiondate");
@@ -91,7 +91,7 @@ public class ReportDAOImpl implements ReportDAO {
                 idReport = pConnection.rs.getInt("max") + 1;
             }
             pConnection.statement.executeUpdate("INSERT INTO report " +
-                    "VALUES( DEFAULT , DEFAULT, '" + reactionDate + "', '" + reactionName + "', '" + idPatient + "', '" + doctor + "')"
+                    "VALUES(" + idReport + " , DEFAULT, '" + reactionDate + "', '" + reactionName + "', '" + idPatient + "', '" + doctor + "')"
             );
         } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());

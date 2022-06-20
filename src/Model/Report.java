@@ -8,14 +8,14 @@ import java.util.List;
 
 public class Report {
     private final SimpleStringProperty id;
-    private final SimpleObjectProperty<Patient> patient;
+    private final SimpleStringProperty patient;
     private final SimpleStringProperty reaction;
     private final SimpleStringProperty reportDate;
     private final SimpleStringProperty reactionDate;
     private final List<Vaccination> vaccination;
     private final SimpleStringProperty doctor;
 
-    public Report(SimpleStringProperty id, SimpleObjectProperty<Patient> patient, SimpleStringProperty reaction,
+    public Report(SimpleStringProperty id, SimpleStringProperty patient, SimpleStringProperty reaction,
                   SimpleStringProperty reportDate, SimpleStringProperty reactionDate,
                   List<Vaccination> vaccination, SimpleStringProperty doctor) {
         this.id = id;
@@ -28,7 +28,7 @@ public class Report {
     }
     public Report() {
         this.id = new SimpleStringProperty("");
-        this.patient = new SimpleObjectProperty<>();
+        this.patient = new SimpleStringProperty("");
         this.reaction = new SimpleStringProperty("");
         this.reportDate = new SimpleStringProperty("");
         this.reactionDate = new SimpleStringProperty("");
@@ -46,15 +46,15 @@ public class Report {
 
     public void setId(String id) { this.id.set(id); }
 
-    public Patient getPatient() {
+    public String getPatient() {
         return patient.get();
     }
 
-    public SimpleObjectProperty<Patient> patientProperty() {
+    public SimpleStringProperty patientProperty() {
         return patient;
     }
 
-    public void setPatient(Patient patient) { this.patient.set(patient); }
+    public void setPatient(String patient) { this.patient.set(patient); }
 
     public String getReaction() { return reaction.get(); }
 

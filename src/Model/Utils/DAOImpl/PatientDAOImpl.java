@@ -68,7 +68,7 @@ public class PatientDAOImpl implements PatientDAO {
                 List<Vaccination> listaVuota = new ArrayList<>();
                 reports.add(new Report(
                         new SimpleStringProperty(pConnection.rs.getString("id")),
-                        new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("idpatient")),
                         new SimpleStringProperty(pConnection.rs.getString("reaction")),
                         new SimpleStringProperty(pConnection.rs.getString("reportdate")),
                         new SimpleStringProperty(pConnection.rs.getString("reactiondate")),
