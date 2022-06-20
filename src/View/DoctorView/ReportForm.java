@@ -3,6 +3,7 @@ package View.DoctorView;
 import Control.DoctorControl.ReactionFormController;
 import Model.*;
 import Model.Utils.Exceptions.NullStringException;
+import View.Utils.Alerts;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
@@ -24,15 +25,15 @@ import java.util.List;
 
 public class ReportForm {
 
-    private User model;
+    private final User model;
 
     private static ReactionFormController controller;
 
-    private Stage reportDocStage;
+    private final Stage reportDocStage;
 
     private Patient patient;
     private Reaction reaction;
-    private Report report;
+    private final Report report;
 
     /*
     Costruttore
@@ -95,25 +96,19 @@ public class ReportForm {
         for (String risk : controller.getAllExistingRisks()) {
             CheckMenuItem sub = new CheckMenuItem(risk);
             riskFactor.getItems().add(sub);
-            sub.setOnAction(a -> {
-                addedRisks.add(controller.getRisk(risk));
-            });
+            sub.setOnAction(a -> addedRisks.add(controller.getRisk(risk)));
         }
 
         //Regulate the visibility of menus
         addRiskFactor.setVisible(false);
-        addRisk.setOnAction(e -> {
-            addRiskFactor.setVisible(true);
-        });
+        addRisk.setOnAction(e -> addRiskFactor.setVisible(true));
 
-        //insert new risk and clears textfields
+        //insert new risk and clears text fields
         submit.setOnAction(e -> {
             controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
             CheckMenuItem risk = new CheckMenuItem(newRisk.getName());
             riskFactor.getItems().add(risk);
-            risk.setOnAction(a -> {
-                addedRisks.add(controller.getRisk(newRisk.getName()));
-            });
+            risk.setOnAction(a -> addedRisks.add(controller.getRisk(newRisk.getName())));
             nameField.clear();
             descriptionField.clear();
             levelField.clear();
@@ -143,9 +138,7 @@ public class ReportForm {
             RadioMenuItem sub = new RadioMenuItem("Paziente: " + getPatient);
             choosePatient.getItems().add(sub);
             sub.setToggleGroup(group);
-            sub.setOnAction(a -> {
-                patient = controller.getPatient(getPatient);
-            });
+            sub.setOnAction(a -> patient = controller.getPatient(getPatient));
         }
 
         //Show new Patient menù
@@ -171,7 +164,7 @@ public class ReportForm {
         layout1.setRight(rightVBOX);
         BorderPane.setMargin(rightVBOX, insets);
 
-        //everything goes in a scrollpane
+        //everything goes in a scroll pane
         ScrollPane sp1 = new ScrollPane();
         sp1.setContent(layout1);
 
@@ -185,7 +178,7 @@ public class ReportForm {
 
         //Second tab layout
         // First option: insert new reaction
-        Button newReactiontMenu = new Button("Inserisci nuova reazione");
+        Button newReactionMenu = new Button("Inserisci nuova reazione");
         //Hidden VBoxes for new Reaction
         Reaction newReaction = new Reaction();
 
@@ -226,14 +219,12 @@ public class ReportForm {
             RadioMenuItem sub = new RadioMenuItem("Reazione: " + getReaction);
             reactions.getItems().add(sub);
             sub.setToggleGroup(group2);
-            sub.setOnAction(a -> {
-                reaction = controller.getReaction(getReaction);
-            });
+            sub.setOnAction(a -> reaction = controller.getReaction(getReaction));
         }
 
-        VBox totalMenuP = new VBox(20, newReactiontMenu, newReactionVBOX);
+        VBox totalMenuP = new VBox(20, newReactionMenu, newReactionVBOX);
 
-        newReactiontMenu.setOnAction(e -> {
+        newReactionMenu.setOnAction(e -> {
             newReactionVBOX.setVisible(true);
             group2.selectToggle(null);
         });
@@ -264,7 +255,6 @@ public class ReportForm {
         //Third tab layout
         //Hidden VBoxes for new Vaccination
         // First option: insert new reaction
-        Button vaccinationsButton = new Button("Inserisci nuova vaccinazione");
         List<Vaccination> vaccinations = new ArrayList<>();
 
         Vaccination newVaccination = new Vaccination();
@@ -282,7 +272,7 @@ public class ReportForm {
         VBox dateVacc = new VBox(20, new Text("Data della vaccinazione:"), datePickerV);
         Button submitVacc = new Button("Inserisci");
 
-        //insert new risk and clears textfields
+        //insert new risk and clears text fields
         submitVacc.setOnAction(e -> {
             //controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
             Vaccination vaccination = new Vaccination();
@@ -343,11 +333,10 @@ public class ReportForm {
         //Controls to submit everything in the correct way
         submitAll.setOnAction(e -> {
             boolean flagPatient;
-            boolean flagReaction;
             if (group.getSelectedToggle() == null) {
                 flagPatient = true;
                 if (birthYearTextField.getText().isEmpty() || provinceTextField.getText().isEmpty() || professionTextField.getText().isEmpty()) {
-                    displayErrorMessage();
+                    Alerts.displayErrorMessage(model);
                 } else {
                     patient.setBirthYear(birthYearTextField.getText());
                     patient.setProvince(provinceTextField.getText());
@@ -360,17 +349,15 @@ public class ReportForm {
                 flagPatient = false;
             }
             if (group2.getSelectedToggle() == null) {
-                flagReaction = true;
                 if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
-                        || gravityFieldReact.getText().isEmpty() || datePickerR.getValue().equals(null)) {
-                    displayErrorMessage();
+                        || gravityFieldReact.getText().isEmpty() || datePickerR.getValue() == null) {
+                    Alerts.displayErrorMessage(model);
                 } else {
-                    //displayConfMessage();
-                    if (displayConfMessage().getResult() == ButtonType.OK) {
+                    if (Alerts.displayConfMessage(model).getResult() == ButtonType.OK) {
                         reaction.setName(nameFieldReact.getText());
-                        reaction.setGravity(Integer.valueOf(gravityFieldReact.getText()));
+                        reaction.setGravity(Integer.parseInt(gravityFieldReact.getText()));
                         reaction.setDescription((descriptionFieldReact.getText()));
-                        controller.createReport(patient, reaction, vaccinations, datePickerR.getValue().toString(), flagPatient, flagReaction);
+                        controller.createReport(patient, reaction, vaccinations, datePickerR.getValue().toString(), flagPatient, true);
                         try {
                             reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
                             reportDocStage.setTitle("Menù Principale");
@@ -382,10 +369,8 @@ public class ReportForm {
                     }
                 }
             } else {
-                flagReaction = false;
-                if (displayConfMessage().getResult() == ButtonType.OK) {
-                    System.out.println(flagReaction);
-                    controller.createReport(patient, reaction, vaccinations, datePickerR.getValue().toString(), flagPatient, flagReaction);
+                if (Alerts.displayConfMessage(model).getResult() == ButtonType.OK) {
+                    controller.createReport(patient, reaction, vaccinations, datePickerR.getValue().toString(), flagPatient, false);
                     try {
                         reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
                         reportDocStage.setTitle("Menù Principale");
@@ -416,23 +401,5 @@ public class ReportForm {
         TextField results = new TextField("");
         results.textProperty().bindBidirectional(boundProperty, new NumberStringConverter());
         return results;
-    }
-
-    private Dialog displayConfMessage() {
-        Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
-        dialog.setTitle("Sei sicuro di voler continuare?");
-        dialog.setHeaderText("Dottore: " + model.getUsername());
-        dialog.setContentText("Stai inserendo un report, questa azione non è reversibile.");
-        dialog.showAndWait();
-
-        return dialog;
-    }
-
-    private void displayErrorMessage() {
-        Dialog dialog = new Alert(Alert.AlertType.ERROR);
-        dialog.setTitle("Errore!");
-        dialog.setHeaderText("Hai dimenticato qualcosa.");
-        dialog.setContentText("Inserisci tutti i dati necessari prima di andare avanti");
-        dialog.showAndWait();
     }
 }
