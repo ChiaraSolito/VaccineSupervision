@@ -5,6 +5,7 @@ import Model.*;
 import Model.Utils.Exceptions.NullStringException;
 import View.Utils.Alerts;
 import View.Utils.BoundField;
+import View.Utils.VaccinesList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -260,14 +262,54 @@ public class ReportForm {
 
         //Third tab layout
         //Hidden VBoxes for new Vaccination
-        // First option: insert new reaction
+        // First option: insert new vaccination
         List<Vaccination> vaccinations = new ArrayList<>();
-
         Vaccination newVaccination = new Vaccination();
-        TextField vaccineField = BoundField.createBoundTextField(newVaccination.vaccineProperty());
-        VBox vaccineV = new VBox(10, new Text("Nome: "), vaccineField);
-        TextField typeSomministrationField = BoundField.createBoundTextField(newVaccination.typeSomministrationProperty());
-        VBox typeV = new VBox(10, new Text("Tipo della Somministrazione: "), typeSomministrationField);
+
+        //Implementazione delle dosi -> non visibili
+        MenuButton doseList = new MenuButton("Scegli il tipo di somministrazione");
+        ToggleGroup doseGroup = new ToggleGroup();
+        doseList.setVisible(false);
+
+        //Implementazione della scelta del vaccino
+        MenuButton vaccineList = new MenuButton("Scegli il vaccino effettuato");
+        ToggleGroup vaccineGroup = new ToggleGroup();
+        //popola il toggle con i vaccini da covid
+        for (String vaccine : VaccinesList.getCovidVaccinesString()) {
+            RadioMenuItem sub = new RadioMenuItem(vaccine);
+            vaccineList.getItems().add(sub);
+            sub.setToggleGroup(vaccineGroup);
+            sub.setOnAction(a -> {
+                vaccineList.setText(vaccine);
+                newVaccination.setVaccine(vaccine);
+                doseList.setVisible(true);
+            });
+        }
+        //popola il toggle con i vaccini antinfluenzali
+        for (String vaccine : VaccinesList.getInfluenceVaccines()) {
+            RadioMenuItem sub = new RadioMenuItem(vaccine);
+            vaccineList.getItems().add(sub);
+            sub.setToggleGroup(vaccineGroup);
+            sub.setOnAction(a -> {
+                vaccineList.setText(vaccine);
+                newVaccination.setVaccine(vaccine);
+                newVaccination.setTypeSomministration("Standard");
+                doseGroup.selectToggle(null);
+                doseList.setVisible(false);
+                doseList.setText("Scegli il tipo di somministrazione");
+            });
+        }
+        //populate somministration type button
+        for (String dose : new ArrayList<>(Arrays.asList("Prima dose", "Seconda dose", "Dose booster", "Unica"))) {
+            RadioMenuItem sub = new RadioMenuItem(dose);
+            doseList.getItems().add(sub);
+            sub.setToggleGroup(doseGroup);
+            sub.setOnAction(a -> {
+                doseList.setText(dose);
+                newVaccination.setTypeSomministration(dose);
+            });
+        }
+
         TextField siteField = BoundField.createBoundTextField(newVaccination.vaccinationSiteProperty());
         VBox siteV = new VBox(10, new Text("Sito della vaccinazione: "), siteField);
         DatePicker datePickerV = new DatePicker();
@@ -277,24 +319,24 @@ public class ReportForm {
         });
         VBox dateVacc = new VBox(20, new Text("Data della vaccinazione:"), datePickerV);
         Button submitVacc = new Button("Inserisci");
-
         //insert new risk and clears text fields
         submitVacc.setOnAction(e -> {
-            //controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
             Vaccination vaccination = new Vaccination();
             vaccination.setVaccine(newVaccination.getVaccine());
+            vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
             vaccination.setVaccinationDate(newVaccination.getVaccinationDate());
             vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
-            vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
             vaccinations.add(vaccination);
-            vaccineField.clear();
-            typeSomministrationField.clear();
+            vaccineGroup.selectToggle(null);
+            doseGroup.selectToggle(null);
+            vaccineList.setText("Scegli il vaccino effettuato");
+            doseList.setText("Scegli il tipo di somministrazione");
             siteField.clear();
             datePickerV.cancelEdit();
         });
 
         //Get everything in a VBox
-        VBox vaccinationVBOX = new VBox(10, vaccineV, typeV, siteV, dateVacc, submitVacc);
+        VBox vaccinationVBOX = new VBox(10, vaccineList, doseList, siteV, dateVacc, submitVacc);
         vaccinationVBOX.setPrefWidth(300);
 
         //On top are the informations
@@ -337,6 +379,7 @@ public class ReportForm {
 
 
         //Controls to submit everything in the correct way
+
         submitAll.setOnAction(e -> {
             int counter = 0;
             boolean patientFlag = false;
