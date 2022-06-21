@@ -7,13 +7,6 @@ import Model.Utils.DAOImpl.PatientDAOImpl;
 import Model.Utils.DAOImpl.VaccinationDAOImpl;
 import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
-import View.DoctorView.PatientInfo;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -25,7 +18,7 @@ public class PatientInfoController {
         Costruttore
      */
     public PatientInfoController(User model) {
-        this.model = model;
+        PatientInfoController.model = model;
     }
 
     public Patient getPatient(String patient) throws NullStringException {
@@ -80,5 +73,29 @@ public class PatientInfoController {
         return vaccinations;
     }
 
+    public int getNumberVaccination(String patient) throws NullStringException {
+        PatientDAOImpl patientDAO = new PatientDAOImpl();
+        int numberVaccinations;
 
+        try {
+            numberVaccinations = patientDAO.vaccinationsNumber(patient);
+        } catch (NullStringException e) {
+            throw new NullStringException();
+        }
+
+        return numberVaccinations;
+    }
+
+    public int getNumberReport(String patient) throws NullStringException {
+        PatientDAOImpl patientDAO = new PatientDAOImpl();
+        int numberReports;
+
+        try {
+            numberReports = patientDAO.reactionsNumber(patient);
+        } catch (NullStringException e) {
+            throw new NullStringException();
+        }
+
+        return numberReports;
+    }
 }

@@ -32,20 +32,22 @@ public class PatientInfo {
     /*
         Costruttore
      */
-    public PatientInfo(Stage stage, User model, String id) {
-        this.model = model;
-        this.patientInfoDocStage = stage;
-        controller = new PatientInfoController(model);
-        this.id = id;
+    public PatientInfo(Stage stage, User modelPI, String idPI) {
+        model = modelPI;
+        patientInfoDocStage = stage;
+        controller = new PatientInfoController(modelPI);
+        id = idPI;
     }
 
     public Parent getView() throws NullStringException {
         Patient patient = controller.getPatient(id);
         List<Report> reports = new ArrayList<>(controller.getPatientReports(id));
         List<Vaccination> vaccinations = new ArrayList<>(controller.getPatientVaccinations(id));
-        List<RiskFactor> riskFactorList = new ArrayList<>((controller.getPatient(id)).getAllRiskFactor());
+        List<RiskFactor> riskFactorList = new ArrayList<>(patient.getAllRiskFactor());
 
         // Create the GridPane for personalInfo
+        int numberVaccinations = controller.getNumberVaccination(patient.getIdPatient());
+        int numberReports = controller.getNumberReport(patient.getIdPatient());
         GridPane personalInfo = new GridPane();
         personalInfo.add(new Text("Codice paziente "), 0, 0, 1, 1);
         personalInfo.add(new Text(patient.getIdPatient()), 1, 0, 1, 1);
@@ -55,6 +57,10 @@ public class PatientInfo {
         personalInfo.add(new Text(patient.getProvince()), 3, 0, 1, 1);
         personalInfo.add(new Text("Professione "), 2, 1, 1, 1);
         personalInfo.add(new Text(patient.getProfession()), 3, 1, 1, 1);
+        personalInfo.add(new Text("Numero vaccinazioni "), 0, 2, 1, 1);
+        personalInfo.add(new Text(Integer.toString(numberVaccinations)), 1, 2, 1, 1);
+        personalInfo.add(new Text("Numero segnalazioni "), 2, 2, 1, 1);
+        personalInfo.add(new Text(Integer.toString(numberReports)), 3, 2, 1, 1);
         personalInfo.add(new Text("Fattori di rischio "), 0, 3, 1, 1);
         personalInfo.setPadding(new Insets(10, 10, 10, 30));
 
@@ -148,12 +154,12 @@ public class PatientInfo {
         return layout;
     }
 
-    public class TableObject{
-        private SimpleStringProperty id;
-        private SimpleStringProperty reaction;
-        private SimpleStringProperty reportDate;
-        private SimpleStringProperty reactionDate;
-        private SimpleStringProperty twoMonthsVaccinations;
+    public static class TableObject{
+        private final SimpleStringProperty id;
+        private final SimpleStringProperty reaction;
+        private final SimpleStringProperty reportDate;
+        private final SimpleStringProperty reactionDate;
+        private final SimpleStringProperty twoMonthsVaccinations;
 
         public TableObject(SimpleStringProperty id, SimpleStringProperty reaction, SimpleStringProperty reportDate,
                            SimpleStringProperty reactionDate, SimpleStringProperty twoMonthsVaccinations){
@@ -167,17 +173,9 @@ public class PatientInfo {
         public String getId() { return id.get(); }
         public SimpleStringProperty idProperty() { return id; }
         public void setId(String id) { this.id.set(id); }
-        public String getReaction() { return reaction.get(); }
         public SimpleStringProperty reactionProperty() { return reaction; }
-        public void setReaction(String reaction) { this.reaction.set(reaction); }
-        public String getReportDate() { return reportDate.get(); }
         public SimpleStringProperty reportDateProperty() { return reportDate; }
-        public void setReportDate(String reportDate) { this.reportDate.set(reportDate); }
-        public String getReactionDate() { return reactionDate.get(); }
         public SimpleStringProperty reactionDateProperty() { return reactionDate; }
-        public void setReactionDate(String reactionDate) { this.reactionDate.set(reactionDate); }
-        public String getTwoMonthsVaccinations() { return twoMonthsVaccinations.get(); }
         public SimpleStringProperty twoMonthsVaccinationsProperty() { return twoMonthsVaccinations; }
-        public void setTwoMonthsVaccinations(String twoMonthsVaccinations) { this.twoMonthsVaccinations.set(twoMonthsVaccinations); }
     }
 }

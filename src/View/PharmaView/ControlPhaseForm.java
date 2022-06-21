@@ -5,11 +5,14 @@ import Model.ControlPhase;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
 import View.Utils.Alerts;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -83,7 +86,29 @@ public class ControlPhaseForm {
 
         //TABLE VIEW
         TableView vaccineTable = new TableView();
+        TableColumn<TableObject, String> vaccineColumn = new TableColumn<>("Vaccino");
+        vaccineColumn.setCellValueFactory(new PropertyValueFactory<>("vaccine"));
+        vaccineColumn.setPrefWidth(100);
+        TableColumn<TableObject, String> controlPhaseColumn = new TableColumn<>("Num. proposte controllo");
+        controlPhaseColumn.setPrefWidth(200);
+        TableColumn<TableObject, String> generalCPColumn = new TableColumn<>("Totali");
+        generalCPColumn.setCellValueFactory(new PropertyValueFactory<>("generalCP"));
+        generalCPColumn.setPrefWidth(100);
+        TableColumn<TableObject, String> sixMonthsCPColumn = new TableColumn<>("Ultimi 6 mesi");
+        sixMonthsCPColumn.setCellValueFactory(new PropertyValueFactory<>("sixMonthsCP"));
+        sixMonthsCPColumn.setPrefWidth(100);
 
+        controlPhaseColumn.getColumns().addAll(generalCPColumn, sixMonthsCPColumn);
+        vaccineTable.getColumns().addAll(vaccineColumn, controlPhaseColumn);
+        for (String vaccine : controller.getAllVaccines()){
+            SimpleIntegerProperty totalNumber = new SimpleIntegerProperty(controller.getTotalNumberControlPhase(vaccine));
+            SimpleIntegerProperty sixMonthsNumber = new SimpleIntegerProperty(controller.getSixMonthsNumberControlPhase(vaccine));
+            SimpleStringProperty vaccineString = new SimpleStringProperty(vaccine);
+            vaccineTable.getItems().add(new TableObject(vaccineString, totalNumber, sixMonthsNumber));
+        }
+        vaccineTable.setPlaceholder(new Label("No rows to display"));
+
+        //BackButton
         Button backButton = new Button();
         backButton.setText("Indietro");
         backButton.setOnAction(e -> {
@@ -96,7 +121,6 @@ public class ControlPhaseForm {
                 throw new RuntimeException(ex);
             }
         });
-
 
         //Layout settings
         Insets insets = new Insets(20);
@@ -119,5 +143,37 @@ public class ControlPhaseForm {
         layout.setBottom(buttons);
         BorderPane.setMargin(buttons, insets);
         return layout;
+    }
+
+    public static class TableObject {
+        private final SimpleStringProperty vaccine;
+        private final SimpleIntegerProperty generalCP;
+        private final SimpleIntegerProperty sixMonthsCP;
+
+        public TableObject(SimpleStringProperty vaccine, SimpleIntegerProperty generalCP, SimpleIntegerProperty sixMonthsCP) {
+            this.vaccine = vaccine;
+            this.generalCP = generalCP;
+            this.sixMonthsCP = sixMonthsCP;
+        }
+
+        public String getVaccine() {
+            return vaccine.get();
+        }
+
+        public SimpleStringProperty vaccineProperty() {
+            return vaccine;
+        }
+
+        public void setVaccine(String vaccine) {
+            this.vaccine.set(vaccine);
+        }
+
+        public SimpleIntegerProperty generalCPProperty() {
+            return generalCP;
+        }
+
+        public SimpleIntegerProperty sixMonthsCPProperty() {
+            return sixMonthsCP;
+        }
     }
 }
