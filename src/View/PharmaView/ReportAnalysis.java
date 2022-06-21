@@ -2,25 +2,26 @@ package View.PharmaView;
 
 import Control.FarmacologistControl.ReportAnalysisController;
 import Model.User;
-import Model.Utils.DAOImpl.VaccinationDAOImpl;
 import Model.Utils.Exceptions.NullStringException;
-import Model.Vaccination;
 import View.Utils.VaccinesList;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class ReportAnalysis {
@@ -37,11 +38,20 @@ public class ReportAnalysis {
     public ReportAnalysis(Stage stage, User modelRA) {
         model = modelRA;
         reportAnalysisStage = stage;
-        controller = new ReportAnalysisController();
+        controller = new ReportAnalysisController(model);
     }
 
     Parent getView() throws NullStringException {
         List<String> vaccines = VaccinesList.getCovidVaccinesString();
+        Map<String, Integer> provinceReportsMap = controller.getReactionProvince();
+        ObservableList<Map.Entry<String, Integer>> items = FXCollections.observableArrayList(provinceReportsMap.entrySet());
+        Map<String, Integer> vaccinationSiteReportsMap = controller.getReactionSite();
+        ObservableList<Map.Entry<String, Integer>> items2 = FXCollections.observableArrayList(vaccinationSiteReportsMap.entrySet());
+        Map<String, Integer> totalNumberReportsMap = controller.getReactionNumber();
+        Map<String, Integer> sixMonthsNumberReportsMap = controller.getReaction6Months();
+        Map<String, Integer> severeReportsMap = controller.getReaction6Months();
+        ObservableList<Map.Entry<String, Integer>> items5 = FXCollections.observableArrayList(severeReportsMap.entrySet());
+
 
         BorderPane layout = new BorderPane();
 
@@ -53,63 +63,128 @@ public class ReportAnalysis {
 
 
         //Segnalazioni per vaccino
-        CategoryAxis xAxis = new CategoryAxis(); xAxis.setLabel("Vaccino");
-        NumberAxis yAxis = new NumberAxis(); yAxis.setLabel("Numero di Reports");
-
-        BarChart<String,Number> barChart1 = new BarChart(xAxis, yAxis);
-        barChart1.setTitle("Segnalazioni per vaccino TOTALI");
-        barChart1.setCategoryGap(20);
-
-        XYChart.Series dataSeries1 = new XYChart.Series();
-        for (String vaccine : vaccines){
-            dataSeries1.getData().add(new XYChart.Data(vaccine, 60));
+        PieChart pieChart1 = new PieChart();
+        pieChart1.setTitle("Totali");
+        for(Map.Entry<String, Integer> mod: totalNumberReportsMap.entrySet()){
+            PieChart.Data above = new PieChart.Data(mod.getKey(), mod.getValue());
+            pieChart1.getData().add(above);
         }
-        barChart1.getData().add(dataSeries1);
+        pieChart1.setLabelsVisible(true);
 
-        BarChart barChart2 = new BarChart(xAxis, yAxis);
-        barChart2.setTitle("Segnalazioni per vaccino ULTIMI 6 MESI");
-        barChart2.setCategoryGap(20);
+        PieChart pieChart2 = new PieChart();
+        pieChart2.setTitle("Ultimi 6 mesi");
+        for(Map.Entry<String, Integer> mod: sixMonthsNumberReportsMap.entrySet()){
+            PieChart.Data above = new PieChart.Data(mod.getKey(), mod.getValue());
+            pieChart2.getData().add(above);
+        }
+        pieChart2.setLabelsVisible(true);
 
-        XYChart.Series dataSeries2 = new XYChart.Series();
-        dataSeries2.getData().add(new XYChart.Data("Desktop", 567));
-        dataSeries2.getData().add(new XYChart.Data("Phone"  , 65));
-        dataSeries2.getData().add(new XYChart.Data("Tablet"  , 23));
-        barChart2.getData().add(dataSeries2);
-
-        HBox vaccineReportsCharts = new HBox(barChart1, barChart2); //2 chart
+        HBox vaccineReportsCharts = new HBox(pieChart1, pieChart2);
 
 
         //Segnalazioni gravi in settimana
-        BarChart barChart3 = new BarChart(xAxis, yAxis);
+        CategoryAxis xAxis3 = new CategoryAxis(); xAxis3.setLabel("Vaccino");
+        NumberAxis yAxis3 = new NumberAxis(); yAxis3.setLabel("Numero di Reports");
+        BarChart barChart3 = new BarChart(xAxis3, yAxis3);
         barChart3.setTitle("Segnalazioni gravi in settimana");
         barChart3.setCategoryGap(20);
+        barChart3.setLegendVisible(false);
 
-        XYChart.Series dataSeries3 = new XYChart.Series();
-/*        dataSeries3.getData().add(new XYChart.Data("Desktop", 567));
-        dataSeries3.getData().add(new XYChart.Data("Phone"  , 65));
-        dataSeries3.getData().add(new XYChart.Data("Tablet"  , 23));*/
-        barChart3.getData().add(dataSeries3);
+        XYChart.Series<String, Integer> dataSeries = new XYChart.Series();
+        for (Map.Entry<String, Integer> entry : severeReportsMap.entrySet()) {
+            String tmpString = entry.getKey();
+            Integer tmpValue = entry.getValue();
+            XYChart.Data<String, Integer> d = new XYChart.Data<>(tmpString, tmpValue);
+            dataSeries.getData().add(d);
+        }
+        barChart3.getData().add(dataSeries);
+        barChart3.setMaxWidth(450);
 
-        HBox severeReports = new HBox(); //chart a sx con numero reazioni gravi in settimana, tabella a dx
+
+        TableView severeReportsTable = new TableView();
+        TableColumn<Map.Entry<String, Integer>, String> vaccineColumn = new TableColumn<>("Vaccino");
+        vaccineColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
+                return new SimpleStringProperty(p.getValue().getKey());
+            }
+        });
+        vaccineColumn.setPrefWidth(120);
+        TableColumn<Map.Entry<String, Integer>, String> numberSevereForVaccineColumn = new TableColumn<>("#segnalazioni gravi");
+        numberSevereForVaccineColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
+                return new SimpleStringProperty(p.getValue().getValue().toString());
+            }
+        });
+        numberSevereForVaccineColumn.setPrefWidth(120);
+        severeReportsTable.getColumns().addAll(vaccineColumn, numberSevereForVaccineColumn);
+        severeReportsTable.setItems(items5);
+        severeReportsTable.setPlaceholder(new Label("No rows to display"));
+
+        HBox severeReports = new HBox(barChart3, severeReportsTable);
 
 
         //Segnalazioni per provincia (provincia residenza dei pazienti)
         TableView provinceReports = new TableView();
+        TableColumn<Map.Entry<String, Integer>, String> provinceColumn = new TableColumn<>("Provincia");
+        provinceColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
+                return new SimpleStringProperty(p.getValue().getKey());
+            }
+        });
+        provinceColumn.setPrefWidth(200);
+        TableColumn<Map.Entry<String, Integer>, String> numberForProvinceColumn = new TableColumn<>("Numero segnalazioni");
+        numberForProvinceColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
+                return new SimpleStringProperty(p.getValue().getValue().toString());
+            }
+        });
+        numberForProvinceColumn.setPrefWidth(200);
+        provinceReports.getColumns().addAll(provinceColumn, numberForProvinceColumn);
+        provinceReports.setItems(items);
+        provinceReports.setPlaceholder(new Label("No rows to display"));
+
+        HBox provinceReportsTab2 = new HBox(provinceReports);
+        provinceReportsTab2.setAlignment(Pos.CENTER);
 
 
         //Segnalazioni per sede di vaccinazione
         TableView vaccinationSiteReports = new TableView();
+        TableColumn<Map.Entry<String, Integer>, String> vaccinationSiteColumn = new TableColumn<>("Sito di vaccinazione");
+        vaccinationSiteColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
+                return new SimpleStringProperty(p.getValue().getKey());
+            }
+        });
+        vaccinationSiteColumn.setPrefWidth(200);
+        TableColumn<Map.Entry<String, Integer>, String> numberForVaccinationSiteColumn = new TableColumn<>("Numero segnalazioni");
+        numberForVaccinationSiteColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
+                return new SimpleStringProperty(p.getValue().getValue().toString());
+            }
+        });
+        numberForVaccinationSiteColumn.setPrefWidth(200);
+        vaccinationSiteReports.setItems(items2);
+        vaccinationSiteReports.getColumns().addAll(vaccinationSiteColumn, numberForVaccinationSiteColumn);
+        vaccinationSiteReports.setPlaceholder(new Label("No rows to display"));
+
+        HBox vaccinationSiteReportsTab3 = new HBox(500, vaccinationSiteReports);
+        vaccinationSiteReportsTab3.setAlignment(Pos.CENTER);
 
 
         //TabPane
         TabPane views = new TabPane();
         Tab tab1 = new Tab("per vaccino", vaccineReportsCharts);
         Tab tab2 = new Tab("gravi in settimana", severeReports);
-        Tab tab3 = new Tab("per provincia", provinceReports);
-        Tab tab4 = new Tab("per sede di vaccinazione", vaccinationSiteReports);
+        Tab tab3 = new Tab("per provincia", provinceReportsTab2);
+        Tab tab4 = new Tab("per sede di vaccinazione", vaccinationSiteReportsTab3);
         views.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         views.getTabs().addAll(tab1, tab2, tab3, tab4);
-
         layout.setCenter(views);
 
         //BackButton
