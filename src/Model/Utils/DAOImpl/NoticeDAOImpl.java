@@ -115,6 +115,8 @@ public class NoticeDAOImpl implements NoticeDAO {
     @Override
     public void createNotice(String content) throws NullStringException {
 
+        List<String> existingNotice = new ArrayList<>();
+
         if (content.isEmpty()) {
             throw new NullStringException();
         }
@@ -124,14 +126,29 @@ public class NoticeDAOImpl implements NoticeDAO {
 
         try {
             pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("INSERT INTO notice " +
-                    "VALUES( DEFAULT , '" + content + "', CURRENT_DATE)"
-            );
+            pConnection.rs = pConnection.statement.executeQuery("SELECT id FROM notice " +
+                    "WHERE content = '" + content + "' " +
+                    "AND noticedate = CURRENT_DATE");
+
+            while (pConnection.rs.next()) {
+                existingNotice.add(pConnection.rs.getString("id"));
+            }
         } catch (SQLException sqle) {
-            System.out.println("Prova");
-        } finally {
-            pConnection.closeConnection();
         }
+
+        if (existingNotice.isEmpty()) {
+            try {
+                pConnection.statement = pConnection.connection.createStatement();
+                pConnection.rs = pConnection.statement.executeQuery("INSERT INTO notice " +
+                        "VALUES( DEFAULT , '" + content + "', CURRENT_DATE)"
+                );
+            } catch (SQLException sqle) {
+                System.out.println("Error: " + sqle.getMessage());
+                sqle.printStackTrace();
+            }
+        }
+
+        pConnection.closeConnection();
 
     }
 }
