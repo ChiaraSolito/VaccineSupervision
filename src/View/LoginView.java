@@ -6,6 +6,8 @@ import View.DoctorView.MainPageDoc;
 import View.PharmaView.MainPagePharm;
 import View.Utils.Alerts;
 import View.Utils.BoundField;
+import View.Utils.Notices;
+import View.Utils.VaccinesList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -38,6 +40,8 @@ public class LoginView {
         this.primaryStage = stage;
         this.model = model;
         controller = new LoginController(model);
+        VaccinesList.populate();
+        Notices.createNotices();
     }
 
     /*
