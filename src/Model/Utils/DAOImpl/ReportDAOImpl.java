@@ -135,7 +135,7 @@ public class ReportDAOImpl implements ReportDAO {
                     "JOIN patient P ON P.idpatient = V.idpatient " +
                     "JOIN report R ON R.idpatient = V.idpatient " +
                     "JOIN reaction RE ON R.reaction = RE.name " +
-                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "WHERE V.vaccine NOT LIKE 'Antinfluenzale%' " +
                     "AND R.reportdate > current_date - 7 " +
                     "AND V.vaccinationdate > R.reportdate - 60 " +
                     "AND RE.gravity > 3 " +
@@ -170,7 +170,7 @@ public class ReportDAOImpl implements ReportDAO {
                     "JOIN patient P ON P.idpatient = V.idpatient " +
                     "JOIN report R ON R.idpatient = V.idpatient " +
                     "JOIN reaction RE ON R.reaction = RE.name " +
-                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "WHERE V.vaccine NOT LIKE 'Antinfluenzale%' " +
                     "AND V.vaccinationdate > R.reportdate - 60 " +
                     "GROUP BY V.vaccine"
             );
@@ -200,7 +200,7 @@ public class ReportDAOImpl implements ReportDAO {
                     "JOIN patient P ON P.idpatient = V.idpatient " +
                     "JOIN report R ON R.idpatient = V.idpatient " +
                     "JOIN reaction RE ON R.reaction = RE.name " +
-                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "WHERE V.vaccine NOT LIKE '%Antinfluenzale%' " +
                     "AND R.reportdate > current_date - 180 " +
                     "AND V.vaccinationdate > R.reportdate - 60 " +
                     "GROUP BY V.vaccine"
@@ -231,7 +231,7 @@ public class ReportDAOImpl implements ReportDAO {
                     "JOIN patient P ON P.idpatient = V.idpatient " +
                     "JOIN report R ON R.idpatient = V.idpatient " +
                     "JOIN reaction RE ON R.reaction = RE.name " +
-                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "WHERE V.vaccine NOT LIKE '%Antinfluenzale%' " +
                     "AND R.reportdate > current_date - 7 " +
                     "AND V.vaccinationdate > R.reportdate - 60 " +
                     "AND RE.gravity > 3 " +
@@ -263,7 +263,7 @@ public class ReportDAOImpl implements ReportDAO {
                     "JOIN patient P ON P.idpatient = V.idpatient " +
                     "JOIN report R ON R.idpatient = V.idpatient " +
                     "JOIN reaction RE ON R.reaction = RE.name " +
-                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "WHERE V.vaccine NOT LIKE 'Antinfluenzale%' " +
                     "AND V.vaccinationdate > R.reportdate - 60 " +
                     "GROUP BY V.vaccinationsite"
             );

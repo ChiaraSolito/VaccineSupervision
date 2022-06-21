@@ -4,7 +4,6 @@ import Control.FarmacologistControl.ReportAnalysisController;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
 import View.Utils.VaccinesList;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -49,7 +48,7 @@ public class ReportAnalysis {
         ObservableList<Map.Entry<String, Integer>> items2 = FXCollections.observableArrayList(vaccinationSiteReportsMap.entrySet());
         Map<String, Integer> totalNumberReportsMap = controller.getReactionNumber();
         Map<String, Integer> sixMonthsNumberReportsMap = controller.getReaction6Months();
-        Map<String, Integer> severeReportsMap = controller.getReaction6Months();
+        Map<String, Integer> severeReportsMap = controller.countVaccineSevereReaction();
         ObservableList<Map.Entry<String, Integer>> items5 = FXCollections.observableArrayList(severeReportsMap.entrySet());
 
 

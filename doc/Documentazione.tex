@@ -243,6 +243,43 @@ Nei diagrammi relativi alle azioni successive al login non si è ritenuto di agg
 \captionof{figure}{}
 \end{center}
 
+\newpage
+\section{Scelte progettuali}
+\subsection{Note sullo sviluppo}
+Si è scelto di sviluppare l'applicazione in Java, utilizzando la libreria \textbf{JavaFX}, senza l'ausilio di FXML, perché soddisfatti del design delle interfacce.\\
+Il progetto è stato interamente sviluppato utilizzando \textbf{Git} come sistema di \textit{code versioning} e GitHub per l'hosting della repository.\\
+Abbiamo seguito una metodologia di sviluppo per lo più a cascata e \textbf{Plan Driven}: le fasi di specifica e di sviluppo sono state separate, cercando di porre comunque rimedio al principale svantaggio dello stesso, ovvero la difficoltà di cambiamento dopo aver avviato il processo. Questo è stato fatto utilizzando alcune metodologie proprie dello \textbf{sviluppo Agile}, soprattutto l'attività di \textit{Pair Programming} che ha riguardato tutto lo sviluppo, con particolare attenzione allo sviluppo dei Modelli e delle prime View (si veda in seguito).\\
+Ogni area è stata divisa in task in modo da alleggerire il carico di lavoro e i design pattern sono stati scelti nella fase di sviluppo in base a quelle che erano le nostre necessità, al fine di ottenere un codice performante ma allo stesso tempo leggibile.\\
+Prima di cominciare lo sviluppo vero e proprio, si è condotta la fase di analisi dei requisiti che si è vista nella sezione precedente, generando i relativi use-cases e i diagrammi di attività. Anche la progettazione architetturale è stata fatta prima di iniziare il lavoro centrale, in
+modo da non avere problemi su quel frangente.
+\subsection{Pattern Architetturale - MVC}
+Abbiamo deciso di utilizzare il \textbf{pattern Model View Controller}, semplicemente perchè naturalmente implementabile con l'uso di JavaFX. Il sistema è strutturato in tre componenti logiche che interagiscono tra loro. Il \textbf{model} si occupa della gestione dei dati e delle operazioni su di essi. La componente \textbf{View} definisce le interfazze e come i dati vengono presentati all'utente. Il \textbf{Controller} 
+gestisce infine l'interazione delle interfacce e dell'utente con i dati.
+\begin{center}
+    \includegraphics[width=0.70\textwidth]{pictures/mvc.png}
+\captionof{figure}{Pattern MVC}
+\end{center}
+		
+\newpage
+
+\subsection{Data Access Object Pattern}
+Per la gestione dei dati si è ritenuto di utilizzare il pattern DAO, utilizzato per separare i dati di basso livello che accedono all'API dalle operazioni di alto livello.\\
+Per ogni classe del Model (e di conseguenza per quasi tutte le tabelle implementate nel DataBase) si è implementato:
+\begin{itemize}
+    \item \textbf{Interfaccia DAO} - Definisce le operazioni standard da eseguire.
+    \item \textbf{Classe concreta DAO} - Implementa l'interfaccia di cuisopra. È responsabile dell'accesso ai dati dal database.
+    \item \textbf{Model Object} - Questo è un semplice oggetto Java che contiene i metodi getter e setter per memorizzare i dati.
+\end{itemize}
+Le classi-modello implementate con il pattern DAO sono (in ordine alfabetico):
+\begin{itemize}
+    \item \textbf{ControlPhase} - Fase di Controllo effettuata dal farmacologo.
+    \item \textbf{Notice} - gli avvisi ricevuti dal farmacologo.
+    \item \textbf{Patient} - i pazienti.
+    \item \textbf{Reaction} - le reazioni avverse.
+    \item \textbf{RiskFactor} - i fattori di rischio relativi ai pazienti.
+    \item \textbf{User} - gli user che hanno accesso all'applicazione (dottori e farmacologi).
+    \item \textbf{Vaccination} - le vaccinazioni effettuate dai pazienti.
+\end{itemize}
 
 \newpage
 \section{Implementazione del DataBase}
