@@ -89,13 +89,20 @@ public class ReportList {
         Button analysisButton = new Button();
         analysisButton.setText("Analisi di base");
         analysisButton.setOnAction(e -> {
-            System.out.println("Hai cliccato Analisi di base!");
+            try {
+                reportListStage.setScene(new Scene(new ReportAnalysis(reportListStage, model).getView(), 700, 400));
+                reportListStage.setTitle("Analisi di base");
+                reportListStage.setResizable(false);
+                reportListStage.show();
+            } catch (NullStringException ex){
+                throw new RuntimeException(ex);
+            }
         });
 
-        HBox buttons = new HBox(500, backButton, analysisButton);
+        HBox buttons = new HBox(520, backButton, analysisButton);
         BorderPane.setAlignment(buttons, Pos.BOTTOM_CENTER);
         layout.setBottom(buttons);
-        BorderPane.setMargin(buttons, new Insets(10));
+        BorderPane.setMargin(buttons, new Insets(5));
 
         return layout;
     }
