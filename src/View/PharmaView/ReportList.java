@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -84,9 +85,17 @@ public class ReportList {
                 throw new RuntimeException(ex);
             }
         });
-        layout.setBottom(backButton);
-        layout.setAlignment(backButton, Pos.CENTER_LEFT);
-        layout.setMargin(backButton, new Insets(5, 5, 5, 5));
+
+        Button analysisButton = new Button();
+        analysisButton.setText("Analisi di base");
+        analysisButton.setOnAction(e -> {
+            System.out.println("Hai cliccato Analisi di base!");
+        });
+
+        HBox buttons = new HBox(500, backButton, analysisButton);
+        BorderPane.setAlignment(buttons, Pos.BOTTOM_CENTER);
+        layout.setBottom(buttons);
+        BorderPane.setMargin(buttons, new Insets(10));
 
         return layout;
     }
