@@ -4,6 +4,7 @@ import Model.ControlPhase;
 import Model.DataBase.DataBaseConnection;
 import Model.Utils.DAO.ControlPhaseDAO;
 import Model.Utils.Exceptions.NullStringException;
+import View.Utils.Alerts;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.SQLException;
@@ -151,8 +152,8 @@ public class ControlPhaseDAOImpl implements ControlPhaseDAO {
                     "VALUES('" + pharmacologist + "', '" + vaccine + "', CURRENT_DATE)"
             );
         } catch (SQLException sqle) {
+            Alerts.displayCPhaseError();
             System.out.println("Error: " + sqle.getMessage());
-            sqle.printStackTrace();
         } finally {
             pConnection.closeConnection();
         }

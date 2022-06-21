@@ -38,4 +38,12 @@ public class Alerts {
         dialog.setContentText("Parte delle informazioni inserite per il paziente sono errate, non possibili o non accettate.");
         dialog.showAndWait();
     }
+
+    public static void displayCPhaseError() {
+        Alert dialog = new Alert(Alert.AlertType.ERROR);
+        dialog.setTitle("Proposta fase di controllo già inserita");
+        dialog.setHeaderText("In data odierna hai già proposto una fase di controllo su questo vaccino.");
+        dialog.setContentText("Per inserire una nuova proposta per questo vaccino riprova in una data diversa.");
+        dialog.showAndWait();
+    }
 }
