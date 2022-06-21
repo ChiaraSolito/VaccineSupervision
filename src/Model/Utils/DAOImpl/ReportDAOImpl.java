@@ -10,7 +10,9 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReportDAOImpl implements ReportDAO {
     DataBaseConnection pConnection;
@@ -135,7 +137,7 @@ public class ReportDAOImpl implements ReportDAO {
                     "JOIN reaction RE ON R.reaction = RE.name " +
                     "WHERE V.vaccine <> 'Antinfluenzale%' " +
                     "AND R.reportdate > current_date - 7 " +
-                    "AND V.vaccinationdate > current_date - 60 " +
+                    "AND V.vaccinationdate > R.reportdate - 60 " +
                     "AND RE.gravity > 3 " +
                     "GROUP BY V.vaccine"
             );
@@ -153,6 +155,155 @@ public class ReportDAOImpl implements ReportDAO {
         }
 
         return vaccines;
+    }
+
+    //Conta le reazioni per vaccini covid nel totale
+    public Map<String, Integer> getReactionNumber() {
+        Map<String, Integer> vaccineReactions = new HashMap<>();
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT V.vaccine, COUNT(V.vaccine) FROM vaccination V " +
+                    "JOIN patient P ON P.idpatient = V.idpatient " +
+                    "JOIN report R ON R.idpatient = V.idpatient " +
+                    "JOIN reaction RE ON R.reaction = RE.name " +
+                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "AND V.vaccinationdate > R.reportdate - 60 " +
+                    "GROUP BY V.vaccine"
+            );
+            while (pConnection.rs.next()) {
+                vaccineReactions.put(pConnection.rs.getString("vaccine"), pConnection.rs.getInt("count"));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return vaccineReactions;
+    }
+
+    //Conta le reazioni per vaccini covid negli ultimi 6 mesi
+    public Map<String, Integer> getReaction6Months() {
+        Map<String, Integer> vaccineReactions = new HashMap<>();
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT V.vaccine, COUNT(V.vaccine) FROM vaccination V " +
+                    "JOIN patient P ON P.idpatient = V.idpatient " +
+                    "JOIN report R ON R.idpatient = V.idpatient " +
+                    "JOIN reaction RE ON R.reaction = RE.name " +
+                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "AND R.reportdate > current_date - 180 " +
+                    "AND V.vaccinationdate > R.reportdate - 60 " +
+                    "GROUP BY V.vaccine"
+            );
+            while (pConnection.rs.next()) {
+                vaccineReactions.put(pConnection.rs.getString("vaccine"), pConnection.rs.getInt("count"));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return vaccineReactions;
+    }
+
+    //Conta il numero di reazioni per vaccino che sono di gravità maggiore di 3 e nella settimana
+    public Map<String, Integer> countVaccineSevereReaction() {
+        Map<String, Integer> vaccineReactions = new HashMap<>();
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT V.vaccine, COUNT(V.vaccine) FROM vaccination V " +
+                    "JOIN patient P ON P.idpatient = V.idpatient " +
+                    "JOIN report R ON R.idpatient = V.idpatient " +
+                    "JOIN reaction RE ON R.reaction = RE.name " +
+                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "AND R.reportdate > current_date - 7 " +
+                    "AND V.vaccinationdate > R.reportdate - 60 " +
+                    "AND RE.gravity > 3 " +
+                    "GROUP BY V.vaccine"
+            );
+            while (pConnection.rs.next()) {
+                vaccineReactions.put(pConnection.rs.getString("vaccine"), pConnection.rs.getInt("count"));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return vaccineReactions;
+    }
+
+    //Conta il numero di reazioni per luogo di vaccinazione
+    public Map<String, Integer> getReactionSite() {
+        Map<String, Integer> vaccineReactions = new HashMap<>();
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT V.vaccinationsite, COUNT(V.vaccinationsite) FROM vaccination V " +
+                    "JOIN patient P ON P.idpatient = V.idpatient " +
+                    "JOIN report R ON R.idpatient = V.idpatient " +
+                    "JOIN reaction RE ON R.reaction = RE.name " +
+                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "AND V.vaccinationdate > R.reportdate - 60 " +
+                    "GROUP BY V.vaccinationsite"
+            );
+            while (pConnection.rs.next()) {
+                vaccineReactions.put(pConnection.rs.getString("vaccinationsite"), pConnection.rs.getInt("count"));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return vaccineReactions;
+    }
+
+    //Conta per provincia
+    public Map<String, Integer> getReactionProvince() {
+        Map<String, Integer> vaccineReactions = new HashMap<>();
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT P.province, COUNT(P.province) FROM patient P " +
+                    "JOIN report R ON R.idpatient = P.idpatient " +
+                    "GROUP BY P.province"
+            );
+            while (pConnection.rs.next()) {
+                vaccineReactions.put(pConnection.rs.getString("province"), pConnection.rs.getInt("count"));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return vaccineReactions;
     }
 }
 
