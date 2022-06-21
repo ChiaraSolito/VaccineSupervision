@@ -1,5 +1,6 @@
 import Model.User;
 import View.LoginView;
+import View.Utils.Notices;
 import View.Utils.VaccinesList;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         VaccinesList.populate();
+        Notices.createNotices();
         primaryStage.setTitle("Drug Supervision - Login");
         primaryStage.setScene(new Scene(new LoginView(primaryStage, new User()).getView(), 700, 400));
         primaryStage.setResizable(false);

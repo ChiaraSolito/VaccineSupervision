@@ -1,7 +1,6 @@
 package Model.Utils.DAOImpl;
 
 import Model.DataBase.DataBaseConnection;
-import Model.Patient;
 import Model.Report;
 import Model.Utils.DAO.ReportDAO;
 import Model.Utils.Exceptions.NullStringException;
@@ -17,13 +16,9 @@ public class ReportDAOImpl implements ReportDAO {
     DataBaseConnection pConnection;
 
     @Override
-    public List<Report> getAllReports(String username) throws NullStringException {
+    public List<Report> getAllReports() throws NullStringException {
 
         List<Report> reports = new ArrayList<>();
-
-        if(username.isEmpty()){
-            throw new NullStringException();
-        }
 
         pConnection = new DataBaseConnection();
         pConnection.openConnection();
@@ -63,7 +58,7 @@ public class ReportDAOImpl implements ReportDAO {
                     ));
                 }
             }
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             System.out.println("Error: " + sqle.getMessage());
             sqle.printStackTrace();
         } finally {
@@ -101,4 +96,63 @@ public class ReportDAOImpl implements ReportDAO {
         }
 
     }
+
+    public int getReportNumber() {
+        int reportNumber = 0;
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT COUNT(DISTINCT id) FROM report " +
+                    "WHERE reportdate >= CURRENT_DATE - 7");
+            while (pConnection.rs.next()) {
+                reportNumber = pConnection.rs.getInt("count");
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return reportNumber;
+    }
+
+    public List<String> countSevereReaction() {
+        List<String> vaccines = new ArrayList<>();
+        int countV = 0;
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT V.vaccine, COUNT(V.vaccine) FROM vaccination V " +
+                    "JOIN patient P ON P.idpatient = V.idpatient " +
+                    "JOIN report R ON R.idpatient = V.idpatient " +
+                    "JOIN reaction RE ON R.reaction = RE.name " +
+                    "WHERE V.vaccine <> 'Antinfluenzale%' " +
+                    "AND R.reportdate > current_date - 7 " +
+                    "AND V.vaccinationdate > current_date - 60 " +
+                    "AND RE.gravity > 3 " +
+                    "GROUP BY V.vaccine"
+            );
+            while (pConnection.rs.next()) {
+                countV = pConnection.rs.getInt("count");
+                if (countV > 5) {
+                    vaccines.add(pConnection.rs.getString("vaccine"));
+                }
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return vaccines;
+    }
 }
+

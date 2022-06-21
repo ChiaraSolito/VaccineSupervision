@@ -128,8 +128,7 @@ public class NoticeDAOImpl implements NoticeDAO {
                     "VALUES( DEFAULT , '" + content + "', CURRENT_DATE)"
             );
         } catch (SQLException sqle) {
-            System.out.println("Error: " + sqle.getMessage());
-            sqle.printStackTrace();
+            System.out.println("Prova");
         } finally {
             pConnection.closeConnection();
         }

@@ -22,7 +22,7 @@ public class ReportListController {
         List<Report> reports = new ArrayList<>();
 
         try{
-            reports = reportDAO.getAllReports(model.getUsername());
+            reports = reportDAO.getAllReports();
         } catch (NullStringException nse){
             System.err.println("String Error: ");
             nse.printStackTrace();
