@@ -57,7 +57,7 @@
             
     \end{center}
 \end{titlepage}
-La presente è la documentazione blablabla.\\
+La presente è la documentazione del progetto del corso di Ingegneria del Software, svolto nel contesto della laurea triennale in bioinformatica.\\
 Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  con cui è stato generato.
 \tableofcontents
 \thispagestyle{empty}
@@ -312,9 +312,6 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
         \captionof{figure}{Interazione tra le classi del Controller del Dottore e i dati a cui ha accesso}
         \end{center}
 
-
-
-
 \newpage
     \section{Implementazione del DataBase}
     Come richiesto dalla traccia si è implementato un database con cui l'applicazione potesse interagire.\\
@@ -324,6 +321,20 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
             \captionof{figure}{Schema ER da modificare!}
         \end{center}
 %Aggiungere Relazionale
+
+\newpage
+    \section{Fase di Test}
+    Il test dell'applicazione è stato iniziato in concomitanza con il termine del primo prototipo, in accordo con la metodologia di sviluppo Plan-Driven adottata.\\
+    Si è divisa la fase di test in 4 fasi principali:
+    \begin{enumerate}
+        \item Verifica interna della consistenza dell'applicazione rispetto all'analisi dei requisiti.
+        \item \textbf{Test di sviluppo}, implementati come unit test automatizzato mediante JUnit per verificare la correttezza di
+        alcune delle classi più problematiche.
+        \item \textbf{Test di release}, consistente in alcuni stress test, con un team simulato di colleghi esterni allo sviluppo dell'applicazione.
+        \item \textbf{Test degli utenti}, in cui si è scelto un campione di conoscenti senza background informatico che verificassero il software facendo le veci di utenti reali in situazioni reali.
+    \end{enumerate}
+    \subsection*{Nota}
+        Il primo prototipo è da intendersi come la prima versione con tutte le features implementate ma senza aver passato il testing.
 
 \newpage
     \section*{Appendice A: Query di creazione Database}
