@@ -293,15 +293,25 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
         \end{center}
 \newpage
     \paragraph*{Classi della View}
+        \subparagraph*{Nota} Non si sono inserite nel diagramma le classi considerate \textit{Utils}, quindi le classi che ad esempio generano gli avvisi, i messaggi di errore o la lista dei vaccini possibili.
         \begin{center}
             \includegraphics[width=1\textwidth]{pictures/ViewInteraction.png}
         \captionof{figure}{Interazione tra le classi della View}
         \end{center}
+\newpage
     \paragraph*{Esempio Interazione View - Controller}
+        \subparagraph*{Nota} Si è scelto di riportare come \textit{Class Diagram} solo un esempio di \textbf{interazione tra Vista e Controllore}, perché esemplificativa delle interazioni generali tra questi due.\\
+        La vista chiama i metodi del controllore per poter interagire con i dati, a cui il controllore ha accesso (si veda la prossima DAO).
         \begin{center}
             \includegraphics[width=1\textwidth]{pictures/ExampleControlViewInteraction.png}
         \captionof{figure}{Interazione tra le classi della View Farmacologo e i loro controller}
         \end{center}
+    \paragraph*{Esempio Interazione DAO - Controller}
+        \begin{center}
+            \includegraphics[width=1\textwidth]{pictures/ControllerDati.png}
+        \captionof{figure}{Interazione tra le classi del Controller del Dottore e i dati a cui ha accesso}
+        \end{center}
+
 
 
 
