@@ -17,7 +17,7 @@ public class ControlPhaseController {
 
         VaccinationDAOImpl vaccinationDAO = new VaccinationDAOImpl();
 
-        return FXCollections.observableArrayList(vaccinationDAO.getAllVaccines());
+        return FXCollections.observableArrayList(vaccinationDAO.getAllCovidVaccines());
     }
 
     public void addControlPhase(ControlPhase controlPhase) {

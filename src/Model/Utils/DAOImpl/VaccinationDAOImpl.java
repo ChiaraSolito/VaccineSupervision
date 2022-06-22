@@ -138,4 +138,30 @@ public class VaccinationDAOImpl implements VaccinationDAO {
 
         return vaccines;
     }
+
+    public List<String> getAllCovidVaccines() {
+
+        List<String> vaccines = new ArrayList<>();
+
+        pConnection = new DataBaseConnection();
+        pConnection.openConnection();
+
+        try {
+
+            pConnection.statement = pConnection.connection.createStatement();
+            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT vaccine " +
+                    "FROM vaccination " +
+                    "WHERE vaccine NOT LIKE '%Antinfluenzale%'");
+            while (pConnection.rs.next()) {
+                vaccines.add(pConnection.rs.getString("vaccine"));
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error: " + sqle.getMessage());
+            sqle.printStackTrace();
+        } finally {
+            pConnection.closeConnection();
+        }
+
+        return vaccines;
+    }
 }
