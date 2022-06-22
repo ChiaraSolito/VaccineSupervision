@@ -15,4 +15,5 @@ public interface VaccinationDAO {
     List<Vaccination> getTwoMonthsVaccination(String idPatient, String reactionDate) throws NullStringException;
 
     List<String> getAllVaccines();
+    List<String> getAllCovidVaccines();
 }

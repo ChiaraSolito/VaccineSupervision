@@ -21,5 +21,6 @@ public interface ReportDAO {
     Map<String, Integer> countVaccineSevereReaction();
 
     Map<String, Integer> getReactionSite();
+    Map<String, Integer> getReactionProvince();
 
 }
