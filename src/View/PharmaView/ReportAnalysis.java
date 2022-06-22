@@ -12,8 +12,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.Map;
@@ -46,10 +47,12 @@ public class ReportAnalysis {
         Map<String, Integer> severeReportsMap = controller.countVaccineSevereReaction();
         ObservableList<Map.Entry<String, Integer>> items5 = FXCollections.observableArrayList(severeReportsMap.entrySet());
 
+
         BorderPane layout = new BorderPane();
 
         //Title
         Label title = new Label("Analisi di base dei reports");
+        title.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         layout.setTop(title);
         BorderPane.setAlignment(title, Pos.TOP_CENTER);
         BorderPane.setMargin(title, new Insets(5));
@@ -58,19 +61,37 @@ public class ReportAnalysis {
         //Segnalazioni per vaccino
         PieChart pieChart1 = new PieChart();
         pieChart1.setTitle("Totali");
+        int sum = 0;
         for(Map.Entry<String, Integer> mod: totalNumberReportsMap.entrySet()){
             PieChart.Data above = new PieChart.Data(mod.getKey(), mod.getValue());
             pieChart1.getData().add(above);
+            sum += mod.getValue();
         }
         pieChart1.setLabelsVisible(true);
 
+        int finalSum = sum;
+        pieChart1.getData().forEach(data -> {
+            String percentage = String.format("%.0f / %d", data.getPieValue(), finalSum);
+            Tooltip tooltip = new Tooltip(percentage);
+            Tooltip.install(data.getNode(), tooltip);
+        });
+
         PieChart pieChart2 = new PieChart();
-        pieChart2.setTitle("Ultimi 6 mesi");
+        int sum2 = 0;
         for(Map.Entry<String, Integer> mod: sixMonthsNumberReportsMap.entrySet()){
             PieChart.Data above = new PieChart.Data(mod.getKey(), mod.getValue());
             pieChart2.getData().add(above);
+            sum2 += mod.getValue();
         }
         pieChart2.setLabelsVisible(true);
+
+        int finalSum2 = sum2;
+        pieChart2.setTitle("Ultimi 6 mesi");
+        pieChart2.getData().forEach(data -> {
+            String percentage = String.format("%.0f / %d", data.getPieValue(), finalSum2);
+            Tooltip tooltip = new Tooltip(percentage);
+            Tooltip.install(data.getNode(), tooltip);
+        });
 
         HBox vaccineReportsCharts = new HBox(pieChart1, pieChart2);
 
@@ -105,6 +126,7 @@ public class ReportAnalysis {
         severeReportsTable.getColumns().add(numberSevereForVaccineColumn);
         severeReportsTable.setItems(items5);
         severeReportsTable.setPlaceholder(new Label("No rows to display"));
+
 
         HBox severeReports = new HBox(barChart3, severeReportsTable);
 
@@ -152,6 +174,7 @@ public class ReportAnalysis {
         views.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         views.getTabs().addAll(tab1, tab2, tab3, tab4);
         layout.setCenter(views);
+        BorderPane.setMargin(views, new Insets(5));
 
         //BackButton
         Button backButton = new Button();
@@ -159,7 +182,7 @@ public class ReportAnalysis {
         backButton.setOnAction(e -> {
             try {
                 reportAnalysisStage.setScene(new Scene(new ReportList(reportAnalysisStage, model).getView(), 700, 400));
-                reportAnalysisStage.setTitle("Menù principale");
+                reportAnalysisStage.setTitle("Lista segnalazioni");
                 reportAnalysisStage.setResizable(false);
                 reportAnalysisStage.show();
             } catch (NullStringException ex){
