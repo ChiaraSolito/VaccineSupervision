@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -30,35 +29,39 @@ public class ReportList {
     public ReportList(Stage stage, User modelG) {
         model = modelG;
         reportListStage = stage;
-        controller = new ReportListController(model);
+        controller = new ReportListController();
     }
 
     Parent getView() throws NullStringException {
-        //ObservableList<Report> reports = FXCollections.observableArrayList(controller.getReportList());
         List<Report> reports = new ArrayList<>(controller.getReportList());
 
         //Create the TableView
-        TableView reportList = new TableView();
+        TableView<TableObject> reportList = new TableView<>();
         TableColumn<TableObject, String> idColumn = new TableColumn<>("Codice report");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(p -> p.getValue().idProperty());
         idColumn.setPrefWidth(100);
+        reportList.getColumns().add(idColumn);
         TableColumn<TableObject, String> doctorColumn = new TableColumn<>("Codice dottore");
-        doctorColumn.setCellValueFactory(new PropertyValueFactory<>("doctor"));
+        doctorColumn.setCellValueFactory(p -> p.getValue().doctorProperty());
         doctorColumn.setPrefWidth(100);
+        reportList.getColumns().add(doctorColumn);
         TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
-        reactionColumn.setCellValueFactory(new PropertyValueFactory<>("reaction"));
+        reactionColumn.setCellValueFactory(p -> p.getValue().reactionProperty());
         reactionColumn.setPrefWidth(100);
+        reportList.getColumns().add(reactionColumn);
         TableColumn<TableObject, String> reportDateColumn = new TableColumn<>("Data report");
-        reportDateColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
+        reportDateColumn.setCellValueFactory(p -> p.getValue().reportDateProperty());
         reportDateColumn.setPrefWidth(100);
+        reportList.getColumns().add(reportDateColumn);
         TableColumn<TableObject, String> reactionDateColumn = new TableColumn<>("Data reazione");
-        reactionDateColumn.setCellValueFactory(new PropertyValueFactory<>("reactionDate"));
+        reactionDateColumn.setCellValueFactory(p -> p.getValue().reactionDateProperty());
         reactionDateColumn.setPrefWidth(100);
+        reportList.getColumns().add(reactionColumn);
         TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni due mesi precedenti alla reazione");
-        vaccinationColumn.setCellValueFactory(new PropertyValueFactory<>("twoMonthsVaccinations"));
+        vaccinationColumn.setCellValueFactory(p -> p.getValue().twoMonthsVaccinationsProperty());
         vaccinationColumn.setPrefWidth(200);
+        reportList.getColumns().add(vaccinationColumn);
 
-        reportList.getColumns().addAll(idColumn, doctorColumn, reactionColumn, reportDateColumn, reactionDateColumn, vaccinationColumn);
         for (Report report : reports){
             List<Vaccination> twoMonthsVaccinations = controller.getPatientTwoMonthsVaccination(report.getPatient(), report.getReactionDate());
             String vaccinationString = twoMonthsVaccinations.stream().map(Vaccination::toString).collect(Collectors.joining("\n"));

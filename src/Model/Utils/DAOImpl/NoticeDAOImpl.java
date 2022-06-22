@@ -133,7 +133,7 @@ public class NoticeDAOImpl implements NoticeDAO {
             while (pConnection.rs.next()) {
                 existingNotice.add(pConnection.rs.getString("id"));
             }
-        } catch (SQLException sqle) {
+        } catch (SQLException ignored) {
         }
 
         if (existingNotice.isEmpty()) {

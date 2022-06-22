@@ -5,7 +5,6 @@ import Model.Report;
 import Model.Utils.DAO.ReportDAO;
 import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.SQLException;
@@ -52,7 +51,7 @@ public class ReportDAOImpl implements ReportDAO {
 
                 while (pConnection.rs.next()) {
                     r.addVaccination(new Vaccination(
-                            new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                            new SimpleStringProperty(pConnection.rs.getString("idpatient")),
                             new SimpleStringProperty(pConnection.rs.getString("vaccine")),
                             new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
                             new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),
@@ -124,7 +123,7 @@ public class ReportDAOImpl implements ReportDAO {
 
     public List<String> countSevereReaction() {
         List<String> vaccines = new ArrayList<>();
-        int countV = 0;
+        int countV;
 
         pConnection = new DataBaseConnection();
         pConnection.openConnection();

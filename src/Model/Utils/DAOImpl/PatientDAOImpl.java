@@ -84,7 +84,7 @@ public class PatientDAOImpl implements PatientDAO {
 
                 while (pConnection.rs.next()) {
                     r.addVaccination(new Vaccination(
-                            new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                            new SimpleStringProperty(pConnection.rs.getString("idpatient")),
                             new SimpleStringProperty(pConnection.rs.getString("vaccine")),
                             new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
                             new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),
@@ -165,7 +165,7 @@ public class PatientDAOImpl implements PatientDAO {
 
             while (pConnection.rs.next()) {
                 vaccinations.add(new Vaccination(
-                        new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("idpatient")),
                         new SimpleStringProperty(pConnection.rs.getString("vaccine")),
                         new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
                         new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),

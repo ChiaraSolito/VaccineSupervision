@@ -3,9 +3,7 @@ package View.PharmaView;
 import Control.FarmacologistControl.ReportAnalysisController;
 import Model.User;
 import Model.Utils.Exceptions.NullStringException;
-import View.Utils.VaccinesList;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -17,9 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
-import java.util.List;
 import java.util.Map;
 
 
@@ -37,11 +33,10 @@ public class ReportAnalysis {
     public ReportAnalysis(Stage stage, User modelRA) {
         model = modelRA;
         reportAnalysisStage = stage;
-        controller = new ReportAnalysisController(model);
+        controller = new ReportAnalysisController();
     }
 
     Parent getView() throws NullStringException {
-        List<String> vaccines = VaccinesList.getCovidVaccinesString();
         Map<String, Integer> provinceReportsMap = controller.getReactionProvince();
         ObservableList<Map.Entry<String, Integer>> items = FXCollections.observableArrayList(provinceReportsMap.entrySet());
         Map<String, Integer> vaccinationSiteReportsMap = controller.getReactionSite();
@@ -51,14 +46,13 @@ public class ReportAnalysis {
         Map<String, Integer> severeReportsMap = controller.countVaccineSevereReaction();
         ObservableList<Map.Entry<String, Integer>> items5 = FXCollections.observableArrayList(severeReportsMap.entrySet());
 
-
         BorderPane layout = new BorderPane();
 
         //Title
         Label title = new Label("Analisi di base dei reports");
         layout.setTop(title);
-        layout.setAlignment(title, Pos.TOP_CENTER);
-        layout.setMargin(title, new Insets(5));
+        BorderPane.setAlignment(title, Pos.TOP_CENTER);
+        BorderPane.setMargin(title, new Insets(5));
 
 
         //Segnalazioni per vaccino
@@ -84,40 +78,31 @@ public class ReportAnalysis {
         //Segnalazioni gravi in settimana
         CategoryAxis xAxis3 = new CategoryAxis(); xAxis3.setLabel("Vaccino");
         NumberAxis yAxis3 = new NumberAxis(); yAxis3.setLabel("Numero di Reports");
-        BarChart barChart3 = new BarChart(xAxis3, yAxis3);
+        BarChart<String, Number> barChart3 = new BarChart<>(xAxis3, yAxis3);
         barChart3.setTitle("Segnalazioni gravi in settimana");
         barChart3.setCategoryGap(20);
         barChart3.setLegendVisible(false);
 
-        XYChart.Series<String, Integer> dataSeries = new XYChart.Series();
+        XYChart.Series<String, Number> dataSeries = new XYChart.Series<>();
         for (Map.Entry<String, Integer> entry : severeReportsMap.entrySet()) {
             String tmpString = entry.getKey();
-            Integer tmpValue = entry.getValue();
-            XYChart.Data<String, Integer> d = new XYChart.Data<>(tmpString, tmpValue);
+            Number tmpValue = entry.getValue();
+            XYChart.Data<String, Number> d = new XYChart.Data<>(tmpString, tmpValue);
             dataSeries.getData().add(d);
         }
         barChart3.getData().add(dataSeries);
         barChart3.setMaxWidth(450);
 
 
-        TableView severeReportsTable = new TableView();
+        TableView<Map.Entry<String, Integer>> severeReportsTable = new TableView<>();
         TableColumn<Map.Entry<String, Integer>, String> vaccineColumn = new TableColumn<>("Vaccino");
-        vaccineColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
-                return new SimpleStringProperty(p.getValue().getKey());
-            }
-        });
+        vaccineColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
         vaccineColumn.setPrefWidth(120);
+        severeReportsTable.getColumns().add(vaccineColumn);
         TableColumn<Map.Entry<String, Integer>, String> numberSevereForVaccineColumn = new TableColumn<>("#segnalazioni gravi");
-        numberSevereForVaccineColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
-                return new SimpleStringProperty(p.getValue().getValue().toString());
-            }
-        });
+        numberSevereForVaccineColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
         numberSevereForVaccineColumn.setPrefWidth(120);
-        severeReportsTable.getColumns().addAll(vaccineColumn, numberSevereForVaccineColumn);
+        severeReportsTable.getColumns().add(numberSevereForVaccineColumn);
         severeReportsTable.setItems(items5);
         severeReportsTable.setPlaceholder(new Label("No rows to display"));
 
@@ -125,24 +110,15 @@ public class ReportAnalysis {
 
 
         //Segnalazioni per provincia (provincia residenza dei pazienti)
-        TableView provinceReports = new TableView();
+        TableView<Map.Entry<String, Integer>> provinceReports = new TableView<>();
         TableColumn<Map.Entry<String, Integer>, String> provinceColumn = new TableColumn<>("Provincia");
-        provinceColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
-                return new SimpleStringProperty(p.getValue().getKey());
-            }
-        });
+        provinceColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
         provinceColumn.setPrefWidth(200);
+        provinceReports.getColumns().add(provinceColumn);
         TableColumn<Map.Entry<String, Integer>, String> numberForProvinceColumn = new TableColumn<>("Numero segnalazioni");
-        numberForProvinceColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
-                return new SimpleStringProperty(p.getValue().getValue().toString());
-            }
-        });
+        numberForProvinceColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
         numberForProvinceColumn.setPrefWidth(200);
-        provinceReports.getColumns().addAll(provinceColumn, numberForProvinceColumn);
+        provinceReports.getColumns().add(numberForProvinceColumn);
         provinceReports.setItems(items);
         provinceReports.setPlaceholder(new Label("No rows to display"));
 
@@ -151,25 +127,16 @@ public class ReportAnalysis {
 
 
         //Segnalazioni per sede di vaccinazione
-        TableView vaccinationSiteReports = new TableView();
+        TableView<Map.Entry<String, Integer>> vaccinationSiteReports = new TableView<>();
         TableColumn<Map.Entry<String, Integer>, String> vaccinationSiteColumn = new TableColumn<>("Sito di vaccinazione");
-        vaccinationSiteColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
-                return new SimpleStringProperty(p.getValue().getKey());
-            }
-        });
+        vaccinationSiteColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
         vaccinationSiteColumn.setPrefWidth(200);
+        vaccinationSiteReports.getColumns().add(vaccinationSiteColumn);
         TableColumn<Map.Entry<String, Integer>, String> numberForVaccinationSiteColumn = new TableColumn<>("Numero segnalazioni");
-        numberForVaccinationSiteColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) {
-                return new SimpleStringProperty(p.getValue().getValue().toString());
-            }
-        });
+        numberForVaccinationSiteColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
         numberForVaccinationSiteColumn.setPrefWidth(200);
+        vaccinationSiteReports.getColumns().add(numberForVaccinationSiteColumn);
         vaccinationSiteReports.setItems(items2);
-        vaccinationSiteReports.getColumns().addAll(vaccinationSiteColumn, numberForVaccinationSiteColumn);
         vaccinationSiteReports.setPlaceholder(new Label("No rows to display"));
 
         HBox vaccinationSiteReportsTab3 = new HBox(500, vaccinationSiteReports);
@@ -201,7 +168,7 @@ public class ReportAnalysis {
         });
 
         layout.setBottom(backButton);
-        layout.setMargin(backButton, new Insets(5));
+        BorderPane.setMargin(backButton, new Insets(5));
 
         return layout;
     }

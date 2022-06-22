@@ -34,9 +34,9 @@ public class PatientsList extends Parent {
     /*
         Costruttore
      */
-    public PatientsList(Stage stage, User model) {
-        this.model = model;
-        this.listDocStage = stage;
+    public PatientsList(Stage stage, User modelPL) {
+        model = modelPL;
+        listDocStage = stage;
         controller = new PatientListController(model);
     }
 
@@ -104,8 +104,8 @@ public class PatientsList extends Parent {
             }
         });
         layout.setBottom(backButton);
-        layout.setAlignment(backButton, Pos.CENTER_LEFT);
-        layout.setMargin(backButton, new Insets(5, 5, 5, 5));
+        BorderPane.setAlignment(backButton, Pos.CENTER_LEFT);
+        BorderPane.setMargin(backButton, new Insets(5, 5, 5, 5));
 
 
         return layout;

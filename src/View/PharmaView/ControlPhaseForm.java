@@ -85,21 +85,24 @@ public class ControlPhaseForm {
         });
 
         //TABLE VIEW
-        TableView vaccineTable = new TableView();
+        TableView<TableObject> vaccineTable = new TableView<>();
         TableColumn<TableObject, String> vaccineColumn = new TableColumn<>("Vaccino");
-        vaccineColumn.setCellValueFactory(new PropertyValueFactory<>("vaccine"));
+        vaccineColumn.setCellValueFactory(p -> p.getValue().vaccineProperty());
         vaccineColumn.setPrefWidth(100);
+        vaccineTable.getColumns().add(vaccineColumn);
         TableColumn<TableObject, String> controlPhaseColumn = new TableColumn<>("Num. proposte controllo");
         controlPhaseColumn.setPrefWidth(200);
-        TableColumn<TableObject, String> generalCPColumn = new TableColumn<>("Totali");
-        generalCPColumn.setCellValueFactory(new PropertyValueFactory<>("generalCP"));
+        TableColumn<TableObject, Number> generalCPColumn = new TableColumn<>("Totali");
+        generalCPColumn.setCellValueFactory(p -> p.getValue().generalCPProperty());
         generalCPColumn.setPrefWidth(100);
-        TableColumn<TableObject, String> sixMonthsCPColumn = new TableColumn<>("Ultimi 6 mesi");
+        controlPhaseColumn.getColumns().add(generalCPColumn);
+        TableColumn<TableObject, Number> sixMonthsCPColumn = new TableColumn<>("Ultimi 6 mesi");
         sixMonthsCPColumn.setCellValueFactory(new PropertyValueFactory<>("sixMonthsCP"));
+        sixMonthsCPColumn.setCellValueFactory(p -> p.getValue().sixMonthsCPProperty());
         sixMonthsCPColumn.setPrefWidth(100);
+        controlPhaseColumn.getColumns().add(sixMonthsCPColumn);
+        vaccineTable.getColumns().add(controlPhaseColumn);
 
-        controlPhaseColumn.getColumns().addAll(generalCPColumn, sixMonthsCPColumn);
-        vaccineTable.getColumns().addAll(vaccineColumn, controlPhaseColumn);
         for (String vaccine : controller.getAllVaccines()){
             SimpleIntegerProperty totalNumber = new SimpleIntegerProperty(controller.getTotalNumberControlPhase(vaccine));
             SimpleIntegerProperty sixMonthsNumber = new SimpleIntegerProperty(controller.getSixMonthsNumberControlPhase(vaccine));

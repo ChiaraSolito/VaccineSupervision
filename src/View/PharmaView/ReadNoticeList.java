@@ -11,7 +11,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -43,14 +42,17 @@ public class ReadNoticeList extends Parent {
         BorderPane layout = new BorderPane();
         TableView<Notice> noticeList = new TableView<>();
         TableColumn<Notice, String> idColumn = new TableColumn<>("Codice avviso");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(p -> p.getValue().idProperty());
         idColumn.setPrefWidth(125);
+        noticeList.getColumns().add(idColumn);
         TableColumn<Notice, String> contentColumn = new TableColumn<>("Content");
-        contentColumn.setCellValueFactory(new PropertyValueFactory<>("content"));
+        contentColumn.setCellValueFactory(p -> p.getValue().contentProperty());
         contentColumn.setPrefWidth(450);
+        noticeList.getColumns().add(contentColumn);
         TableColumn<Notice, String> dateColumn = new TableColumn<>("Data avviso");
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("noticeDate"));
+        dateColumn.setCellValueFactory(p -> p.getValue().noticeDateProperty());
         dateColumn.setPrefWidth(125);
+        noticeList.getColumns().add(dateColumn);
 
         contentColumn.setCellFactory(new Callback<>() {
             @Override
@@ -69,7 +71,6 @@ public class ReadNoticeList extends Parent {
             }
         });
 
-        noticeList.getColumns().addAll(idColumn, dateColumn, contentColumn);
         noticeList.setItems(notices);
         noticeList.setPlaceholder(new Label("No rows to display"));
         layout.setCenter(noticeList);
@@ -87,8 +88,8 @@ public class ReadNoticeList extends Parent {
             }
         });
         layout.setBottom(backButton);
-        layout.setAlignment(backButton, Pos.CENTER_LEFT);
-        layout.setMargin(backButton, new Insets(5, 5, 5, 5));
+        BorderPane.setAlignment(backButton, Pos.CENTER_LEFT);
+        BorderPane.setMargin(backButton, new Insets(5, 5, 5, 5));
 
         return layout;
     }

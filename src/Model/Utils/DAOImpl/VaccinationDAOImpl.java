@@ -4,7 +4,6 @@ import Model.DataBase.DataBaseConnection;
 import Model.Utils.DAO.VaccinationDAO;
 import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.SQLException;
@@ -58,7 +57,7 @@ public class VaccinationDAOImpl implements VaccinationDAO {
 
             while (pConnection.rs.next()) {
                 vaccinations.add(new Vaccination(
-                        new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("idpatient")),
                         new SimpleStringProperty(pConnection.rs.getString("vaccine")),
                         new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
                         new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),
@@ -97,7 +96,7 @@ public class VaccinationDAOImpl implements VaccinationDAO {
 
             while (pConnection.rs.next()) {
                 vaccinations.add(new Vaccination(
-                        new SimpleObjectProperty(pConnection.rs.getString("idpatient")),
+                        new SimpleStringProperty(pConnection.rs.getString("idpatient")),
                         new SimpleStringProperty(pConnection.rs.getString("vaccine")),
                         new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
                         new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),

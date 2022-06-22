@@ -1,7 +1,6 @@
 package Control.FarmacologistControl;
 
 import Model.Report;
-import Model.User;
 import Model.Utils.DAOImpl.ReportDAOImpl;
 import Model.Utils.DAOImpl.VaccinationDAOImpl;
 import Model.Utils.Exceptions.NullStringException;
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportListController {
-    private final User model;
 
-    public ReportListController(User model) {
-        this.model = model;
+    public ReportListController() {
     }
 
     public List<Report> getReportList(){

@@ -1,56 +1,41 @@
 package Control.FarmacologistControl;
 
-import Model.Notice;
-import Model.User;
-import Model.Utils.DAOImpl.NoticeDAOImpl;
 import Model.Utils.DAOImpl.ReportDAOImpl;
-import Model.Utils.Exceptions.NullStringException;
-import View.PharmaView.ReportAnalysis;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ReportAnalysisController {
 
-    private final User model;
-
-    public ReportAnalysisController(User model) { this.model = model; }
+    public ReportAnalysisController() {
+    }
 
     public Map<String, Integer> getReactionProvince() {
         ReportDAOImpl reportDAO = new ReportDAOImpl();
-        Map<String, Integer> vaccineReactions = reportDAO.getReactionProvince();
 
-        return vaccineReactions;
+        return reportDAO.getReactionProvince();
     }
 
     public Map<String, Integer> getReactionSite() {
         ReportDAOImpl reportDAO = new ReportDAOImpl();
-        Map<String, Integer> vaccineReactions = reportDAO.getReactionSite();
 
-        return vaccineReactions;
+        return reportDAO.getReactionSite();
     }
 
     public Map<String, Integer> countVaccineSevereReaction() {
         ReportDAOImpl reportDAO = new ReportDAOImpl();
-        Map<String, Integer> vaccineReactions = reportDAO.countVaccineSevereReaction();
 
-        return vaccineReactions;
+        return reportDAO.countVaccineSevereReaction();
     }
 
     public Map<String, Integer> getReaction6Months() {
         ReportDAOImpl reportDAO = new ReportDAOImpl();
-        Map<String, Integer> vaccineReactions = reportDAO.getReaction6Months();
 
-        return vaccineReactions;
+        return reportDAO.getReaction6Months();
     }
 
     public Map<String, Integer> getReactionNumber() {
         ReportDAOImpl reportDAO = new ReportDAOImpl();
-        Map<String, Integer> vaccineReactions = reportDAO.getReactionNumber();
 
-        return vaccineReactions;
+        return reportDAO.getReactionNumber();
     }
 }

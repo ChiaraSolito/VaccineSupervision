@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -64,8 +63,8 @@ public class PatientInfo {
         personalInfo.add(new Text("Fattori di rischio "), 0, 3, 1, 1);
         personalInfo.setPadding(new Insets(10, 10, 10, 30));
 
-        ListView riskFactorsListView = new ListView();
-       for (RiskFactor riskfactor : riskFactorList) {
+        ListView<String> riskFactorsListView = new ListView<>();
+        for (RiskFactor riskfactor : riskFactorList) {
             riskFactorsListView.getItems().add(riskfactor.getName());
         }
         personalInfo.add(riskFactorsListView, 0, 4, 2, 1);
@@ -74,21 +73,24 @@ public class PatientInfo {
 
 
         //Create the TableView for vaccinations
-        TableView vaccinationsInfo = new TableView<>();
+        TableView<Vaccination> vaccinationsInfo = new TableView<>();
         TableColumn<Vaccination, String> vaccineColumn = new TableColumn<>("Vaccino");
-        vaccineColumn.setCellValueFactory(new PropertyValueFactory<>("vaccine"));
+        vaccineColumn.setCellValueFactory(p -> p.getValue().vaccineProperty());
         vaccineColumn.setPrefWidth(175);
+        vaccinationsInfo.getColumns().add(vaccineColumn);
         TableColumn<Vaccination, String> typeSomministrationColumn = new TableColumn<>("Tipo somministrazione");
-        typeSomministrationColumn.setCellValueFactory(new PropertyValueFactory<>("typeSomministration"));
+        typeSomministrationColumn.setCellValueFactory(p -> p.getValue().typeSomministrationProperty());
         typeSomministrationColumn.setPrefWidth(175);
+        vaccinationsInfo.getColumns().add(typeSomministrationColumn);
         TableColumn<Vaccination, String> siteColumn = new TableColumn<>("Sede vaccinazione");
-        siteColumn.setCellValueFactory(new PropertyValueFactory<>("vaccinationSite"));
+        siteColumn.setCellValueFactory(p -> p.getValue().vaccinationSiteProperty());
         siteColumn.setPrefWidth(175);
+        vaccinationsInfo.getColumns().add(siteColumn);
         TableColumn<Vaccination, String> dateColumn = new TableColumn<>("Data vaccinazione");
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("vaccinationDate"));
+        dateColumn.setCellValueFactory(p -> p.getValue().vaccinationDateProperty());
         dateColumn.setPrefWidth(175);
+        vaccinationsInfo.getColumns().add(dateColumn);
 
-        vaccinationsInfo.getColumns().addAll(vaccineColumn, typeSomministrationColumn, siteColumn, dateColumn);
         for (Vaccination vaccination : vaccinations) {
             vaccinationsInfo.getItems().add(vaccination);
         }
@@ -96,24 +98,28 @@ public class PatientInfo {
 
 
         //Create the TableView for reports
-        TableView reportsInfo = new TableView();
+        TableView<TableObject> reportsInfo = new TableView<>();
         TableColumn<TableObject, String> idColumn = new TableColumn<>("Codice report");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(p -> p.getValue().idProperty());
         idColumn.setPrefWidth(100);
+        reportsInfo.getColumns().add(idColumn);
         TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
-        reactionColumn.setCellValueFactory(new PropertyValueFactory<>("reaction"));
+        reactionColumn.setCellValueFactory(p -> p.getValue().reactionProperty());
         reactionColumn.setPrefWidth(100);
+        reportsInfo.getColumns().add(reactionColumn);
         TableColumn<TableObject, String> reportDateColumn = new TableColumn<>("Data report");
-        reportDateColumn.setCellValueFactory(new PropertyValueFactory<>("reportDate"));
+        reportDateColumn.setCellValueFactory(p -> p.getValue().reportDateProperty());
         reportDateColumn.setPrefWidth(100);
+        reportsInfo.getColumns().add(reportDateColumn);
         TableColumn<TableObject, String> reactionDateColumn = new TableColumn<>("Data reazione");
-        reactionDateColumn.setCellValueFactory(new PropertyValueFactory<>("reactionDate"));
+        reactionDateColumn.setCellValueFactory(p -> p.getValue().reactionDateProperty());
         reactionDateColumn.setPrefWidth(100);
+        reportsInfo.getColumns().add(reactionDateColumn);
         TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni due mesi precedenti alla reazione");
-        vaccinationColumn.setCellValueFactory(new PropertyValueFactory<>("twoMonthsVaccinations"));
+        vaccinationColumn.setCellValueFactory(p -> p.getValue().twoMonthsVaccinationsProperty());
         vaccinationColumn.setPrefWidth(300);
+        reportsInfo.getColumns().add(vaccinationColumn);
 
-        reportsInfo.getColumns().addAll(idColumn, reactionColumn, reportDateColumn, reactionDateColumn, vaccinationColumn);
         for (Report report : reports){
             List<Vaccination> twoMonthsVaccinations = controller.getPatientTwoMonthsVaccination(id, report.getReactionDate());
             String vaccinationString = twoMonthsVaccinations.stream().map(Vaccination::toString).collect(Collectors.joining("\n"));
@@ -148,8 +154,8 @@ public class PatientInfo {
         BorderPane layout = new BorderPane();
         layout.setCenter(tabpane);
         layout.setBottom(backButton);
-        layout.setAlignment(backButton, Pos.CENTER_LEFT);
-        layout.setMargin(backButton, new Insets(5, 5, 5, 5));
+        BorderPane.setAlignment(backButton, Pos.CENTER_LEFT);
+        BorderPane.setMargin(backButton, new Insets(5, 5, 5, 5));
 
         return layout;
     }

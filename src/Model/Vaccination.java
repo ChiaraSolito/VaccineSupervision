@@ -1,16 +1,15 @@
 package Model;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Vaccination {
-    private final SimpleObjectProperty<Patient> patient;
+    private final SimpleStringProperty patient;
     private final SimpleStringProperty vaccine;
     private final SimpleStringProperty typeSomministration;
     private final SimpleStringProperty vaccinationSite;
     private final SimpleStringProperty vaccinationDate;
 
-    public Vaccination(SimpleObjectProperty<Patient> patient, SimpleStringProperty vaccine,
+    public Vaccination(SimpleStringProperty patient, SimpleStringProperty vaccine,
                        SimpleStringProperty typeSomministration, SimpleStringProperty vaccinationSite,
                        SimpleStringProperty vaccinationDate) {
         this.patient = patient;
@@ -21,22 +20,22 @@ public class Vaccination {
     }
 
     public Vaccination() {
-        this.patient = new SimpleObjectProperty<>();
+        this.patient = new SimpleStringProperty("");
         this.vaccine = new SimpleStringProperty("");
         this.typeSomministration = new SimpleStringProperty("");
         this.vaccinationSite = new SimpleStringProperty("");
         this.vaccinationDate = new SimpleStringProperty("");
     }
 
-    public Patient getPatient() {
+    public String getPatient() {
         return patient.get();
     }
 
-    public SimpleObjectProperty<Patient> patientProperty() {
+    public SimpleStringProperty patientProperty() {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(String patient) {
         this.patient.set(patient);
     }
 

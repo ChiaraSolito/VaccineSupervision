@@ -1,18 +1,11 @@
 package View.Utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class VaccinesList {
     static final Map<String, ArrayList<String>> covidVaccines = new HashMap<>();
 
     static final ArrayList<String> influenceVaccines = new ArrayList<>();
-
-    public static ArrayList<String> getCovidVaccinesDoses(String vaccine) {
-        return covidVaccines.get(vaccine);
-    }
 
     public static ArrayList<String> getInfluenceVaccines() {
         return influenceVaccines;
@@ -28,7 +21,7 @@ public class VaccinesList {
         covidVaccines.put("Astrazeneca", new ArrayList<>(Arrays.asList("Prima dose", "Seconda dose", "Dose booster")));
         covidVaccines.put("Novavax", new ArrayList<>(Arrays.asList("Prima dose", "Seconda dose", "Dose booster")));
         covidVaccines.put("Pfizer pediatrico", new ArrayList<>(Arrays.asList("Prima dose", "Seconda dose", "Dose booster")));
-        covidVaccines.put("Janssen", new ArrayList<>(Arrays.asList("Unica")));
+        covidVaccines.put("Janssen", new ArrayList<>(List.of("Unica")));
         influenceVaccines.add("Antinfluenzale A/Victoria/2570/2019");
         influenceVaccines.add("Antinfluenzale B/Austria/1359417/2021");
         influenceVaccines.add("Antinfluenzale B/Phuket/3073/2013");

@@ -2,16 +2,13 @@ package Control;
 
 import Model.DataBase.DataBaseConnection;
 import Model.User;
-import View.DoctorView.MainPageDoc;
 
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginController {
-    private User model;
-
-    private MainPageDoc mainPageDoc;
+    private final User model;
 
     DataBaseConnection userConnection;
 
