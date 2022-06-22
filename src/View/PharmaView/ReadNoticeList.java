@@ -45,14 +45,14 @@ public class ReadNoticeList extends Parent {
         idColumn.setCellValueFactory(p -> p.getValue().idProperty());
         idColumn.setPrefWidth(125);
         noticeList.getColumns().add(idColumn);
-        TableColumn<Notice, String> contentColumn = new TableColumn<>("Content");
-        contentColumn.setCellValueFactory(p -> p.getValue().contentProperty());
-        contentColumn.setPrefWidth(450);
-        noticeList.getColumns().add(contentColumn);
         TableColumn<Notice, String> dateColumn = new TableColumn<>("Data avviso");
         dateColumn.setCellValueFactory(p -> p.getValue().noticeDateProperty());
         dateColumn.setPrefWidth(125);
         noticeList.getColumns().add(dateColumn);
+        TableColumn<Notice, String> contentColumn = new TableColumn<>("Content");
+        contentColumn.setCellValueFactory(p -> p.getValue().contentProperty());
+        contentColumn.setPrefWidth(450);
+        noticeList.getColumns().add(contentColumn);
 
         contentColumn.setCellFactory(new Callback<>() {
             @Override
