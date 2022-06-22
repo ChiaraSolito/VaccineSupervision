@@ -1,0 +1,184 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{booktabs, siunitx}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage{pifont}
+\usepackage[margin=0.90in]{geometry}
+\usepackage{etoolbox,titling}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{soulutf8}
+\usepackage{epigraph}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Virginia Filippi e Chiara Solito}
+\lhead{VaccineSupervision}
+\rfoot{Pagina \thepage}
+\lfoot{Bioinformatica - A.A. 2021/22}
+\usetikzlibrary{trees}
+\tikzstyle{every node}=[draw=black,thick,anchor=west]
+\newcommand{\angstrom}{\mbox{\normalfont\AA}}
+
+\begin{document}
+\newcommand\tab[1][0.3cm]{\hspace*{#1}}
+
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{Vaccine Supervision}
+            
+        \vspace{0.5cm}
+        \LARGE
+        Test dell'Utente Dottore
+            
+        \vspace{1.5cm}
+            
+        \textbf{A cura di Virginia Filippi e Chiara Solito}
+
+        \vspace{0.8cm}
+
+            
+        \Large
+        Corso di Laurea in Bioinformatica\\
+        Università degli studi di Verona\\
+        A.A. 2021/22
+            
+    \end{center}
+\end{titlepage}
+
+\section{Traccia su cui basare l'idea del funzionamento}
+    Di seguito riportiamo la traccia dell'elaborato per quel che riguarda le funzionalità dell'utente di tipo Dottore.
+    \begin{quotation}
+       \textit{Si vuole progettare un sistema software per gestire le segnalazioni di reazioni avverse (ad esempio, asma, dermatiti, insufficienza renale, miocardiopatia, \dots) da vaccini anti-Covid.\\
+        Ogni segnalazione è caratterizzata da un codice univoco, dall'indicazione del paziente a cui fa riferimento, dall'indicazione della reazione avversa, dalla data della reazione avversa, dalla data di segnalazione, e dalle vaccinazioni ricevute nei due mesi precedenti il momento della reazione avversa.
+        Per ogni paziente sono memorizzati: un codice univoco, l'anno di nascita, la provincia di residenza e la professione.\\
+        Per ogni paziente è possibile memorizzare gli eventuali fattori di rischio presenti (paziente fumatore, iperteso, sovrappeso, paziente fragile per precedenti patologie cardiovascolari/oncologiche), anche più d'uno. Ogni fattore di rischio è caratterizzato da un nome univoco, una descrizione e il livello di rischio associato. Per ogni paziente è, inoltre, memorizzata l'intera storia delle sue vaccinazioni precedenti, anti-Covid-19 e antinfluenzali.\\
+        Ogni vaccinazione è caratterizzata da: paziente a cui si riferisce, segnalazioni a cui è legata, vaccino somministrato (AstraZeneca, Pfizer, Moderna, Sputnik, Sinovac, antinfluenzale, \dots), tipo della somministrazione (I, II, III o IV dose, dose unica), sede presso la quale è avvenuta la vaccinazione e data di vaccinazione. Per ogni reazione avversa sono memorizzati un nome univoco, un livello di gravità (da 1 a 5) e una descrizione generale, espressa in linguaggio naturale. Una reazione avversa può essere legata a molte segnalazioni. Per ogni paziente sono memorizzati il numero di reazioni avverse segnalate ed il numero di vaccinazioni ricevute.\\
+        Il sistema deve supportare i medici che effettuano la segnalazione. \textbf{Dopo opportuna autenticazione, il medico viene introdotto ad una interfaccia che permette l'inserimento dei dati delle reazioni avverse e dei pazienti. Il codice univoco dei pazienti è gestito dal sistema, che tiene traccia dei pazienti indicati da ogni medico. Ogni medico vede solo i codici identificativi dei pazienti, dei quali ha già segnalato qualche reazione avversa, e le relative informazioni.}}
+    \end{quotation}
+
+\section{Passi che si richiede di effettuare}
+
+    \subsection*{Tester 1}
+    Dopo aver avviato l'applicazione si chiede all'utente di effettuare i seguenti passaggi:
+    \begin{enumerate}
+        \item Effettuare un login tramite le credenziali: username=\textit{doc12}, password=\textit{PROVA}.
+        \item Verificare che l'accesso è negato.
+        \item Effettuare un login tramite le credenziali: username=\textit{doc3}, password=\textit{DOC3}.
+        \item Verificare che l'accesso è eseguito come dottore.
+        \item Accedere alla lista pazienti tramite l'apposito bottone.
+        \item Verificare che questa sia vuota.
+        \item Tornare alla pagina principale.
+        \item Accedere al form di inserimento dei report
+        \item Nella prima tab cliccare il bottone di inserimento di un nuovo paziente.
+        \item Inserire le seguenti informazioni\\
+                Anno di nascita: \textit{1959}, Provincia: \textit{Lecco}, Professione:\textit{Impiegato}, scegliere tra i fattori di rischio il fattore esistente \textit{Colesterolo alto}.
+        \item Passare alla tab successiva e inserire come data reazione, dall'apposito calendario il \textit{22 Maggio del 2022}.
+        \item Cliccare il bottone di inserimento di una nuova reazione.
+        \item Inserire le seguenti informazioni\\ 
+                Nome: \textit{Trombosi}, Descrizione: \textit{Presenza di un coagulo di sangue, che aderisce alle pareti non lesionate dei vasi.}, Gravità: \textit{4}.
+        \item Passare alla tab successiva e scegliere dai vaccini: \textit{Antinfluenzale A/Victoria/2570/2019}
+        \item Inserire nei campi di testo:\\
+                Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{4/12/2022}
+        \item Cliccare su inserisci.
+        \item Inserire nuovamente un vaccino: questa volta si scelga il vaccino \textit{Pfizer}
+        \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Prima dose}
+        \item Inserire nei campi di testo:\\
+            Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{2/16/2022}
+        \item Cliccare su inserisci.
+        \item Inserire nuovamente un vaccino: questa volta si scelga il vaccino \textit{Moderna}
+        \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Seconda dose}
+        \item Inserire nei campi di testo:\\
+            Sito della vaccinazione: \textit{Lecco}, Data della vaccinazione: \textit{4/31/2022}
+        \item Cliccare su inserisci.
+        \item Cliccare su conferma.
+        \item Apparirà ora un avviso di conferma, cliccare su OK.
+        \item Si tornerà sutomaticamente nella pagina iniziale. 
+        \item Accedere alla lista pazienti tramite l'apposito bottone.
+        \item Verificare la presenza di un nuovo paziente
+        \item Cliccare sul bottone "Info".
+        \item Dalla pagina aperta scorrere tra le tab e verificare la correttezza delle informazioni inserite.
+        \item Tornare indietro e poi ancora fino alla pagina principale.
+        \item Accedere di nuovo al form di inserimento dei report.
+        \item Selezionare il paziente già esistente nella prima tab.
+        \item Inserire come data della reazione: \textit{15 Giugno 2022}
+        \item Selezionare dalle reazioni esistenti la reazione \textit{Eruzione cutanea}
+        \item Nella tab successiva, inserire una nuova vaccinazione:\\
+            si scelga il vaccino \textit{Moderna}
+        \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Dose booster}
+        \item Inserire nei campi di testo:\\
+            Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{6/3/2022}
+        \item Cliccare su conferma.
+        \item Verificare nuovamente le informazioni inserite dalla pagina di visualizzazione dei pazienti.
+        \item Tornare alla pagina iniziale.
+        \item Effettuare il logout.
+    \end{enumerate}
+
+    \subsection*{Tester 2}
+    Dopo aver avviato l'applicazione si chiede all'utente di effettuare i seguenti passaggi:
+    \begin{enumerate}
+        \item Effettuare un login tramite le credenziali: username=\textit{doc2}, password=\textit{PROVA}.
+        \item Verificare che l'accesso è negato.
+        \item Effettuare un login tramite le credenziali: username=\textit{doc1}, password=\textit{DOC1}.
+        \item Verificare che l'accesso è eseguito come dottore.
+        \item Accedere alla lista pazienti tramite l'apposito bottone.
+        \item Verificare che questa sia popolata.
+        \item Tornare alla pagina principale.
+        \item Accedere al form di inserimento dei report
+        \item Nella prima tab cliccare il bottone di inserimento di un nuovo paziente.
+        \item Inserire le seguenti informazioni\\
+                Anno di nascita: \textit{1980}, Provincia: \textit{Salerno}, Professione:\textit{Ristoratore}, 
+                inserire un nuovo fattore di rischio: Nome: \textit{Sovrappeso}, Descrizione: \textit{Paziente con un peso superiore a quello indicato per eta e statura}, Livello di rischio: \textit{3}. Cliccare il bottone di inserimento.
+        \item Selezionare ora il fattore di rischio aggiunto dal menù a tendina.
+        \item Passare alla tab successiva e inserire come data reazione, dall'apposito calendario il \textit{30 Maggio del 2022}.
+        \item Selezionare dalle reazioni esistenti la reazione \textit{Vomito}
+        \item Passare alla tab successiva e scegliere dai vaccini: \textit{Antinfluenzale A/Darwin/6/2021}
+        \item Inserire nei campi di testo:\\
+                Sito della vaccinazione: \textit{Salerno}, Data della vaccinazione: \textit{5/20/2022}
+        \item Cliccare su inserisci.
+        \item Inserire nuovamente un vaccino: questa volta si scelga il vaccino \textit{Jannsen}
+        \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Unica}
+        \item Inserire nei campi di testo:\\
+            Sito della vaccinazione: \textit{Salerno}, Data della vaccinazione: \textit{4/16/2022}
+        \item Cliccare su inserisci.
+        \item Cliccare su conferma.
+        \item Apparirà ora un avviso di conferma, cliccare su OK.
+        \item Si tornerà sutomaticamente nella pagina iniziale. 
+        \item Accedere alla lista pazienti tramite l'apposito bottone.
+        \item Verificare la presenza di un nuovo paziente
+        \item Cliccare sul bottone "Info".
+        \item Dalla pagina aperta scorrere tra le tab e verificare la correttezza delle informazioni inserite.
+        \item Tornare indietro e poi ancora fino alla pagina principale.
+        \item Accedere di nuovo al form di inserimento dei report.
+        \item Selezionare il paziente con codice 20 nella prima tab.
+        \item Inserire come data della reazione: \textit{23 Giugno 2022}
+        \item Cliccare il bottone di inserimento di una nuova reazione.
+        \item Inserire le seguenti informazioni\\ 
+                Nome: \textit{Dermatite}, Descrizione: \textit{Infiammazione della pelle causata dalla reazione a determinate sostanze chimiche o naturali (dette allergeni).}, Gravità: \textit{2}.
+        \item Nella tab successiva, inserire una nuova vaccinazione:\\
+            si scelga il vaccino \textit{Moderna}
+        \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Dose booster}
+        \item Inserire nei campi di testo:\\
+            Sito della vaccinazione: \textit{Torino}, Data della vaccinazione: \textit{6/20/2022}
+        \item Cliccare su conferma.
+        \item Verificare nuovamente le informazioni inserite dalla pagina di visualizzazione dei pazienti.
+        \item Tornare alla pagina iniziale.
+        \item Effettuare il logout.
+    \end{enumerate}
+
+\section{Tabella di valutazione}
+    Si chiede ad entrambi i partecipanti di compilare la tabella di valutazione data assieme a questo modulo.
+
+\end{document}

@@ -1,0 +1,101 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{booktabs, siunitx}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage{pifont}
+\usepackage[margin=0.90in]{geometry}
+\usepackage{etoolbox,titling}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{soulutf8}
+\usepackage{epigraph}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Virginia Filippi e Chiara Solito}
+\lhead{VaccineSupervision}
+\rfoot{Pagina \thepage}
+\lfoot{Bioinformatica - A.A. 2021/22}
+\usetikzlibrary{trees}
+\tikzstyle{every node}=[draw=black,thick,anchor=west]
+\newcommand{\angstrom}{\mbox{\normalfont\AA}}
+
+\begin{document}
+\newcommand\tab[1][0.3cm]{\hspace*{#1}}
+
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{Vaccine Supervision}
+            
+        \vspace{0.5cm}
+        \LARGE
+        Test dell'Utente Farmacologo
+            
+        \vspace{1.5cm}
+            
+        \textbf{A cura di Virginia Filippi e Chiara Solito}
+
+        \vspace{0.8cm}
+
+            
+        \Large
+        Corso di Laurea in Bioinformatica\\
+        Università degli studi di Verona\\
+        A.A. 2021/22
+            
+    \end{center}
+\end{titlepage}
+
+\section{Traccia su cui basare l'idea del funzionamento}
+    Di seguito riportiamo la traccia dell'elaborato per quel che riguarda le funzionalità dell'utente di tipo Dottore.
+    \begin{quotation}
+       \textit{Si vuole progettare un sistema software per gestire le segnalazioni di reazioni avverse (ad esempio, asma, dermatiti, insufficienza renale, miocardiopatia, \dots) da vaccini anti-Covid.\\
+        Ogni segnalazione è caratterizzata da un codice univoco, dall'indicazione del paziente a cui fa riferimento, dall'indicazione della reazione avversa, dalla data della reazione avversa, dalla data di segnalazione, e dalle vaccinazioni ricevute nei due mesi precedenti il momento della reazione avversa.
+        Per ogni paziente sono memorizzati: un codice univoco, l'anno di nascita, la provincia di residenza e la professione.\\
+        Per ogni paziente è possibile memorizzare gli eventuali fattori di rischio presenti (paziente fumatore, iperteso, sovrappeso, paziente fragile per precedenti patologie cardiovascolari/oncologiche), anche più d'uno. Ogni fattore di rischio è caratterizzato da un nome univoco, una descrizione e il livello di rischio associato. Per ogni paziente è, inoltre, memorizzata l'intera storia delle sue vaccinazioni precedenti, anti-Covid-19 e antinfluenzali.\\
+        Ogni vaccinazione è caratterizzata da: paziente a cui si riferisce, segnalazioni a cui è legata, vaccino somministrato (AstraZeneca, Pfizer, Moderna, Sputnik, Sinovac, antinfluenzale, \dots), tipo della somministrazione (I, II, III o IV dose, dose unica), sede presso la quale è avvenuta la vaccinazione e data di vaccinazione. Per ogni reazione avversa sono memorizzati un nome univoco, un livello di gravità (da 1 a 5) e una descrizione generale, espressa in linguaggio naturale. Una reazione avversa può essere legata a molte segnalazioni. Per ogni paziente sono memorizzati il numero di reazioni avverse segnalate ed il numero di vaccinazioni ricevute.\\
+        Il sistema deve supportare i medici che effettuano la segnalazione.\\
+        \textbf{Ad ogni fine settimana o quando il numero di segnalazioni raggiunge la soglia di 50, il sistema manda un avviso ad uno dei farmacologi responsabili della gestione delle segnalazioni di reazioni avverse. Il farmacologo, dopo autenticazione, accede alle segnalazioni (tutte, con l'indicazione del medico che le ha fatte) e può effettuare alcune analisi di base (quante segnalazioni per vaccino, quante segnalazioni gravi in settimana, quante segnalazioni per provincia e quante segnalazioni per sede di vaccinazione). Il sistema, inoltre, avvisa il farmacologo quando un vaccino ha accumulato in un mese oltre 5 segnalazioni di gravità superiore a 3.
+        In base alle segnalazioni e agli avvisi del sistema, il farmacologo può proporre di attivare una fase di controllo del vaccino. Tale proposta viene registrata dal sistema, che tiene traccia di tutte le proposte relative ai vaccini segnalati.
+    }}
+    \end{quotation}
+
+\section{Passi che si richiede di effettuare}
+
+    Dopo aver avviato l'applicazione si chiede all'utente di effettuare i seguenti passaggi:
+    \begin{enumerate}
+        \item Effettuare un login tramite le credenziali: username=\textit{farm12}, password=\textit{PROVA}.
+        \item Verificare che l'accesso è negato.
+        \item Effettuare un login tramite le credenziali: username=\textit{farm3}, password=\textit{FARM3}.
+        \item Visualizzazione di vari avvisi.
+        \item Verificare che l'accesso è eseguito come farmacologo.
+        \item Accedere alla lista di avvisi già letti tramite l'apposito bottone.
+        \item Verificare che questa abbia tutti gli avvisi appena visualizzati.
+        \item Tornare alla pagina principale.
+        \item Accedere alla lista delle segnalazioni. Guardare le segnalazioni presenti. 
+        \item In basso a destra cliccare sul bottone delle analisi di base.
+        \item Verificare quanti vaccini hanno avuto una reazione grave nell'ultima settimana e proporre una fase di controllo del vaccino con maggiori reazioni.
+        \item Tornare alla pagina iniziale.
+        \item Cliccare sul bottone "Proponi fase controllo".
+        \item Selezionare tra i vaccini, il vaccino "Jannsen".
+        \item Cliccare il bottone Conferma e poi OK.
+        \item Ripetere l'operazione e verificare che l'inserimento dia errore.
+        \item Effettuare il logout.
+    \end{enumerate}
+
+\section{Tabella di valutazione}
+    Si chiede al partecipante di compilare la tabella di valutazione data assieme a questo modulo.
+
+\end{document}
