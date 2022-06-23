@@ -139,7 +139,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         if (existingNotice.isEmpty()) {
             try {
                 pConnection.statement = pConnection.connection.createStatement();
-                pConnection.rs = pConnection.statement.executeQuery("INSERT INTO notice " +
+                pConnection.statement.executeUpdate("INSERT INTO notice " +
                         "VALUES( DEFAULT , '" + content + "', CURRENT_DATE)"
                 );
             } catch (SQLException sqle) {
