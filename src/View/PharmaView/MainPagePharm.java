@@ -3,7 +3,6 @@ package View.PharmaView;
 import Control.FarmacologistControl.MainControllerPharm;
 import Model.Notice;
 import Model.User;
-import Model.Utils.Exceptions.NullStringException;
 import View.LoginView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +19,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import static javafx.geometry.Pos.CENTER_LEFT;
@@ -36,7 +34,7 @@ public class MainPagePharm extends Parent {
     /*
         Costruttore
      */
-    public MainPagePharm(Stage stage, User model) throws FileNotFoundException {
+    public MainPagePharm(Stage stage, User model) {
         this.model = model;
         this.mainPharmStage = stage;
         this.controller = new MainControllerPharm(model);
@@ -46,7 +44,7 @@ public class MainPagePharm extends Parent {
     /*
         Crea la view effettiva
      */
-    public Region getView() throws FileNotFoundException {
+    public Region getView() {
 
         //insets
         Insets insets = new Insets(30);
@@ -81,14 +79,10 @@ public class MainPagePharm extends Parent {
         Button button1 = createButton(new Button(), icon1, text);
         button1.setPrefWidth(75);
         button1.setOnAction(e -> {
-            try {
-                mainPharmStage.setScene(new Scene(new ReportList(mainPharmStage, model).getView(), 700, 400));
-                mainPharmStage.setTitle("Lista segnalazioni");
-                mainPharmStage.setResizable(false);
-                mainPharmStage.show();
-            } catch (NullStringException ex) {
-                throw new RuntimeException(ex);
-            }
+            mainPharmStage.setScene(new Scene(new ReportList(mainPharmStage, model).getView(), 700, 400));
+            mainPharmStage.setTitle("Lista segnalazioni");
+            mainPharmStage.setResizable(false);
+            mainPharmStage.show();
         });
 
         //
@@ -97,14 +91,10 @@ public class MainPagePharm extends Parent {
         Button button2 = createButton(new Button(), icon2, text2);
         button2.setPrefWidth(75);
         button2.setOnAction(e -> {
-            try {
-                mainPharmStage.setScene(new Scene(new ReadNoticeList(mainPharmStage, model).getView(), 700, 400));
-                mainPharmStage.setTitle("Lista avvisi");
-                mainPharmStage.setResizable(false);
-                mainPharmStage.show();
-            } catch (NullStringException ex) {
-                throw new RuntimeException(ex);
-            }
+            mainPharmStage.setScene(new Scene(new ReadNoticeList(mainPharmStage, model).getView(), 700, 400));
+            mainPharmStage.setTitle("Lista avvisi");
+            mainPharmStage.setResizable(false);
+            mainPharmStage.show();
         });
 
         ImageView icon3 = new ImageView("pic/control.png");
@@ -113,14 +103,10 @@ public class MainPagePharm extends Parent {
         button3.setPrefWidth(75);
         //setOnAction per la fase controllo
         button3.setOnAction(e -> {
-            try {
-                mainPharmStage.setScene(new Scene(new ControlPhaseForm(mainPharmStage, model).getView(), 700, 400));
-                mainPharmStage.setTitle("Proponi fase controllo");
-                mainPharmStage.setResizable(false);
-                mainPharmStage.show();
-            } catch (NullStringException ex) {
-                throw new RuntimeException(ex);
-            }
+            mainPharmStage.setScene(new Scene(new ControlPhaseForm(mainPharmStage, model).getView(), 700, 400));
+            mainPharmStage.setTitle("Proponi fase controllo");
+            mainPharmStage.setResizable(false);
+            mainPharmStage.show();
         });
 
         HBox layout = new HBox(button1, button2, button3);
@@ -138,15 +124,10 @@ public class MainPagePharm extends Parent {
 
         Button logout = new Button("Logout");
         logout.setOnAction(e -> {
-            try {
-                mainPharmStage.setTitle("Drug Supervision - Login");
-                mainPharmStage.setScene(new Scene(new LoginView(mainPharmStage, new User()).getView(), 700, 400));
-                mainPharmStage.setResizable(false);
-                mainPharmStage.show();
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-
+            mainPharmStage.setTitle("Drug Supervision - Login");
+            mainPharmStage.setScene(new Scene(new LoginView(mainPharmStage, new User()).getView(), 700, 400));
+            mainPharmStage.setResizable(false);
+            mainPharmStage.show();
         });
 
         // Set the Location

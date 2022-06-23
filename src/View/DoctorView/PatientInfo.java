@@ -2,7 +2,6 @@ package View.DoctorView;
 
 import Control.DoctorControl.PatientInfoController;
 import Model.*;
-import Model.Utils.Exceptions.NullStringException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,7 +37,7 @@ public class PatientInfo {
         id = idPI;
     }
 
-    public Parent getView() throws NullStringException {
+    public Parent getView() {
         Patient patient = controller.getPatient(id);
         List<Report> reports = new ArrayList<>(controller.getPatientReports(id));
         List<Vaccination> vaccinations = new ArrayList<>(controller.getPatientVaccinations(id));

@@ -10,10 +10,7 @@ public interface VaccinationDAO {
                            String typeSomministration, String vaccinationSite,
                            String vaccinationDate) throws NullStringException;
 
-    List<Vaccination> getAllVaccination(String idPatient) throws NullStringException;
-
     List<Vaccination> getTwoMonthsVaccination(String idPatient, String reactionDate) throws NullStringException;
 
-    List<String> getAllVaccines();
     List<String> getAllCovidVaccines();
 }

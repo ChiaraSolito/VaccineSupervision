@@ -2,7 +2,6 @@ package View.DoctorView;
 
 import Control.DoctorControl.ReactionFormController;
 import Model.*;
-import Model.Utils.Exceptions.NullStringException;
 import View.Utils.Alerts;
 import View.Utils.BoundField;
 import View.Utils.VaccinesList;
@@ -48,7 +47,7 @@ public class ReportForm {
         report = new Report();
     }
 
-    Parent getView() throws NullStringException {
+    Parent getView() {
 
         BorderPane layout1 = new BorderPane();
 

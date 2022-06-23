@@ -1,7 +1,6 @@
 package View.DoctorView;
 
 import Model.User;
-import Model.Utils.Exceptions.NullStringException;
 import View.LoginView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -81,14 +80,10 @@ public class MainPageDoc extends Parent {
         Button button2 = createButton(new Button(), icon2, text2);
         //inserire una chiamata al form inserisci reazione
         button2.setOnAction(e -> {
-            try {
-                mainDocStage.setScene(new Scene(new ReportForm(mainDocStage, model).getView(), 700, 400));
-                mainDocStage.setTitle("Inserimento reazione");
-                mainDocStage.setResizable(false);
-                mainDocStage.show();
-            } catch (NullStringException ex) {
-                throw new RuntimeException(ex);
-            }
+            mainDocStage.setScene(new Scene(new ReportForm(mainDocStage, model).getView(), 700, 400));
+            mainDocStage.setTitle("Inserimento reazione");
+            mainDocStage.setResizable(false);
+            mainDocStage.show();
         });
 
         HBox layout = new HBox(button1, button2);

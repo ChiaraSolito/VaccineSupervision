@@ -3,7 +3,6 @@ package View.PharmaView;
 import Control.FarmacologistControl.ReadNoticeListController;
 import Model.Notice;
 import Model.User;
-import Model.Utils.Exceptions.NullStringException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -15,8 +14,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
-import java.io.FileNotFoundException;
 
 public class ReadNoticeList extends Parent {
     private static User model;
@@ -35,7 +32,7 @@ public class ReadNoticeList extends Parent {
     }
 
 
-    public Parent getView() throws NullStringException {
+    public Parent getView() {
         ObservableList<Notice> notices = FXCollections.observableArrayList(controller.getReadNotice());
 
         // Create the BorderPane
@@ -78,14 +75,10 @@ public class ReadNoticeList extends Parent {
         Button backButton = new Button();
         backButton.setText("Indietro");
         backButton.setOnAction(e -> {
-            try {
-                noticeListPharmStage.setScene(new Scene(new MainPagePharm(noticeListPharmStage, model).getView(), 700, 400));
-                noticeListPharmStage.setTitle("Menù principale");
-                noticeListPharmStage.setResizable(false);
-                noticeListPharmStage.show();
-            } catch (FileNotFoundException ex){
-                throw new RuntimeException(ex);
-            }
+            noticeListPharmStage.setScene(new Scene(new MainPagePharm(noticeListPharmStage, model).getView(), 700, 400));
+            noticeListPharmStage.setTitle("Menù principale");
+            noticeListPharmStage.setResizable(false);
+            noticeListPharmStage.show();
         });
         layout.setBottom(backButton);
         BorderPane.setAlignment(backButton, Pos.CENTER_LEFT);

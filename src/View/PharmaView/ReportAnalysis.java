@@ -2,7 +2,6 @@ package View.PharmaView;
 
 import Control.FarmacologistControl.ReportAnalysisController;
 import Model.User;
-import Model.Utils.Exceptions.NullStringException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -37,7 +37,7 @@ public class ReportAnalysis {
         controller = new ReportAnalysisController();
     }
 
-    Parent getView() throws NullStringException {
+    Parent getView() {
         Map<String, Integer> provinceReportsMap = controller.getReactionProvince();
         ObservableList<Map.Entry<String, Integer>> items = FXCollections.observableArrayList(provinceReportsMap.entrySet());
         Map<String, Integer> vaccinationSiteReportsMap = controller.getReactionSite();
@@ -180,14 +180,10 @@ public class ReportAnalysis {
         Button backButton = new Button();
         backButton.setText("Indietro");
         backButton.setOnAction(e -> {
-            try {
-                reportAnalysisStage.setScene(new Scene(new ReportList(reportAnalysisStage, model).getView(), 700, 400));
-                reportAnalysisStage.setTitle("Lista segnalazioni");
-                reportAnalysisStage.setResizable(false);
-                reportAnalysisStage.show();
-            } catch (NullStringException ex){
-                throw new RuntimeException(ex);
-            }
+            reportAnalysisStage.setScene(new Scene(new ReportList(reportAnalysisStage, model).getView(), 700, 400));
+            reportAnalysisStage.setTitle("Lista segnalazioni");
+            reportAnalysisStage.setResizable(false);
+            reportAnalysisStage.show();
         });
 
         layout.setBottom(backButton);

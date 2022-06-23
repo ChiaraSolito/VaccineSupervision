@@ -38,43 +38,6 @@ public class VaccinationDAOImpl implements VaccinationDAO {
     }
 
     @Override
-    public List<Vaccination> getAllVaccination(String idPatient) throws NullStringException {
-
-        List<Vaccination> vaccinations = new ArrayList<>();
-
-        if (idPatient.isEmpty()) {
-            throw new NullStringException();
-        }
-
-        pConnection = new DataBaseConnection();
-        pConnection.openConnection();
-
-        try{
-            pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("SELECT V.idpatient, V.vaccine, V.typesomministration, V.vaccinationsite, V.vaccinationdate " +
-                    "FROM vaccination V " +
-                    "WHERE V.idpatient = '" + idPatient + "'");
-
-            while (pConnection.rs.next()) {
-                vaccinations.add(new Vaccination(
-                        new SimpleStringProperty(pConnection.rs.getString("idpatient")),
-                        new SimpleStringProperty(pConnection.rs.getString("vaccine")),
-                        new SimpleStringProperty(pConnection.rs.getString("typesomministration")),
-                        new SimpleStringProperty(pConnection.rs.getString("vaccinationsite")),
-                        new SimpleStringProperty(pConnection.rs.getString("vaccinationdate"))
-                ));
-            }
-        } catch (SQLException sqle) {
-            System.out.println("Error: " + sqle.getMessage());
-            sqle.printStackTrace();
-        } finally {
-            pConnection.closeConnection();
-        }
-
-        return vaccinations;
-    }
-
-    @Override
     public List<Vaccination> getTwoMonthsVaccination(String idPatient, String reactionDate) throws NullStringException {
 
         List<Vaccination> vaccinations = new ArrayList<>();
@@ -111,31 +74,6 @@ public class VaccinationDAOImpl implements VaccinationDAO {
         }
 
         return vaccinations;
-    }
-
-    public List<String> getAllVaccines() {
-
-        List<String> vaccines = new ArrayList<>();
-
-        pConnection = new DataBaseConnection();
-        pConnection.openConnection();
-
-        try {
-
-            pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("SELECT DISTINCT vaccine " +
-                    "FROM vaccination ");
-            while (pConnection.rs.next()) {
-                vaccines.add(pConnection.rs.getString("vaccine"));
-            }
-        } catch (SQLException sqle) {
-            System.out.println("Error: " + sqle.getMessage());
-            sqle.printStackTrace();
-        } finally {
-            pConnection.closeConnection();
-        }
-
-        return vaccines;
     }
 
     public List<String> getAllCovidVaccines() {

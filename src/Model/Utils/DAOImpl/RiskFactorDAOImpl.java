@@ -14,41 +14,6 @@ import java.util.List;
 public class RiskFactorDAOImpl implements RiskFactorDAO {
     DataBaseConnection pConnection;
 
-    @Override
-    public List<RiskFactor> getAllRiskFactors(String idPatient) throws NullStringException {
-
-        List<RiskFactor> risks = new ArrayList<>();
-
-        if (idPatient.isEmpty()) {
-            throw new NullStringException();
-        }
-
-        pConnection = new DataBaseConnection();
-        pConnection.openConnection();
-
-        try {
-            pConnection.statement = pConnection.connection.createStatement();
-            pConnection.rs = pConnection.statement.executeQuery("SELECT RF.name, RF.risklevel, RF.description " +
-                    "FROM RiskFactor RF JOIN PatientRisk PR ON PR.risk = RF.name " +
-                    "WHERE PR.idpatient = '" + idPatient + "'");
-
-            while (pConnection.rs.next()) {
-                risks.add(new RiskFactor(
-                        new SimpleStringProperty(pConnection.rs.getString("name")),
-                        new SimpleStringProperty(pConnection.rs.getString("description")),
-                        new SimpleIntegerProperty(pConnection.rs.getInt("risklevel"))
-                ));
-            }
-        } catch (SQLException sqle) {
-            System.out.println("Error: " + sqle.getMessage());
-            sqle.printStackTrace();
-        } finally {
-            pConnection.closeConnection();
-        }
-
-        return risks;
-    }
-
     public List<String> getAllExistingRisks() {
 
         List<String> risks = new ArrayList<>();

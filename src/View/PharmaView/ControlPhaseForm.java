@@ -3,7 +3,6 @@ package View.PharmaView;
 import Control.FarmacologistControl.ControlPhaseController;
 import Model.ControlPhase;
 import Model.User;
-import Model.Utils.Exceptions.NullStringException;
 import View.Utils.Alerts;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,8 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.io.FileNotFoundException;
 
 public class ControlPhaseForm {
     private final User model;
@@ -38,7 +35,7 @@ public class ControlPhaseForm {
         this.controlPhase = new ControlPhase();
     }
 
-    Parent getView() throws NullStringException {
+    Parent getView() {
 
         BorderPane layout = new BorderPane();
 
@@ -73,14 +70,10 @@ public class ControlPhaseForm {
                 if (Alerts.displayConfMessage(model).getResult() == ButtonType.OK) {
                     controller.addControlPhase(controlPhase);
                 }
-                try {
-                    controlPhaseStage.setScene(new Scene(new MainPagePharm(controlPhaseStage, model).getView(), 700, 400));
-                    controlPhaseStage.setResizable(false);
-                    controlPhaseStage.setTitle("Menù Principale");
-                    controlPhaseStage.show();
-                } catch (FileNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
+                controlPhaseStage.setScene(new Scene(new MainPagePharm(controlPhaseStage, model).getView(), 700, 400));
+                controlPhaseStage.setResizable(false);
+                controlPhaseStage.setTitle("Menù Principale");
+                controlPhaseStage.show();
             }
         });
 
@@ -115,14 +108,10 @@ public class ControlPhaseForm {
         Button backButton = new Button();
         backButton.setText("Indietro");
         backButton.setOnAction(e -> {
-            try {
-                controlPhaseStage.setScene(new Scene(new MainPagePharm(controlPhaseStage, model).getView(), 700, 400));
-                controlPhaseStage.setTitle("Menù Principale");
-                controlPhaseStage.setResizable(false);
-                controlPhaseStage.show();
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
+            controlPhaseStage.setScene(new Scene(new MainPagePharm(controlPhaseStage, model).getView(), 700, 400));
+            controlPhaseStage.setTitle("Menù Principale");
+            controlPhaseStage.setResizable(false);
+            controlPhaseStage.show();
         });
 
         //Layout settings

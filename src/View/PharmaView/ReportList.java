@@ -1,19 +1,22 @@
 package View.PharmaView;
 
 import Control.FarmacologistControl.ReportListController;
-import Model.*;
-import Model.Utils.Exceptions.NullStringException;
+import Model.Report;
+import Model.User;
+import Model.Vaccination;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +35,7 @@ public class ReportList {
         controller = new ReportListController();
     }
 
-    Parent getView() throws NullStringException {
+    Parent getView() {
         List<Report> reports = new ArrayList<>(controller.getReportList());
 
         //Create the TableView
@@ -79,27 +82,19 @@ public class ReportList {
         Button backButton = new Button();
         backButton.setText("Indietro");
         backButton.setOnAction(e -> {
-            try {
-                reportListStage.setScene(new Scene(new MainPagePharm(reportListStage, model).getView(), 700, 400));
-                reportListStage.setTitle("Menù principale");
-                reportListStage.setResizable(false);
-                reportListStage.show();
-            } catch (FileNotFoundException ex){
-                throw new RuntimeException(ex);
-            }
+            reportListStage.setScene(new Scene(new MainPagePharm(reportListStage, model).getView(), 700, 400));
+            reportListStage.setTitle("Menù principale");
+            reportListStage.setResizable(false);
+            reportListStage.show();
         });
 
         Button analysisButton = new Button();
         analysisButton.setText("Analisi di base");
         analysisButton.setOnAction(e -> {
-            try {
-                reportListStage.setScene(new Scene(new ReportAnalysis(reportListStage, model).getView(), 700, 400));
-                reportListStage.setTitle("Analisi di base");
-                reportListStage.setResizable(false);
-                reportListStage.show();
-            } catch (NullStringException ex){
-                throw new RuntimeException(ex);
-            }
+            reportListStage.setScene(new Scene(new ReportAnalysis(reportListStage, model).getView(), 700, 400));
+            reportListStage.setTitle("Analisi di base");
+            reportListStage.setResizable(false);
+            reportListStage.show();
         });
 
         HBox buttons = new HBox(520, backButton, analysisButton);
