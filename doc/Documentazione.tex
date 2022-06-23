@@ -336,6 +336,14 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
     \subsection*{Nota}
         Il primo prototipo è da intendersi come la prima versione con tutte le features implementate ma senza aver passato il testing.
 
+    \subsection{Test di Sviluppo: Unit Test}
+    Per la parte di Test di sviluppo si è scelto di implementare degli Unit Test sulle classi del \textbf{Controller}. Questa scelta è derivata dal fatto che il controller rappresenta l'interazione tra l'interfaccia (testabile a livello visuale) e le DAO (le cui funzioni sono utilizzate dai controller e quindi implicitamente testate.)\\
+    \begin{itemize}
+        \item Per ogni calsse del controller ed ogni metodo si è scelto di \textbf{testare la normale funzione}: input normali con il confronto dei risultati rispetto a quelli che ci si aspetta dall'implementazione del DataBase utilizzata. Per questo la fase di testing unitario è stata statica e ha riguardato una sola giornata di lavoro, successivamente al termine del primo propototipo.
+        \item Per ogni metodo si è implementato anche un test che verificasse l'\textit{handling} degli errori all'interno delle classi. Dando in input oggetti o stringhe vuote si è verificato che i metodi non ritornassero alcuna informazione, o stampassero in \textbf{Standard Output} o \textbf{Standard Error} i messaggi di errore impostati nei catch delle eccezioni.
+    \end{itemize}
+    Tutte le classi di test hanno ottenuto un buon risultato, i metodi per cui sono stati rilevati errori (ad esempio non stampavano il messaggio esatto) sono state ricontrollate e corrette. Ogni test è visibile nella sezione apposita dell'eseguibile.
+
 \newpage
     \section*{Appendice A: Query di creazione Database}
     \addcontentsline{toc}{section}{Appendice A}
