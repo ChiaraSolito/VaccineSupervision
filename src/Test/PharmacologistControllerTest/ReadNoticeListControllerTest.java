@@ -8,6 +8,8 @@ import javafx.beans.property.SimpleStringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,21 +21,28 @@ class ReadNoticeListControllerTest {
 
     ReadNoticeListController controller;
 
-    @BeforeEach
-    void setUp() {
+    @Test
+    void getReadNotice() {
         controller = new ReadNoticeListController(new User("farm1", "FARM1", true));
+        List<Notice> notices = controller.getReadNotice();
+
+        assertEquals("9",notices.get(0).getId());
+        assertEquals("Avviso importante! I vaccini\n" +
+                "[Moderna]\n" +
+                " hanno riportato più di 5 reazioni di gravità maggiore di 3 negli ultimi 7 giorni.",notices.get(0).getContent());
+        assertEquals("2022-06-21",notices.get(0).getNoticeDate());
     }
 
     @Test
-    void getReadNotice() {
-        List<Notice> notices = new ArrayList<>();
-        notices.add(new Notice(new SimpleStringProperty("1"), new SimpleStringProperty("Questo avviso è per il primo accesso del farmacologo. Benvenuto! Riceverai avvisi come pop up, potrai riguardarli nella sezione Avvisi già letti"),
-                new SimpleStringProperty("2022-06-08")));
-        notices.add(new Notice(new SimpleStringProperty("2"), new SimpleStringProperty("Questo è il secondo avviso"),
-                new SimpleStringProperty("2022-06-07")));
+    void getNoNotice(){
+        controller = new ReadNoticeListController(new User());
+        ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(errContent));
 
-        System.out.println(controller.getReadNotice());
-
-        assertEquals(notices, controller.getReadNotice());
+        //Proving the handling of the esxception
+        assertNull(controller.getReadNotice());
+        String expectedOutput = "Error username: Null String.\n";
+        assertEquals(expectedOutput, errContent.toString());
     }
+
 }
