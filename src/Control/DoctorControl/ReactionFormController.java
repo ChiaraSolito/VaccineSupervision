@@ -40,7 +40,7 @@ public class ReactionFormController {
         try {
             riskDAO.createRiskFactor(name, description, riskLevel);
         } catch (NullStringException exc) {
-            System.out.println("Error risk null: " + exc.getMessage());
+            System.out.println("Error risk: " + exc.getMessage());
         }
 
     }
@@ -73,7 +73,7 @@ public class ReactionFormController {
         try {
             risk = riskDAO.getRisk(name);
         } catch (NullStringException e) {
-            System.out.println("Error risk null: " + e.getMessage());
+            System.out.println("Error risk: " + e.getMessage());
         }
         return risk;
     }
@@ -85,7 +85,7 @@ public class ReactionFormController {
         try {
             reaction = reactionDAO.getReaction(name);
         } catch (NullStringException e) {
-            System.out.println("Error reaction null: " + e.getMessage());
+            System.out.println("Error reaction: " + e.getMessage());
         }
         return reaction;
     }
@@ -96,7 +96,7 @@ public class ReactionFormController {
         try {
             idPatient = patientDAO.createPatient(patient.getBirthYear(), patient.getProvince(), patient.getProfession(), patient.getAllRiskFactor());
         } catch (NullStringException e) {
-            System.out.println("Error idpatient null: " + e.getMessage());
+            System.out.println("Error idpatient: " + e.getMessage());
         }
         return idPatient;
     }
@@ -106,7 +106,7 @@ public class ReactionFormController {
         try {
             reactionDAO.createReaction(reaction.getName(), reaction.getGravity(), reaction.getDescription());
         } catch (NullStringException e) {
-            System.out.println("Error reaction null: " + e.getMessage());
+            System.out.println("Error reaction: " + e.getMessage());
         }
     }
 
@@ -117,7 +117,7 @@ public class ReactionFormController {
             try {
                 vaccinationDAO.createVaccination(patient.getIdPatient(), vaccination.getVaccine(), vaccination.getTypeSomministration(), vaccination.getVaccinationSite(), vaccination.getVaccinationDate());
             } catch (NullStringException e) {
-                System.out.println("Error vaccination null: " + e.getMessage());
+                System.out.println("Error vaccination: " + e.getMessage());
             }
         }
     }
@@ -127,7 +127,7 @@ public class ReactionFormController {
         try {
             reportDAO.createReport(patient.getIdPatient(), reaction.getName(), reactionDate, model.getUsername());
         } catch (NullStringException e) {
-            System.out.println("Error report null: " + e.getMessage());
+            System.out.println("Error report: " + e.getMessage());
         }
     }
 
