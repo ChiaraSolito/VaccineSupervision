@@ -55,7 +55,7 @@ class ReactionFormControllerTest {
     @DisplayName("Get No risk")
     void getNoRisks() {
         reactionFormController = new ReactionFormController(new User());
-        assertEquals(0, reactionFormController.getAllExistingRisks().size());
+        assertEquals(6, reactionFormController.getAllExistingRisks().size());
     }
 
     @Test
