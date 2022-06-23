@@ -1,10 +1,10 @@
-\documentclass{article}
+\documentclass[11pt]{article}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{caption}
-\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[labelfont=bf]{caption}
 \usepackage{booktabs, siunitx}
 \usepackage{tikz}
 \usepackage{tikz-qtree}
@@ -326,27 +326,55 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
     \section{Fase di Test}
     Il test dell'applicazione è stato iniziato in concomitanza con il termine del primo prototipo, in accordo con la metodologia di sviluppo Plan-Driven adottata.\\
     Si è divisa la fase di test in 4 fasi principali:
-    \begin{enumerate}
-        \item Verifica interna della consistenza dell'applicazione rispetto all'analisi dei requisiti.
-        \item \textbf{Test di sviluppo}, implementati come unit test automatizzato mediante JUnit per verificare la correttezza di
-        alcune delle classi più problematiche.
-        \item \textbf{Test di release}, consistente in alcuni stress test, con un team simulato di colleghi esterni allo sviluppo dell'applicazione.
-        \item \textbf{Test degli utenti}, in cui si è scelto un campione di conoscenti senza background informatico che verificassero il software facendo le veci di utenti reali in situazioni reali.
-    \end{enumerate}
-    \subsection*{Nota}
-        Il primo prototipo è da intendersi come la prima versione con tutte le features implementate ma senza aver passato il testing.
+        \begin{enumerate}
+            \item Verifica interna della consistenza dell'applicazione rispetto all'analisi dei requisiti.
+            \item \textbf{Test di sviluppo}, implementati come unit test automatizzato mediante JUnit per verificare la correttezza di
+            alcune delle classi più problematiche.
+            \item \textbf{Test di release}, consistente in alcuni stress test, con un team simulato di colleghi esterni allo sviluppo dell'applicazione.
+            \item \textbf{Test degli utenti}, in cui si è scelto un campione di conoscenti senza background informatico che verificassero il software facendo le veci di utenti reali in situazioni reali.
+        \end{enumerate}
+    
+        \subsubsection*{Nota}
+        Il primo prototipo è da intendersi come la prima versione con tutte le features implementate ma senza aver passato il testing, ultimata in data 21/06/2022.
 
-    \subsection{Test di Sviluppo: Unit Test}
-    Per la parte di Test di sviluppo si è scelto di implementare degli Unit Test sulle classi del \textbf{Controller}. Questa scelta è derivata dal fatto che il controller rappresenta l'interazione tra l'interfaccia (testabile a livello visuale) e le DAO (le cui funzioni sono utilizzate dai controller e quindi implicitamente testate.)\\
-    \begin{itemize}
-        \item Per ogni calsse del controller ed ogni metodo si è scelto di \textbf{testare la normale funzione}: input normali con il confronto dei risultati rispetto a quelli che ci si aspetta dall'implementazione del DataBase utilizzata. Per questo la fase di testing unitario è stata statica e ha riguardato una sola giornata di lavoro, successivamente al termine del primo propototipo.
-        \item Per ogni metodo si è implementato anche un test che verificasse l'\textit{handling} degli errori all'interno delle classi. Dando in input oggetti o stringhe vuote si è verificato che i metodi non ritornassero alcuna informazione, o stampassero in \textbf{Standard Output} o \textbf{Standard Error} i messaggi di errore impostati nei catch delle eccezioni.
-    \end{itemize}
-    Tutte le classi di test hanno ottenuto un buon risultato, i metodi per cui sono stati rilevati errori (ad esempio non stampavano il messaggio esatto) sono state ricontrollate e corrette. Ogni test è visibile nella sezione apposita dell'eseguibile.
+        \subsection{Test di Sviluppo: Unit Test}
+        Per la parte di Test di sviluppo si è scelto di implementare degli Unit Test sulle classi del \textbf{Controller}. Questa scelta è derivata dal fatto che il controller rappresenta l'interazione tra l'interfaccia (testabile a livello visuale) e le DAO (le cui funzioni sono utilizzate dai controller e quindi implicitamente testate.)\\
+            \begin{itemize}
+                \item Per ogni calsse del controller ed ogni metodo si è scelto di \textbf{testare la normale funzione}: input normali con il confronto dei risultati rispetto a quelli che ci si aspetta dall'implementazione del DataBase utilizzata. Per questo la fase di testing unitario è stata statica e ha riguardato una sola giornata di lavoro, successivamente al termine del primo propototipo.
+                \item Per ogni metodo si è implementato anche un test che verificasse l'\textit{handling} degli errori all'interno delle classi. Dando in input oggetti o stringhe vuote si è verificato che i metodi non ritornassero alcuna informazione, o stampassero in \textbf{Standard Output} o \textbf{Standard Error} i messaggi di errore impostati nei catch delle eccezioni.
+            \end{itemize}
+        Tutte le classi di test hanno ottenuto un buon risultato, i metodi per cui sono stati rilevati errori (ad esempio non stampavano il messaggio esatto) sono state ricontrollate e corrette. Ogni test è visibile nella sezione apposita dell'eseguibile.
+        
+        \subsubsection*{Nota}
+        Al termine delle Unit Test definiamo ora l'applicazione come la \textbf{realease 1.0}, "rilasciata" in data 24/06/2021. Questa verrà sottoposta ai test di release.
 
+    \newpage
+        \subsection{Test di release}
+        Per effettuare i test di release si è deciso di trovare 4 colleghi disposti a testare l'applicazione e ad effettuare gli \textbf{stress test} che ritenessero più adeguati.\\
+        In data 25/06/2022 l'applicazione è stata sottoposta a testing, riportiamo le considerazioni dei \textit{tester}:
+            \begin{itemize}
+                \item 
+            \end{itemize}
+
+    \newpage
+        \subsection{Test degli utenti}
+        In questo caso si è deciso di simulare un test dell'utente che fosse il più possibile vicino ad un vero test: si sono scelti 3 \textit{tester senza background informatico}.\\
+        Ai tester si è richiesto di eseguire il test di alcune funzionalità all'interno dell'applicazione.
+            \begin{itemize}
+                \item Il primo tester ha fatto le veci di un nuovo utente Dottore, non inizializzato, che non avesse quindi nessun paziente inserito a database. Gli si è chiesto, oltre al testare le normali funzionalità, di inserire nello specifico: un nuovo paziente con una nuova reazione e una nuova storia influenzale, e successivamente per lo stesso paziente (quindi già esistente)
+                di inserire una seconda reazione, questa volta esistente e di aggiungere una vaccinazione alla storia.\footnote{Si veda l'appendice B, alla sezione "Passi che si richiede di effettuare, Tester 1}
+                \item Il secondo tester ha fatto le veci di un utente Dottore già esistente, quindi con pazienti già inseriti. Gli si è chiesto di inserire: un nuovo paziente con una reazione già esistente e in seguito di aggiungere, per un paziente già esistente, una nuova reazione.\footnote{Si veda l'appendice B, alla sezione "Passi che si richiede di effettuare, Tester 2}
+            \end{itemize}
+        In questo modo si sono testate tutte le combinazioni di inserimento dei report da parte dei dottori. Alla fine dei test è stato somministrato un questionario, in cui si è chiesto di valutare (positivamente o negativamente) le diverse funzionalità testate nella parte "Dottore".\footnote{Si veda l'appendice C: Questionari}
+            \begin{itemize}
+                \item Il terzo tester ha fatto le veci di un nuovo utente Farmacologo, con tutti gli avvisi generati ancora da leggere e una fase di controllo da proporre. {Si veda l'appendice B, alla sezione "Passi che si richiede di effettuare, nella sezione farmacologo}
+            \end{itemize}
+        Anche in questo caso alla fine sono stati somministrati i questionari di valutazione.
+    Al termine si sono anche raccolti a voce suggerimenti e note, che riportiamo: 
+    \paragraph*{Considerazioni dei tester}
 \newpage
     \section*{Appendice A: Query di creazione Database}
-    \addcontentsline{toc}{section}{Appendice A}
+    \addcontentsline{toc}{section}{Appendice A: DataBase}
 
     Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le query usate per la creazione delle tabelle, che ci aiutano a comprendere com'è fatto:
     \paragraph*{Tabelle dello schema VaccineSupervisionDB}
@@ -410,5 +438,178 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
             PRIMARY KEY (pharmacologist, vaccine)
         );
         \end{verbatim}
+    
+    \newpage
+    \section*{Appendice B: Documento per i tester Dottore}
+    \addcontentsline{toc}{section}{Appendice B: Test Utente}
+
+    \section*{Test dell'utente Dottore}
+
+        \subsection*{Traccia su cui basare l'idea del funzionamento}
+            Di seguito riportiamo la traccia dell'elaborato per quel che riguarda le funzionalità dell'utente di tipo Dottore.
+            \begin{quotation}
+                Si vuole progettare un sistema software per gestire le segnalazioni di reazioni avverse (ad esempio, asma, dermatiti, insufficienza renale, miocardiopatia, \dots) da vaccini anti-Covid.\\
+                Ogni segnalazione è caratterizzata da un codice univoco, dall'indicazione del paziente a cui fa riferimento, dall'indicazione della reazione avversa, dalla data della reazione avversa, dalla data di segnalazione, e dalle vaccinazioni ricevute nei due mesi precedenti il momento della reazione avversa.
+                Per ogni paziente sono memorizzati: un codice univoco, l'anno di nascita, la provincia di residenza e la professione.\\
+                Per ogni paziente è possibile memorizzare gli eventuali fattori di rischio presenti (paziente fumatore, iperteso, sovrappeso, paziente fragile per precedenti patologie cardiovascolari o oncologiche), anche più d'uno. Ogni fattore di rischio è caratterizzato da un nome univoco, una descrizione e il livello di rischio associato. Per ogni paziente è, inoltre, memorizzata l'intera storia delle sue vaccinazioni precedenti, anti-Covid-19 e antinfluenzali.\\
+                Ogni vaccinazione è caratterizzata da: paziente a cui si riferisce, segnalazioni a cui è legata, vaccino somministrato (AstraZeneca, Pfizer, Moderna, Sputnik, Sinovac, antinfluenzale, \dots), tipo della somministrazione (I, II, III o IV dose, dose unica), sede presso la quale è avvenuta la vaccinazione e data di vaccinazione. Per ogni reazione avversa sono memorizzati un nome univoco, un livello di gravità (da 1 a 5) e una descrizione generale, espressa in linguaggio naturale. Una reazione avversa può essere legata a molte segnalazioni. Per ogni paziente sono memorizzati il numero di reazioni avverse segnalate ed il numero di vaccinazioni ricevute.\\
+                Il sistema deve supportare i medici che effettuano la segnalazione. \textbf{Dopo opportuna autenticazione, il medico viene introdotto ad una interfaccia che permette l'inserimento dei dati delle reazioni avverse e dei pazienti. Il codice univoco dei pazienti è gestito dal sistema, che tiene traccia dei pazienti indicati da ogni medico. Ogni medico vede solo i codici identificativi dei pazienti, dei quali ha già segnalato qualche reazione avversa, e le relative informazioni.}
+            \end{quotation}
+
+        \subsection*{Passi che si richiede di effettuare}
+
+            \subsubsection*{Tester 1}
+            Dopo aver avviato l'applicazione si chiede all'utente di effettuare i seguenti passaggi:
+            \begin{enumerate}
+                \item Effettuare un login tramite le credenziali: username=\textit{doc12}, password=\textit{PROVA}.
+                \item Verificare che l'accesso è negato.
+                \item Effettuare un login tramite le credenziali: username=\textit{doc3}, password=\textit{DOC3}.
+                \item Verificare che l'accesso è eseguito come dottore.
+                \item Accedere alla lista pazienti tramite l'apposito bottone.
+                \item Verificare che questa sia vuota.
+                \item Tornare alla pagina principale.
+                \item Accedere al form di inserimento dei report
+                \item Nella prima tab cliccare il bottone di inserimento di un nuovo paziente.
+                \item Inserire le seguenti informazioni\\
+                        Anno di nascita: \textit{1959}, Provincia: \textit{Lecco}, Professione:\textit{Impiegato}, scegliere tra i fattori di rischio il fattore esistente \textit{Colesterolo alto}.
+                \item Passare alla tab successiva e inserire come data reazione, dall'apposito calendario il \textit{22 Maggio del 2022}.
+                \item Cliccare il bottone di inserimento di una nuova reazione.
+                \item Inserire le seguenti informazioni\\ 
+                        Nome: \textit{Trombosi}, Descrizione: \textit{Presenza di un coagulo di sangue, che aderisce alle pareti non lesionate dei vasi.}, Gravità: \textit{4}.
+                \item Passare alla tab successiva e scegliere dai vaccini: \textit{Antinfluenzale A/Victoria/2570/2019}
+                \item Inserire nei campi di testo:\\
+                        Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{4/12/2022}
+                \item Cliccare su inserisci.
+                \item Inserire nuovamente un vaccino: questa volta si scelga il vaccino \textit{Pfizer}
+                \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Prima dose}
+                \item Inserire nei campi di testo:\\
+                    Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{2/16/2022}
+                \item Cliccare su inserisci.
+                \item Inserire nuovamente un vaccino: questa volta si scelga il vaccino \textit{Moderna}
+                \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Seconda dose}
+                \item Inserire nei campi di testo:\\
+                    Sito della vaccinazione: \textit{Lecco}, Data della vaccinazione: \textit{4/31/2022}
+                \item Cliccare su inserisci.
+                \item Cliccare su conferma.
+                \item Apparirà ora un avviso di conferma, cliccare su OK.
+                \item Si tornerà sutomaticamente nella pagina iniziale. 
+                \item Accedere alla lista pazienti tramite l'apposito bottone.
+                \item Verificare la presenza di un nuovo paziente
+                \item Cliccare sul bottone "Info".
+                \item Dalla pagina aperta scorrere tra le tab e verificare la correttezza delle informazioni inserite.
+                \item Tornare indietro e poi ancora fino alla pagina principale.
+                \item Accedere di nuovo al form di inserimento dei report.
+                \item Selezionare il paziente già esistente nella prima tab.
+                \item Inserire come data della reazione: \textit{15 Giugno 2022}
+                \item Selezionare dalle reazioni esistenti la reazione \textit{Eruzione cutanea}
+                \item Nella tab successiva, inserire una nuova vaccinazione:\\
+                    si scelga il vaccino \textit{Moderna}
+                \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Dose booster}
+                \item Inserire nei campi di testo:\\
+                    Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{6/3/2022}
+                \item Cliccare su conferma.
+                \item Verificare nuovamente le informazioni inserite dalla pagina di visualizzazione dei pazienti.
+                \item Tornare alla pagina iniziale.
+                \item Effettuare il logout.
+            \end{enumerate}
+
+            \subsubsection*{Tester 2}
+            Dopo aver avviato l'applicazione si chiede all'utente di effettuare i seguenti passaggi:
+            \begin{enumerate}
+                \item Effettuare un login tramite le credenziali: username=\textit{doc2}, password=\textit{PROVA}.
+                \item Verificare che l'accesso è negato.
+                \item Effettuare un login tramite le credenziali: username=\textit{doc1}, password=\textit{DOC1}.
+                \item Verificare che l'accesso è eseguito come dottore.
+                \item Accedere alla lista pazienti tramite l'apposito bottone.
+                \item Verificare che questa sia popolata.
+                \item Tornare alla pagina principale.
+                \item Accedere al form di inserimento dei report
+                \item Nella prima tab cliccare il bottone di inserimento di un nuovo paziente.
+                \item Inserire le seguenti informazioni\\
+                        Anno di nascita: \textit{1980}, Provincia: \textit{Salerno}, Professione:\textit{Ristoratore}, 
+                        inserire un nuovo fattore di rischio: Nome: \textit{Sovrappeso}, Descrizione: \textit{Paziente con un peso superiore a quello indicato per eta e statura}, Livello di rischio: \textit{3}. Cliccare il bottone di inserimento.
+                \item Selezionare ora il fattore di rischio aggiunto dal menù a tendina.
+                \item Passare alla tab successiva e inserire come data reazione, dall'apposito calendario il \textit{30 Maggio del 2022}.
+                \item Selezionare dalle reazioni esistenti la reazione \textit{Vomito}
+                \item Passare alla tab successiva e scegliere dai vaccini: \textit{Antinfluenzale A/Darwin/6/2021}
+                \item Inserire nei campi di testo:\\
+                        Sito della vaccinazione: \textit{Salerno}, Data della vaccinazione: \textit{5/20/2022}
+                \item Cliccare su inserisci.
+                \item Inserire nuovamente un vaccino: questa volta si scelga il vaccino \textit{Jannsen}
+                \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Unica}
+                \item Inserire nei campi di testo:\\
+                    Sito della vaccinazione: \textit{Salerno}, Data della vaccinazione: \textit{4/16/2022}
+                \item Cliccare su inserisci.
+                \item Cliccare su conferma.
+                \item Apparirà ora un avviso di conferma, cliccare su OK.
+                \item Si tornerà sutomaticamente nella pagina iniziale. 
+                \item Accedere alla lista pazienti tramite l'apposito bottone.
+                \item Verificare la presenza di un nuovo paziente
+                \item Cliccare sul bottone "Info".
+                \item Dalla pagina aperta scorrere tra le tab e verificare la correttezza delle informazioni inserite.
+                \item Tornare indietro e poi ancora fino alla pagina principale.
+                \item Accedere di nuovo al form di inserimento dei report.
+                \item Selezionare il paziente con codice 20 nella prima tab.
+                \item Inserire come data della reazione: \textit{23 Giugno 2022}
+                \item Cliccare il bottone di inserimento di una nuova reazione.
+                \item Inserire le seguenti informazioni\\ 
+                        Nome: \textit{Dermatite}, Descrizione: \textit{Infiammazione della pelle causata dalla reazione a determinate sostanze chimiche o naturali (dette allergeni).}, Gravità: \textit{2}.
+                \item Nella tab successiva, inserire una nuova vaccinazione:\\
+                    si scelga il vaccino \textit{Moderna}
+                \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Dose booster}
+                \item Inserire nei campi di testo:\\
+                    Sito della vaccinazione: \textit{Torino}, Data della vaccinazione: \textit{6/20/2022}
+                \item Cliccare su conferma.
+                \item Verificare nuovamente le informazioni inserite dalla pagina di visualizzazione dei pazienti.
+                \item Tornare alla pagina iniziale.
+                \item Effettuare il logout.
+            \end{enumerate}
+
+        \subsection*{Tabella di valutazione}
+            Si chiede ad entrambi i partecipanti di compilare la tabella di valutazione data assieme a questo modulo.
+
+        \section*{Test dell'utente Farmacologo}
+            \subsection*{Traccia su cui basare l'idea del funzionamento}
+            Di seguito riportiamo la traccia dell'elaborato per quel che riguarda le funzionalità dell'utente di tipo Dottore.
+            \begin{quotation}
+            Si vuole progettare un sistema software per gestire le segnalazioni di reazioni avverse (ad esempio, asma, dermatiti, insufficienza renale, miocardiopatia, \dots) da vaccini anti-Covid.\\
+                Ogni segnalazione è caratterizzata da un codice univoco, dall'indicazione del paziente a cui fa riferimento, dall'indicazione della reazione avversa, dalla data della reazione avversa, dalla data di segnalazione, e dalle vaccinazioni ricevute nei due mesi precedenti il momento della reazione avversa.
+                Per ogni paziente sono memorizzati: un codice univoco, l'anno di nascita, la provincia di residenza e la professione.\\
+                Per ogni paziente è possibile memorizzare gli eventuali fattori di rischio presenti (paziente fumatore, iperteso, sovrappeso, paziente fragile per precedenti patologie cardiovascolari o oncologiche), anche più d'uno. Ogni fattore di rischio è caratterizzato da un nome univoco, una descrizione e il livello di rischio associato. Per ogni paziente è, inoltre, memorizzata l'intera storia delle sue vaccinazioni precedenti, anti-Covid-19 e antinfluenzali.\\
+                Ogni vaccinazione è caratterizzata da: paziente a cui si riferisce, segnalazioni a cui è legata, vaccino somministrato (AstraZeneca, Pfizer, Moderna, Sputnik, Sinovac, antinfluenzale, \dots), tipo della somministrazione (I, II, III o IV dose, dose unica), sede presso la quale è avvenuta la vaccinazione e data di vaccinazione. Per ogni reazione avversa sono memorizzati un nome univoco, un livello di gravità (da 1 a 5) e una descrizione generale, espressa in linguaggio naturale. Una reazione avversa può essere legata a molte segnalazioni. Per ogni paziente sono memorizzati il numero di reazioni avverse segnalate ed il numero di vaccinazioni ricevute.\\
+                \textbf{Ad ogni fine settimana o quando il numero di segnalazioni raggiunge la soglia di 50, il sistema manda un avviso ad uno dei farmacologi responsabili della gestione delle segnalazioni di reazioni avverse. Il farmacologo, dopo autenticazione, accede alle segnalazioni (tutte, con l'indicazione del medico che le ha fatte) e può effettuare alcune analisi di base (quante segnalazioni per vaccino, quante segnalazioni gravi in settimana, quante segnalazioni per provincia e quante segnalazioni per sede di vaccinazione). Il sistema, inoltre, avvisa il farmacologo quando un vaccino ha accumulato in un mese oltre 5 segnalazioni di gravità superiore a 3.
+                In base alle segnalazioni e agli avvisi del sistema, il farmacologo può proporre di attivare una fase di controllo del vaccino. Tale proposta viene registrata dal sistema, che tiene traccia di tutte le proposte relative ai vaccini segnalati.
+            }
+            \end{quotation}
+    
+            \subsection*{Passi che si richiede di effettuare}
+            
+                Dopo aver avviato l'applicazione si chiede all'utente di effettuare i seguenti passaggi:
+                \begin{enumerate}
+                    \item Effettuare un login tramite le credenziali: username=\textit{farm12}, password=\textit{PROVA}.
+                    \item Verificare che l'accesso è negato.
+                    \item Effettuare un login tramite le credenziali: username=\textit{farm3}, password=\textit{FARM3}.
+                    \item Visualizzazione di vari avvisi.
+                    \item Verificare che l'accesso è eseguito come farmacologo.
+                    \item Accedere alla lista di avvisi già letti tramite l'apposito bottone.
+                    \item Verificare che questa abbia tutti gli avvisi appena visualizzati.
+                    \item Tornare alla pagina principale.
+                    \item Accedere alla lista delle segnalazioni. Guardare le segnalazioni presenti. 
+                    \item In basso a destra cliccare sul bottone delle analisi di base.
+                    \item Verificare quanti vaccini hanno avuto una reazione grave nell'ultima settimana e proporre una fase di controllo del vaccino con maggiori reazioni.
+                    \item Tornare alla pagina iniziale.
+                    \item Cliccare sul bottone "Proponi fase controllo".
+                    \item Selezionare tra i vaccini, il vaccino "Jannsen".
+                    \item Cliccare il bottone Conferma e poi OK.
+                    \item Ripetere l'operazione e verificare che l'inserimento dia errore.
+                    \item Effettuare il logout.
+                \end{enumerate}
+            
+            \subsection*{Tabella di valutazione}
+                Si chiede al partecipante di compilare la tabella di valutazione data assieme a questo modulo.
+            
+    \newpage
+    \section*{Appendice C: Valutazione degli utenti}
+    \addcontentsline{toc}{section}{Appendice C: Documenti di valutazione}
 
 \end{document}
