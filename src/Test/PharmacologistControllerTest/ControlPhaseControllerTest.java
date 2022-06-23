@@ -1,22 +1,17 @@
 package Test.PharmacologistControllerTest;
 
 import Control.FarmacologistControl.ControlPhaseController;
-import Control.FarmacologistControl.MainControllerPharm;
-import Model.ControlPhase;
-import Model.User;
-import javafx.beans.property.SimpleStringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ControlPhaseControllerTest {
-
-    User user;
 
     ControlPhaseController controller;
 
@@ -27,33 +22,53 @@ class ControlPhaseControllerTest {
 
 
     @Test
+    @Order(1)
     @DisplayName("get All Vaccines")
     void getAllVaccines() {
-        List<String> vaccines = new ArrayList<>();
-        assertEquals(vaccines, controller.getAllVaccines());
+        assertEquals(5, controller.getAllVaccines().size());
+        assertEquals("Moderna", controller.getAllVaccines().get(4));
     }
 
-    @Test
-    void addControlPhase() {
-        ControlPhase controlPhase = new ControlPhase(new SimpleStringProperty("2022-06-23"),
-                new SimpleStringProperty("Moderna"), new SimpleStringProperty(user.getUsername()));
-        //assertEquals("controlPhase", controller.addControlPhase(controlPhase));
-    }
 
     @Test
+    @Order(2)
+    @DisplayName("Get total number of the proposed control phases for a vaccine")
     void getTotalNumberControlPhase() {
-        String vaccine = "Moderna";
-        assertEquals(1, controller.getTotalNumberControlPhase(vaccine));
+        assertEquals(2, controller.getTotalNumberControlPhase("Moderna"));
     }
 
     @Test
-    @DisplayName("Get Total Number with no vaccine")
-    void exceptionTestingGetTotalNumber() {
+    @Order(3)
+    @DisplayName("Get total number with no input")
+    void getNoNumber() {
+        ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(errContent));
 
+        //Proving the handling of the exception
+        assertEquals(0, controller.getTotalNumberControlPhase(""));
+        String expectedOutput = "Error vaccine: Null String.\n";
+        assertEquals(expectedOutput, errContent.toString());
     }
 
+
     @Test
+    @Order(4)
+    @DisplayName("Get the number of control phases proposed in the last six months")
     void getSixMonthsNumberControlPhase() {
-        fail("Not implemented yet");
+        assertEquals(2, controller.getTotalNumberControlPhase("Moderna"));
     }
+
+    @Test
+    @Order(5)
+    @DisplayName("Get six months number with no input")
+    void getNoNumberSixMonths() {
+        ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(errContent));
+
+        //Proving the handling of the exception
+        assertEquals(0, controller.getSixMonthsNumberControlPhase(""));
+        String expectedOutput = "Error vaccine: Null String.\n";
+        assertEquals(expectedOutput, errContent.toString());
+    }
+
 }
