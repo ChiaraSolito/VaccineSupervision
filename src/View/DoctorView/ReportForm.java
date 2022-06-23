@@ -17,7 +17,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -364,14 +363,10 @@ public class ReportForm {
         Button backButton = new Button();
         backButton.setText("Indietro");
         backButton.setOnAction(e -> {
-            try {
-                reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
-                reportDocStage.setTitle("Menù Principale");
-                reportDocStage.setResizable(false);
-                reportDocStage.show();
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
+            reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
+            reportDocStage.setTitle("Menù Principale");
+            reportDocStage.setResizable(false);
+            reportDocStage.show();
         });
 
         //Create button to submit
@@ -429,14 +424,10 @@ public class ReportForm {
                 }
                 controller.addVaccination(patient, vaccinations);
                 controller.createReport(patient, reaction, datePickerR.getValue().toString());
-                try {
-                    reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
-                    reportDocStage.setTitle("Menù Principale");
-                    reportDocStage.setResizable(false);
-                    reportDocStage.show();
-                } catch (FileNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
+                reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
+                reportDocStage.setTitle("Menù Principale");
+                reportDocStage.setResizable(false);
+                reportDocStage.show();
             }
         });
 

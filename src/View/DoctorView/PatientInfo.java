@@ -3,7 +3,7 @@ package View.DoctorView;
 import Control.DoctorControl.PatientInfoController;
 import Model.*;
 import Model.Utils.Exceptions.NullStringException;
-import javafx.beans.property.*;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -141,14 +141,10 @@ public class PatientInfo {
         Button backButton = new Button();
         backButton.setText("Indietro");
         backButton.setOnAction(e -> {
-            try {
-                patientInfoDocStage.setScene(new Scene(new PatientsList(patientInfoDocStage, model).getView(), 700, 400));
-                patientInfoDocStage.setTitle("Lista dei pazienti");
-                patientInfoDocStage.setResizable(false);
-                patientInfoDocStage.show();
-            } catch (NullStringException ex) {
-                throw new RuntimeException(ex);
-            }
+            patientInfoDocStage.setScene(new Scene(new PatientsList(patientInfoDocStage, model).getView(), 700, 400));
+            patientInfoDocStage.setTitle("Lista dei pazienti");
+            patientInfoDocStage.setResizable(false);
+            patientInfoDocStage.show();
         });
 
         BorderPane layout = new BorderPane();

@@ -47,7 +47,7 @@ public class LoginView {
     /*
         Crea la view effettiva
      */
-    public Parent getView() throws FileNotFoundException {
+    public Parent getView() {
 
         Insets insets = new Insets(30);
 
@@ -78,7 +78,6 @@ public class LoginView {
                     if (dialog != null) {
                         dialog.showAndWait();
                     }
-
                 } else {
                     Alerts.displayLoginError();
                 }

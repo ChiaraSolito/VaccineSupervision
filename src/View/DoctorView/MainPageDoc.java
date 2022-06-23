@@ -17,8 +17,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
-
 import static javafx.geometry.Pos.CENTER_LEFT;
 import static javafx.geometry.Pos.CENTER_RIGHT;
 
@@ -38,7 +36,7 @@ public class MainPageDoc extends Parent {
     /*
         Crea la view effettiva
      */
-    public Region getView() throws FileNotFoundException {
+    public Region getView() {
 
         //insets
         Insets insets = new Insets(30);
@@ -71,14 +69,10 @@ public class MainPageDoc extends Parent {
         Button button1 = createButton(new Button(), icon1, text);
         //inserisci una chiamata alla vista della lista pazienti
         button1.setOnAction(e -> {
-            try {
-                mainDocStage.setScene(new Scene(new PatientsList(mainDocStage, model).getView(),700,400));
-                mainDocStage.setTitle("Lista dei pazienti");
-                mainDocStage.setResizable(false);
-                mainDocStage.show();
-            } catch (NullStringException ex) {
-                throw new RuntimeException(ex);
-            }
+            mainDocStage.setScene(new Scene(new PatientsList(mainDocStage, model).getView(), 700, 400));
+            mainDocStage.setTitle("Lista dei pazienti");
+            mainDocStage.setResizable(false);
+            mainDocStage.show();
         });
 
         //
@@ -105,15 +99,10 @@ public class MainPageDoc extends Parent {
 
         Button logout = new Button("Logout");
         logout.setOnAction(e -> {
-            try {
-                mainDocStage.setTitle("Drug Supervision - Login");
-                mainDocStage.setScene(new Scene(new LoginView(mainDocStage, new User()).getView(), 700, 400));
-                mainDocStage.setResizable(false);
-                mainDocStage.show();
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-
+            mainDocStage.setTitle("Drug Supervision - Login");
+            mainDocStage.setScene(new Scene(new LoginView(mainDocStage, new User()).getView(), 700, 400));
+            mainDocStage.setResizable(false);
+            mainDocStage.show();
         });
 
         // Set the alignment

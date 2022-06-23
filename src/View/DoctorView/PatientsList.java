@@ -20,7 +20,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +66,7 @@ public class PatientsList extends Parent {
         }
     }
 
-    public Parent getView() throws NullStringException {
+    public Parent getView() {
         // Create the BorderPane
         List<String> patients = new ArrayList<>(controller.getAllPatients());
 
@@ -94,14 +93,10 @@ public class PatientsList extends Parent {
         Button backButton = new Button();
         backButton.setText("Indietro");
         backButton.setOnAction(e -> {
-            try {
-                listDocStage.setScene(new Scene(new MainPageDoc(listDocStage, model).getView(), 700, 400));
-                listDocStage.setTitle("Menù principale");
-                listDocStage.setResizable(false);
-                listDocStage.show();
-            } catch (FileNotFoundException ex){
-                throw new RuntimeException(ex);
-            }
+            listDocStage.setScene(new Scene(new MainPageDoc(listDocStage, model).getView(), 700, 400));
+            listDocStage.setTitle("Menù principale");
+            listDocStage.setResizable(false);
+            listDocStage.show();
         });
         layout.setBottom(backButton);
         BorderPane.setAlignment(backButton, Pos.CENTER_LEFT);
