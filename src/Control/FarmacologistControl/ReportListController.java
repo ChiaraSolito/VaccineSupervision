@@ -6,7 +6,6 @@ import Model.Utils.DAOImpl.VaccinationDAOImpl;
 import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReportListController {
@@ -16,25 +15,18 @@ public class ReportListController {
 
     public List<Report> getReportList(){
         ReportDAOImpl reportDAO = new ReportDAOImpl();
-        List<Report> reports = new ArrayList<>();
 
-        try{
-            reports = reportDAO.getAllReports();
-        } catch (NullStringException nse){
-            System.err.println("String Error: ");
-            nse.printStackTrace();
-        }
-        return reports;
+        return reportDAO.getAllReports();
     }
 
-    public List<Vaccination> getPatientTwoMonthsVaccination(String patient, String reactionDate) throws NullStringException {
+    public List<Vaccination> getPatientTwoMonthsVaccination(String patient, String reactionDate) {
         VaccinationDAOImpl vaccinationDAO = new VaccinationDAOImpl();
-        List<Vaccination> vaccinations;
+        List<Vaccination> vaccinations = null;
 
         try {
             vaccinations = vaccinationDAO.getTwoMonthsVaccination(patient, reactionDate);
         } catch (NullStringException e) {
-            throw new NullStringException();
+            System.err.println("Error patient or reactionDate: " + e.getMessage());
         }
 
         return vaccinations;

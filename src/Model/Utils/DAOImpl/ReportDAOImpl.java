@@ -17,7 +17,7 @@ public class ReportDAOImpl implements ReportDAO {
     DataBaseConnection pConnection;
 
     @Override
-    public List<Report> getAllReports() throws NullStringException {
+    public List<Report> getAllReports() {
 
         List<Report> reports = new ArrayList<>();
 

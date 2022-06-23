@@ -16,14 +16,14 @@ public class ReadNoticeListController {
     //Costruttore
     public ReadNoticeListController(User model) { this.model = model; }
 
-    public List<Notice> getReadNotice() throws NullStringException {
+    public List<Notice> getReadNotice() {
         NoticeDAOImpl noticeDAO = new NoticeDAOImpl();
-        ObservableList<Notice> notices;
+        ObservableList<Notice> notices = null;
 
         try {
             notices = FXCollections.observableArrayList(noticeDAO.getAllNotices(model.getUsername()));
         } catch (NullStringException e) {
-            throw new NullStringException();
+            System.err.println("Error username: " + e.getMessage());
         }
 
         return notices;

@@ -26,7 +26,7 @@ public class ControlPhaseController {
         try {
             controlPhaseDAO.proposeControlPhase(controlPhase.getVaccine(), controlPhase.getPharmacologist());
         } catch (NullStringException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error controlPhase: " + e.getMessage());
         }
     }
 
@@ -37,7 +37,7 @@ public class ControlPhaseController {
         try {
             totalNumber = controlPhaseDAO.getTotalNumberControlPhase(vaccine);
         } catch (NullStringException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error vaccine: " + e.getMessage());
         }
 
         return totalNumber;
@@ -50,7 +50,7 @@ public class ControlPhaseController {
         try {
             sixMonthsNumber = controlPhaseDAO.getSixMonthsNumberControlPhase(vaccine);
         } catch (NullStringException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error vaccine: " + e.getMessage());
         }
 
         return sixMonthsNumber;
