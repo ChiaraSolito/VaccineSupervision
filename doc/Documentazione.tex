@@ -246,95 +246,93 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
 
     \newpage
     \section{Scelte progettuali}
-    \subsection{Note sullo sviluppo}
-    Si è scelto di sviluppare l'applicazione in Java, utilizzando la libreria \textbf{JavaFX}, senza l'ausilio di FXML, perché soddisfatti del design delle interfacce.\\
-    Il progetto è stato interamente sviluppato utilizzando \textbf{Git} come sistema di \textit{code versioning} e GitHub per l'hosting della repository.\\
-    Abbiamo seguito una metodologia di sviluppo per lo più a cascata e \textbf{Plan Driven}: le fasi di specifica e di sviluppo sono state separate, cercando di porre comunque rimedio al principale svantaggio dello stesso, ovvero la difficoltà di cambiamento dopo aver avviato il processo. Questo è stato fatto utilizzando alcune metodologie proprie dello \textbf{sviluppo Agile}, soprattutto l'attività di \textit{Pair Programming} che ha riguardato tutto lo sviluppo, con particolare attenzione allo sviluppo dei Modelli e delle prime View (si veda in seguito).\\
-    Ogni area è stata divisa in task in modo da alleggerire il carico di lavoro e i design pattern sono stati scelti nella fase di sviluppo in base a quelle che erano le nostre necessità, al fine di ottenere un codice performante ma allo stesso tempo leggibile.\\
-    Prima di cominciare lo sviluppo vero e proprio, si è condotta la fase di analisi dei requisiti che si è vista nella sezione precedente, generando i relativi use-cases e i diagrammi di attività. Anche la progettazione architetturale è stata fatta prima di iniziare il lavoro centrale, in
-    modo da non avere problemi su quel frangente.
+        \subsection{Note sullo sviluppo}
+        Si è scelto di sviluppare l'applicazione in Java, utilizzando la libreria \textbf{JavaFX}, senza l'ausilio di FXML, perché soddisfatti del design delle interfacce.\\
+        Il progetto è stato interamente sviluppato utilizzando \textbf{Git} come sistema di \textit{code versioning} e GitHub per l'hosting della repository.\\
+        Abbiamo seguito una metodologia di sviluppo per lo più a cascata e \textbf{Plan Driven}: le fasi di specifica e di sviluppo sono state separate, cercando di porre comunque rimedio al principale svantaggio dello stesso, ovvero la difficoltà di cambiamento dopo aver avviato il processo. Questo è stato fatto utilizzando alcune metodologie proprie dello \textbf{sviluppo Agile}, soprattutto l'attività di \textit{Pair Programming} che ha riguardato tutto lo sviluppo, con particolare attenzione allo sviluppo dei Modelli e delle prime View (si veda in seguito).\\
+        Ogni area è stata divisa in task in modo da alleggerire il carico di lavoro e i design pattern sono stati scelti nella fase di sviluppo in base a quelle che erano le nostre necessità, al fine di ottenere un codice performante ma allo stesso tempo leggibile.\\
+        Prima di cominciare lo sviluppo vero e proprio, si è condotta la fase di analisi dei requisiti che si è vista nella sezione precedente, generando i relativi use-cases e i diagrammi di attività. Anche la progettazione architetturale è stata fatta prima di iniziare il lavoro centrale, in
+        modo da non avere problemi su quel frangente.
 
-    \subsection{Pattern Architetturale - MVC}
-    Abbiamo deciso di utilizzare il \textbf{pattern Model View Controller}, semplicemente perchè naturalmente implementabile con l'uso di JavaFX. Il sistema è strutturato in tre componenti logiche che interagiscono tra loro.\\
-    Il \textbf{model} si occupa della gestione dei dati e delle operazioni su di essi. La componente \textbf{View} definisce le interfacce e come i dati vengono presentati all'utente. Il \textbf{Controller} 
-    gestisce infine l'interazione delle interfacce e dell'utente con i dati.
-        \begin{center}
-            \includegraphics[width=0.70\textwidth]{pictures/mvc.png}
-        \end{center}
-		
-\newpage
+        \subsection{Pattern Architetturale - MVC}
+        Abbiamo deciso di utilizzare il \textbf{pattern Model View Controller}, semplicemente perchè naturalmente implementabile con l'uso di JavaFX. Il sistema è strutturato in tre componenti logiche che interagiscono tra loro.\\
+        Il \textbf{model} si occupa della gestione dei dati e delle operazioni su di essi. La componente \textbf{View} definisce le interfacce e come i dati vengono presentati all'utente. Il \textbf{Controller} 
+        gestisce infine l'interazione delle interfacce e dell'utente con i dati.
+            \begin{center}
+                \includegraphics[width=0.70\textwidth]{pictures/mvc.png}
+            \end{center}
+            
+    \newpage
 
-\subsection{Data Access Object Pattern}
-    Per la gestione dei dati si è ritenuto di utilizzare il pattern DAO, utilizzato per separare i dati di basso livello che accedono all'API dalle operazioni di alto livello.\\
-    Per ogni classe del Model (e di conseguenza per quasi tutte le tabelle implementate nel DataBase) si è implementato:
-        \begin{itemize}
-            \item \textbf{Interfaccia DAO} - Definisce le operazioni standard da eseguire.
-            \item \textbf{Classe concreta DAO} - Implementa l'interfaccia di cui sopra. È responsabile dell'accesso ai dati dal database.
-            \item \textbf{Model Object} - Questo è un semplice oggetto Java che contiene i metodi getter e setter per memorizzare i dati.
-        \end{itemize}
-    Le classi-modello implementate con il pattern DAO sono (in ordine alfabetico):
-        \begin{itemize}
-            \item \textbf{ControlPhase} - le fasi di controllo proposte dal farmacologo.
-            \item \textbf{Notice} - gli avvisi ricevuti dal farmacologo.
-            \item \textbf{Patient} - i pazienti.
-            \item \textbf{Reaction} - le reazioni avverse.
-            \item \textbf{Report} - le segnalazioni effettuate dai medici.
-            \item \textbf{RiskFactor} - i fattori di rischio relativi ai pazienti.
-            \item \textbf{Vaccination} - le vaccinazioni effettuate dai pazienti.
-        \end{itemize}
+        \subsection{Data Access Object Pattern}
+            Per la gestione dei dati si è ritenuto di utilizzare il pattern DAO, utilizzato per separare i dati di basso livello che accedono all'API dalle operazioni di alto livello.\\
+            Per ogni classe del Model (e di conseguenza per quasi tutte le tabelle implementate nel DataBase) si è implementato:
+                \begin{itemize}
+                    \item \textbf{Interfaccia DAO} - Definisce le operazioni standard da eseguire.
+                    \item \textbf{Classe concreta DAO} - Implementa l'interfaccia di cui sopra. È responsabile dell'accesso ai dati dal database.
+                    \item \textbf{Model Object} - Questo è un semplice oggetto Java che contiene i metodi getter e setter per memorizzare i dati.
+                \end{itemize}
+            Le classi-modello implementate con il pattern DAO sono (in ordine alfabetico):
+                \begin{itemize}
+                    \item \textbf{ControlPhase} - le fasi di controllo proposte dal farmacologo.
+                    \item \textbf{Notice} - gli avvisi ricevuti dal farmacologo.
+                    \item \textbf{Patient} - i pazienti.
+                    \item \textbf{Reaction} - le reazioni avverse.
+                    \item \textbf{Report} - le segnalazioni effettuate dai medici.
+                    \item \textbf{RiskFactor} - i fattori di rischio relativi ai pazienti.
+                    \item \textbf{Vaccination} - le vaccinazioni effettuate dai pazienti.
+                \end{itemize}
 
-    \paragraph*{Nota}
-    Per la classe \textbf{User} (gli utenti che hanno accesso all'applicazione, ovvero dottori e farmacologi) si è deciso di non modellare la classe secondo il pattern DAO, ma di implementarla come un oggetto Java generico.
+            \paragraph*{Nota}
+            Per la classe \textbf{User} (gli utenti che hanno accesso all'applicazione, ovvero dottori e farmacologi) si è deciso di non modellare la classe secondo il pattern DAO, ma di implementarla come un oggetto Java generico.
 
-\newpage
-    \subsection{Diagrammi delle classi}
-    \paragraph*{Classi del Modello}
-        \begin{center}
-            \includegraphics[width=1\textwidth]{pictures/DAOInteraction.png}
-        \captionof{figure}{Interazione tra le classi del modello}
-        \end{center}
-\newpage
-    \paragraph*{Classi della View}
-        \subparagraph*{Nota} Non si sono inserite nel diagramma le classi considerate \textit{Utils}, quindi le classi che ad esempio generano gli avvisi, i messaggi di errore o la lista dei vaccini possibili.
-        \begin{center}
-            \includegraphics[width=1\textwidth]{pictures/ViewInteraction.png}
-        \captionof{figure}{Interazione tra le classi della View}
-        \end{center}
-\newpage
-    \paragraph*{Esempio Interazione View - Controller}
-        \subparagraph*{Nota} Si è scelto di riportare come \textit{Class Diagram} solo un esempio di \textbf{interazione tra Vista e Controllore}, perché esemplificativa delle interazioni generali tra questi due.\\
-        La vista chiama i metodi del controllore per poter interagire con i dati, a cui il controllore ha accesso (si veda la prossima DAO).
-        \begin{center}
-            \includegraphics[width=1\textwidth]{pictures/ExampleControlViewInteraction.png}
-        \captionof{figure}{Interazione tra le classi della View Farmacologo e i loro controller}
-        \end{center}
-\newpage
-    \paragraph*{Esempio Interazione DAO - Controller}
-        \begin{center}
-            \includegraphics[width=1\textwidth]{pictures/ControllerDati.png}
-        \captionof{figure}{Interazione tra le classi del Controller del Dottore e i dati a cui ha accesso}
-        \end{center}
-
-\newpage
-    \subsection{Sequence Diagram}
-    \subsubsection*{Chiamate della View del PatientInfo nel metodo getView}
-    \begin{center}
-        \includegraphics[width=0.90\textwidth]{pictures/prova_001.png}
-    \end{center}
+        \newpage
+        \subsection{Diagrammi delle classi}
+        \paragraph*{Classi del Modello}
+            \begin{center}
+                \includegraphics[width=1\textwidth]{pictures/DAOInteraction.png}
+            \captionof{figure}{Interazione tra le classi del modello}
+            \end{center}
+    \newpage
+        \paragraph*{Classi della View}
+            \subparagraph*{Nota} Non si sono inserite nel diagramma le classi considerate \textit{Utils}, quindi le classi che ad esempio generano gli avvisi, i messaggi di errore o la lista dei vaccini possibili.
+            \begin{center}
+                \includegraphics[width=1\textwidth]{pictures/ViewInteraction.png}
+            \captionof{figure}{Interazione tra le classi della View}
+            \end{center}
+    \newpage
+        \paragraph*{Esempio Interazione View - Controller}
+            \subparagraph*{Nota} Si è scelto di riportare come \textit{Class Diagram} solo un esempio di \textbf{interazione tra Vista e Controllore}, perché esemplificativa delle interazioni generali tra questi due.\\
+            La vista chiama i metodi del controllore per poter interagire con i dati, a cui il controllore ha accesso (si veda la prossima DAO).
+            \begin{center}
+                \includegraphics[width=1\textwidth]{pictures/ExampleControlViewInteraction.png}
+            \captionof{figure}{Interazione tra le classi della View Farmacologo e i loro controller}
+            \end{center}
+    \newpage
+        \paragraph*{Esempio Interazione DAO - Controller}
+            \begin{center}
+                \includegraphics[width=1\textwidth]{pictures/ControllerDati.png}
+            \captionof{figure}{Interazione tra le classi del Controller del Dottore e i dati a cui ha accesso}
+            \end{center}
 
     \newpage
-    \begin{center}
-        \includegraphics[width=0.90\textwidth]{pictures/prova_002.png}
-    \end{center}
+        \subsection{Sequence Diagram}
+            \subsubsection*{Chiamate della View del PatientInfo nel metodo getView}
+            \begin{center}
+                \includegraphics[width=0.90\textwidth]{pictures/prova_001.png}
+            \end{center}
+    \newpage
+        \begin{center}
+            \includegraphics[width=0.90\textwidth]{pictures/prova_002.png}
+        \end{center}
+    \newpage
+        \subsubsection*{Chiamate della View del ControlPhaseForm nel metodo getView}
+        \begin{center}
+            \includegraphics[width=1\textwidth]{pictures/prova.png}
+        \captionof{figure}{}
+        \end{center}
 
     \newpage
-    \subsubsection*{Chiamate della View del ControlPhaseForm nel metodo getView}
-    \begin{center}
-        \includegraphics[width=1\textwidth]{pictures/prova.png}
-    \captionof{figure}{}
-    \end{center}
-
-\newpage
     \section{Implementazione del DataBase}
     Come richiesto dalla traccia si è implementato un database con cui l'applicazione potesse interagire.\\
     Il Database è stato creato sulla base dell'ER qui riportato:
