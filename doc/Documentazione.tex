@@ -43,13 +43,19 @@
         \LARGE
         Progetto di Ingegneria del Software
             
-        \vspace{1.5cm}
+        \vspace{2cm}
             
+        \begin{tikzpicture}
+            \clip (0,0.1) circle (2.55cm); \hspace*{-3.5cm}
+            \node {\includegraphics[scale=0.25]{pictures/VaccineSupervision.png}};
+        \end{tikzpicture} 
+
+        \vspace{2cm}
+
         \textbf{Virginia Filippi e Chiara Solito}
 
         \vspace{0.8cm}
 
-            
         \Large
         Corso di Laurea in Bioinformatica\\
         Università degli studi di Verona\\
@@ -64,187 +70,182 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
 \newpage
 \thispagestyle{empty}
 
-\section{Traccia dell'Elaborato}
-Riportiamo di seguito la traccia dell'elaborato:
-\begin{quotation}
-    Si vuole progettare un sistema software per gestire le segnalazioni di reazioni avverse (ad esempio, asma, dermatiti, insufficienza renale, miocardiopatia, \dots) da vaccini anti-Covid.\\
-    Ogni segnalazione è caratterizzata da un codice univoco, dall'indicazione del paziente a cui fa riferimento, dall'indicazione della reazione avversa, dalla data della reazione avversa, dalla data di segnalazione, e dalle vaccinazioni ricevute nei due mesi precedenti il momento della reazione avversa.
-    Per ogni paziente sono memorizzati: un codice univoco, l'anno di nascita, la provincia di residenza e la professione.\\
-    Per ogni paziente è possibile memorizzare gli eventuali fattori di rischio presenti (paziente fumatore, iperteso, sovrappeso, paziente fragile per precedenti patologie cardiovascolari/oncologiche), anche più d'uno. Ogni fattore di rischio è caratterizzato da un nome univoco, una descrizione e il livello di rischio associato. Per ogni paziente è, inoltre, memorizzata l'intera storia delle sue vaccinazioni precedenti, anti-Covid-19 e antinfluenzali.\\
-    Ogni vaccinazione è caratterizzata da: paziente a cui si riferisce, segnalazioni a cui è legata, vaccino somministrato (AstraZeneca, Pfizer, Moderna, Sputnik, Sinovac, antinfluenzale, \dots), tipo della somministrazione (I, II, III o IV dose, dose unica), sede presso la quale è avvenuta la vaccinazione e data di vaccinazione. Per ogni reazione avversa sono memorizzati un nome univoco, un livello di gravità (da 1 a 5) e una descrizione generale, espressa in linguaggio naturale. Una reazione avversa può essere legata a molte segnalazioni. Per ogni paziente sono memorizzati il numero di reazioni avverse segnalate ed il numero di vaccinazioni ricevute.\\
-    Il sistema deve supportare i medici che effettuano la segnalazione. Dopo opportuna autenticazione, il medico viene introdotto ad una interfaccia che permette l'inserimento dei dati delle reazioni avverse e dei pazienti. Il codice univoco dei pazienti è gestito dal sistema, che tiene traccia dei pazienti indicati da ogni medico. Ogni medico vede solo i codici identificativi dei pazienti, dei quali ha già segnalato qualche reazione avversa, e le relative informazioni.\\
-    Ad ogni fine settimana o quando il numero di segnalazioni raggiunge la soglia di 50, il sistema manda un avviso ad uno dei farmacologi responsabili della gestione delle segnalazioni di reazioni avverse. Il farmacologo, dopo autenticazione, accede alle segnalazioni (tutte, con l'indicazione del medico che le ha fatte) e può effettuare alcune analisi di base (quante segnalazioni per vaccino, quante segnalazioni gravi in settimana, quante segnalazioni per provincia e quante segnalazioni per sede di vaccinazione). Il sistema, inoltre, avvisa il farmacologo quando un vaccino ha accumulato in un mese oltre 5 segnalazioni di gravità superiore a 3.
-    In base alle segnalazioni e agli avvisi del sistema, il farmacologo può proporre di attivare una fase di controllo del vaccino. Tale proposta viene registrata dal sistema, che tiene traccia di tutte le proposte relative ai vaccini segnalati.
-\end{quotation}
+    \section{Traccia dell'Elaborato}
+    Riportiamo di seguito la traccia dell'elaborato:
+        \begin{quotation}
+            Si vuole progettare un sistema software per gestire le segnalazioni di reazioni avverse (ad esempio, asma, dermatiti, insufficienza renale, miocardiopatia, \dots) da vaccini anti-Covid.\\
+            Ogni segnalazione è caratterizzata da un codice univoco, dall'indicazione del paziente a cui fa riferimento, dall'indicazione della reazione avversa, dalla data della reazione avversa, dalla data di segnalazione, e dalle vaccinazioni ricevute nei due mesi precedenti il momento della reazione avversa.
+            Per ogni paziente sono memorizzati: un codice univoco, l'anno di nascita, la provincia di residenza e la professione.\\
+            Per ogni paziente è possibile memorizzare gli eventuali fattori di rischio presenti (paziente fumatore, iperteso, sovrappeso, paziente fragile per precedenti patologie cardiovascolari o oncologiche), anche più d'uno. Ogni fattore di rischio è caratterizzato da un nome univoco, una descrizione e il livello di rischio associato. Per ogni paziente è, inoltre, memorizzata l'intera storia delle sue vaccinazioni precedenti, anti-Covid-19 e antinfluenzali.\\
+            Ogni vaccinazione è caratterizzata da: paziente a cui si riferisce, segnalazioni a cui è legata, vaccino somministrato (AstraZeneca, Pfizer, Moderna, Sputnik, Sinovac, antinfluenzale, \dots), tipo della somministrazione (I, II, III o IV dose, dose unica), sede presso la quale è avvenuta la vaccinazione e data di vaccinazione. Per ogni reazione avversa sono memorizzati un nome univoco, un livello di gravità (da 1 a 5) e una descrizione generale, espressa in linguaggio naturale. Una reazione avversa può essere legata a molte segnalazioni. Per ogni paziente sono memorizzati il numero di reazioni avverse segnalate ed il numero di vaccinazioni ricevute.\\
+            Il sistema deve supportare i medici che effettuano la segnalazione. Dopo opportuna autenticazione, il medico viene introdotto ad una interfaccia che permette l'inserimento dei dati delle reazioni avverse e dei pazienti. Il codice univoco dei pazienti è gestito dal sistema, che tiene traccia dei pazienti indicati da ogni medico. Ogni medico vede solo i codici identificativi dei pazienti, dei quali ha già segnalato qualche reazione avversa, e le relative informazioni.\\
+            Ad ogni fine settimana o quando il numero di segnalazioni raggiunge la soglia di 50, il sistema manda un avviso ad uno dei farmacologi responsabili della gestione delle segnalazioni di reazioni avverse. Il farmacologo, dopo autenticazione, accede alle segnalazioni (tutte, con l'indicazione del medico che le ha fatte) e può effettuare alcune analisi di base (quante segnalazioni per vaccino, quante segnalazioni gravi in settimana, quante segnalazioni per provincia e quante segnalazioni per sede di vaccinazione).\\ Il sistema, inoltre, avvisa il farmacologo quando un vaccino ha accumulato in un mese oltre 5 segnalazioni di gravità superiore a 3.
+            In base alle segnalazioni e agli avvisi del sistema, il farmacologo può proporre di attivare una fase di controllo del vaccino. Tale proposta viene registrata dal sistema, che tiene traccia di tutte le proposte relative ai vaccini segnalati.
+        \end{quotation}
 
-\section{Analisi e Specifica dei Requisiti}
-    \subsection{Specifiche casi d'uso}
-    In questa sezione definiamo le proprietà dell'applicazione.\\
-    Come dichiarato nella traccia il sistema prevede l'utilizzo da parte di due tipologie di personale medico: Medico e Farmacologo. 
-    Entrambi i tipi di utente possono utilizzare l'applicazione dopo opportuno login: in questa sede si è previsto che gli utenti siano pre-registrati da un amministratore di sistema esterno (sul modello di sistemi medici già noti). Non è stato quindi previsto un form di registrazione, durante lo sviluppo e si suppone che ogni utente abbia a disposizione \texttt{username} e \texttt{password}.
+    \section{Analisi e Specifica dei Requisiti}
+        \subsection{Specifiche casi d'uso}
+        In questa sezione definiamo le proprietà dell'applicazione.\\
+        Come dichiarato nella traccia il sistema prevede l'utilizzo da parte di due tipologie di personale medico: Medico e Farmacologo. 
+        Entrambi i tipi di utente possono utilizzare l'applicazione dopo opportuno login: in questa sede si è previsto che gli utenti siano pre-registrati da un amministratore di sistema esterno (sul modello di sistemi medici già noti). Non è stato quindi previsto un form di registrazione, durante lo sviluppo e si suppone che ogni utente abbia a disposizione \texttt{username} e \texttt{password}.
 
-\newpage
-    \paragraph*{Casi d'uso relativi al Medico}
-        \begin{center}
-            \includegraphics[width=0.75\textwidth]{pictures/CasoDUsoMedico.png}
-        \captionof{figure}{Caso d'uso Medico}
-    \end{center}
-    Dopo opportuna autenticazione il medico viene introdotto all'interfaccia di base della sua sezione, che gli permette di:
-        \begin{itemize}
-            \item Visualizzare i pazienti già inseriti.
-            \item Visualizzare i dati di un paziente, dalla lista dei pazienti già inseriti.
-            \item Effettuare una segnalazione.
-        \end{itemize}
-        \subparagraph*{Visualizza i pazienti}
-        Una delle possibili attività che il Medico è autorizzato a fare è visualizzare la lista dei codici dei pazienti che lui stesso ha già inserito (gestiti automaticamente dal sistema), effettuando una segnalazione.
+        \paragraph*{Casi d'uso relativi al Medico}
             \begin{center}
-                \includegraphics[width=0.75\textwidth]{pictures/UC1.png}
-            \captionof{figure}{Caso d'uso UC1 del Medico}
+                \includegraphics[width=0.75\textwidth]{pictures/CasoDUsoMedico.png}
+            \captionof{figure}{Caso d'uso Medico}
+            \end{center}
+        Dopo opportuna autenticazione il medico viene introdotto all'interfaccia di base della sua sezione, che gli permette di:
+            \begin{itemize}
+                \item Visualizzare i pazienti già inseriti.
+                \item Visualizzare i dati di un paziente dalla lista dei pazienti già inseriti.
+                \item Effettuare una segnalazione.
+            \end{itemize}
+            \subparagraph*{Visualizza i pazienti}
+            Una delle possibili attività che il Medico è autorizzato a fare è visualizzare la lista dei codici dei pazienti che lui stesso ha già inserito (gestiti automaticamente dal sistema), effettuando una segnalazione.
+                \begin{center}
+                    \includegraphics[width=0.75\textwidth]{pictures/UC1.png}
+                \captionof{figure}{Caso d'uso UC1 del Medico}
+            \end{center}
+
+    \newpage
+    Il medico può visualizzare anche le informazioni relative ai pazienti di cui vede i codici:
+        \begin{center}
+            \includegraphics[width=0.75\textwidth]{pictures/UC2.png}
+        \captionof{figure}{Caso d'uso UC2 del Medico}
+        \end{center}
+        Inseriamo ulteriori dettagli rispetto a questi due casi d'uso (gestiti in unico Sequence Diagram).
+        \begin{center}
+            \includegraphics[width=0.80\textwidth]{pictures/SDMedico2_listaPazienti.png}
+        \captionof{figure}{Sequence Diagram Visualizza Pazienti}
         \end{center}
 
-\newpage
-Il medico può visualizzare anche le informazioni relative ai pazienti di cui vede i codici:
-    \begin{center}
-        \includegraphics[width=0.75\textwidth]{pictures/UC2.png}
-    \captionof{figure}{Caso d'uso UC2 del Medico}
-    \end{center}
-    Inseriamo ulteriori dettagli rispetto a questi due casi d'uso (gestiti in unico Sequence Diagram).
-    \begin{center}
-        \includegraphics[width=0.80\textwidth]{pictures/SDMedico2_listaPazienti.png}
-    \captionof{figure}{Sequence Diagram Visualizza Pazienti}
-    \end{center}
-
-\newpage
-    \subparagraph*{Effettua segnalazione}
-        La principale attività dei medici è quella di inserire segnalazioni. Per fare questo, è necessario
-        inserire i \textbf{dati del paziente} ed inserire i \textbf{dati della reazione avversa}. In questa sede si è scelto di dare uno specifico ordine a queste due azioni.\\
-        La data della segnalazione può essere gestita automaticamente oppure modificata dal medico.
-            \begin{center}
-                \includegraphics[width=0.65\textwidth]{pictures/UC3.png}
-            \captionof{figure}{Caso d'uso UC3 del Medico}
-            \end{center}
-        In questa fase prevediamo che il primo passo sia inserire i dati del paziente, abbiamo due alternative:
-            \begin{itemize}
-                \item Inserire nuovi dati del paziente, effettuando quindi l'intera procedura di inserimento (dati anagrafici, fattori di rischio e storia vaccinale)
-                \item Scegliere uno dei pazienti già inseriti nel sistema.
-            \end{itemize}
-        L'identificativo univoco del paziente sarà gestito dal sistema.\\
-        Subito dopo si inseriscono i dati sulla reazione avversa.
-        Anche in questa fase prevediamo le due alternative:
-            \begin{itemize}
-                \item Inserimento in sistema di una nuova reazione avversa, immettendo nome (univoco), gravità e descrizione.
-                \item Selezione di una reazione avversa nota, pre-esistente nel sistema, aggiungendo la data.
-            \end{itemize}
-        Si prevede quindi che, data la storia vaccinale del paziente e la data della segnalazione, il sistema gestisce autonomamente
-        le vaccinazioni del paziente entro i due mesi precedenti la segnalazione.
-
-\newpage
-In ambo i casi, sarà necessario inserire la data della reazione avversa: questa dovrà essere consistente sia con la data della segnalazione sia con la data delle terapie del paziente.
-    \begin{center}
-        \includegraphics[width=0.80\textwidth]{pictures/SDMedico1_Segnalazione.png}
-    \captionof{figure}{Sequence Diagram Effettua Segnalazione}
-    \end{center}
-
-\newpage
-    \paragraph*{Casi d'uso relativi al Farmacologo}
-            \begin{center}
-                \includegraphics[width=0.75\textwidth]{pictures/CasoDUsoFarmacologo.png}
-            \captionof{figure}{Caso d'uso Farmacologo}
-            \end{center}
-        Dopo opportuna autenticazione il farmacologo viene introdotto all'interfaccia di base della sua sezione. Prima di poter effettuare qualsiasi azione gli vengono mostrati gli \textbf{avvisi non letti}. Dopo di che egli può:
-            \begin{itemize}
-                \item Accedere alle segnalazioni
-                \item Dalle segnalazioni può effettuare delle analisi di base
-                \item Proporre delle fasi di controllo
-            \end{itemize}
-        \subparagraph*{Avvisi}
-            Iniziamo dalla ricezione degli avvisi.\\
-            Il sistema deve fornire un meccanismo di gestione ed invio di avvisi verso i
-            farmacologi, che si dividono in tre tipologie:
-                \begin{enumerate}
-                    \item Il sistema manda un avviso non specifico se sono state raggiunte le 50 segnalazioni in una settimana.
-                    \item Il sistema manda un avviso non specifico se è il weekend.
-                    \item Il sistema manda un avviso specifico rispetto a un vaccino, se questo ha accumulato oltre 5 segnalazioni di gravità superiore a 3.
-                \end{enumerate}
-            Il sistema avverte \textbf{tutti} i farmacologi responsabili. Ciò significa che ogni farmacologo all'autenticarsi riceverà gli avvisi generati e non ancora letti \textit{da lui}:
-            questo avviene in forma di pop-up e prima di vedere la schermata iniziale. È inoltre possibile, tramite un'opzione nel menù principale, rivedere gli avvisi già letti.
+    \newpage
+        \subparagraph*{Effettua segnalazione}
+            La principale attività dei medici è quella di inserire segnalazioni. Per fare questo, è necessario
+            inserire i \textbf{dati del paziente} ed inserire i \textbf{dati della reazione avversa}. In questa sede si è scelto di non dare uno specifico ordine a queste due azioni: il medico potrà inserirle in ordine arbitrario.\\
+            La data della segnalazione è gestita automaticamente dal sistema, al contrario della data della reazione avversa, che deve essere fornita esplicitamente.
                 \begin{center}
-                    \includegraphics[width=0.75\textwidth]{pictures/UC4.png}
-                \captionof{figure}{Caso d'uso UC4 del Farmacologo}
+                    \includegraphics[width=0.65\textwidth]{pictures/UC3.png}
+                \captionof{figure}{Caso d'uso UC3 del Medico}
                 \end{center}
-            In fase di descrizione dei casi d'uso si è ritenuto opportuno inserire anche la possibilità di vedere gli avvisi già letti, sulla base dei quali il farmacologo propone le fasi di controllo:
-                \begin{center}
-                    \includegraphics[width=0.75\textwidth]{pictures/UC5.png}
-                \captionof{figure}{Caso d'uso UC5 del Farmacologo}
-                \end{center}
-        \subparagraph*{Leggi Segnalazioni}
-            Il farmacologo può accedere alla lista delle segnalazioni:
-                \begin{center}
-                    \includegraphics[width=0.75\textwidth]{pictures/UC6.png}
-                \captionof{figure}{Caso d'uso UC6 del Farmacologo}
-                \end{center}
-            Si è previsto che, come il medico visualizza informazioni di base dalla lista dei pazienti, anche il farmacologo possa visualizzare informazioni di base sulle segnalazioni. 
+            In questa fase prevediamo l'inserimento dei dati, con diverse modalità.\\
+            Per inserire i dati del paziente, abbiamo due alternative:
+                \begin{itemize}
+                    \item Inserire nuovi dati del paziente, effettuando quindi l'intera procedura di inserimento (dati anagrafici, fattori di rischio e storia vaccinale, in una sezione a parte)
+                    \item Scegliere uno dei pazienti già inseriti nel sistema, in questo caso è possibile inserire nuove vaccinazioni ma l'azione non è obbligatoria.
+                \end{itemize}
+            L'identificativo univoco del paziente sarà gestito autonomamente dal sistema.\\
+            Anche per l'inserimento dei dati della reazione avversa prevediamo due alternative:
+                \begin{itemize}
+                    \item Inserimento in sistema di una nuova reazione avversa, immettendo nome (univoco), gravità e descrizione.
+                    \item Selezione di una reazione avversa nota, pre-esistente nel sistema.
+                \end{itemize}
+            Data la storia vaccinale del paziente e la data della segnalazione, il sistema gestisce autonomamente
+            le vaccinazioni del paziente entro i due mesi precedenti la segnalazione.
 
-\newpage
-    Questo è stato specificato nel sequence diagram qui inserito:
+    \newpage
+    In ambo i casi, sarà necessario inserire la data della reazione avversa: questa dovrà essere consistente con la data della segnalazione.
         \begin{center}
-            \includegraphics[width=0.75\textwidth]{pictures/SDFarmacologo1_Segnalazioni.png}
-        \captionof{figure}{Sequence Diagram 1 Farmacologo}
-        \end{center}
-    \subparagraph*{Effettua analisi di base}
-    Dalla lista delle segnalazioni può scegliere di effettuare delle \textbf{analisi di base}. Queste sono:
-        \begin{itemize}
-            \item Quante segnalazioni per vaccino
-            \item Quante segnalazioni gravi in settimana
-            \item Quante segnalazioni per provincia 
-            \item Quante segnalazioni per sede di vaccinazione
-        \end{itemize}
-        \begin{center}
-            \includegraphics[width=0.75\textwidth]{pictures/UC7.png}
-        \captionof{figure}{Caso d'uso UC7 del Farmacologo}
+            \includegraphics[width=0.80\textwidth]{pictures/SDMedico1_Segnalazione.png}
+        \captionof{figure}{Sequence Diagram Effettua Segnalazione}
         \end{center}
 
-\newpage
-    \subparagraph*{Propone Fase di Controllo}
-        In base alle analisi eseguite e alla lettura delle segnalazioni, il farmacologo può proporre di attivare una fase di controllo del vaccino.\\
-        Tale proposta viene registrata dal sistema.
+    \newpage
+        \paragraph*{Casi d'uso relativi al Farmacologo}
+                \begin{center}
+                    \includegraphics[width=0.75\textwidth]{pictures/CasoDUsoFarmacologo.png}
+                \captionof{figure}{Caso d'uso Farmacologo}
+                \end{center}
+            Dopo opportuna autenticazione il farmacologo viene introdotto all'interfaccia di base della sua sezione. Prima di poter effettuare qualsiasi azione gli vengono mostrati gli \textbf{avvisi non letti}. Successivamente egli può:
+                \begin{itemize}
+                    \item Accedere alle segnalazioni
+                    \item Dalle segnalazioni può effettuare delle analisi di base
+                    \item Proporre delle fasi di controllo
+                    \item Visualizzare gli avvisi già letti
+                \end{itemize}
+            \subparagraph*{Avvisi}
+                Il sistema deve fornire un meccanismo di gestione ed invio di avvisi verso i
+                farmacologi. Gli avvisi si dividono in tre tipologie:
+                    \begin{enumerate}
+                        \item Il sistema manda un avviso non specifico se sono state raggiunte le 50 segnalazioni in una settimana.
+                        \item Il sistema manda un avviso non specifico se è il weekend.
+                        \item Il sistema manda un avviso specifico rispetto ai vaccini, se questi hanno accumulato oltre 5 segnalazioni di gravità superiore a 3.
+                    \end{enumerate}
+                In questa sede si è deciso, nella casualità che durante il weeekend fossero state raggiunte le 50 segnalazioni in una settimana, di dare priorità a questo secondo avviso, non inviando un ulteriore avviso per il weekend.
+            \newpage
+                Il sistema avverte \textbf{tutti} i farmacologi responsabili. Ciò significa che ogni farmacologo all'autenticarsi riceverà gli avvisi generati e non ancora letti \textit{da lui}:
+                questo avviene in forma di pop-up e prima di vedere la schermata iniziale.\\
+                È inoltre possibile, tramite un'opzione nel menù principale, rivedere gli avvisi già letti.
+                    \begin{center}
+                        \includegraphics[width=0.75\textwidth]{pictures/UC4.png}
+                    \captionof{figure}{Caso d'uso UC4 del Farmacologo}
+                    \end{center}
+                In fase di descrizione dei casi d'uso si è ritenuto opportuno inserire anche la possibilità di vedere gli avvisi già letti:
+                    \begin{center}
+                        \includegraphics[width=0.75\textwidth]{pictures/UC5.png}
+                    \captionof{figure}{Caso d'uso UC5 del Farmacologo}
+                    \end{center}
+            \subparagraph*{Leggi Segnalazioni}
+                Il farmacologo può accedere alla lista delle segnalazioni:
+                    \begin{center}
+                        \includegraphics[width=0.75\textwidth]{pictures/UC6.png}
+                    \captionof{figure}{Caso d'uso UC6 del Farmacologo}
+                    \end{center}
+                Nell'interfaccia dedicata alla lista delle segnalazioni vengono inseriti anche i dettagli relativi ad esse (codice del report, codice del dottore, nome della reazione, data del report e data della reazione, vaccinazioni del paziente relative ai due mesi precedenti alla reazione).
+
+    \newpage
+        \subparagraph*{Effettua analisi di base}
+        Dalla lista delle segnalazioni il farmacologo può scegliere di effettuare delle \textbf{analisi di base}. Queste sono:
+            \begin{itemize}
+                \item Quante segnalazioni per vaccino, totali e negli ultimi sei mesi
+                \item Quante segnalazioni gravi in settimana per vaccino
+                \item Quante segnalazioni per provincia di residenza del paziente
+                \item Quante segnalazioni per sede di vaccinazione
+            \end{itemize}
             \begin{center}
-                \includegraphics[width=0.75\textwidth]{pictures/UC8.png}
-            \captionof{figure}{Caso d'uso UC8 del Farmacologo}
+                \includegraphics[width=0.75\textwidth]{pictures/UC7.png}
+            \captionof{figure}{Caso d'uso UC7 del Farmacologo}
             \end{center}
-        Di seguito un Sequence Diagram specifica queste azioni:
-            \begin{center}
-                \includegraphics[width=0.80\textwidth]{pictures/SDFarmacolo2_proponeControllo.png}
-            \captionof{figure}{Sequence Diagram 2 Farmacologo}
+        \subparagraph*{Propone Fase di Controllo}
+            In base alle analisi eseguite e alla lettura delle segnalazioni, il farmacologo può proporre di attivare una fase di controllo del vaccino.\\
+            Tale proposta viene registrata dal sistema.
+                \begin{center}
+                    \includegraphics[width=0.75\textwidth]{pictures/UC8.png}
+                \captionof{figure}{Caso d'uso UC8 del Farmacologo}
+                \end{center}
+            Si è deciso di non permettere ad un farmacologo di proporre due fasi di controllo per lo stesso vaccino nella stessa data.
+                \begin{center}
+                    \includegraphics[width=0.80\textwidth]{pictures/SDFarmacolo2_proponeControllo.png}
+                \captionof{figure}{Sequence Diagram 2 Farmacologo}
+                \end{center}
+
+    \newpage
+        \subsection{Diagrammi di Attività}
+            \paragraph*{Nota sui diagrammi}
+            Nei diagrammi relativi alle azioni successive al login non si è ritenuto di aggiungere una freccia che collega la scelta finale ad ogni interfaccia di partenza, per chiarezza e compattezza degli schemi.\\
+
+            \paragraph*{Attività di Login}
+                \begin{center}
+                    \includegraphics[width=0.60\textwidth]{pictures/ActivityDiagram_Login.png}
+                \captionof{figure}{}
             \end{center}
 
-\newpage
-    \subsection{Diagrammi di Attività}
-        \paragraph*{Nota sui diagrammi}
-        Nei diagrammi relativi alle azioni successive al login non si è ritenuto di aggiungere una freccia che collega la scelta finale ad ogni interfaccia di partenza, per chiarezza e compattezza degli schemi.\\
-
-        \paragraph*{Attività di Login}
+    \newpage
+        \paragraph*{Attività dell'attore medico}
             \begin{center}
-                \includegraphics[width=0.60\textwidth]{pictures/ActivityDiagram_Login.png}
+                \includegraphics[width=1\textwidth]{pictures/ActivityDiagram_Medico.png}
             \captionof{figure}{}
-        \end{center}
+            \end{center}
 
-\newpage
-    \paragraph*{Attività dell'attore medico}
-        \begin{center}
-            \includegraphics[width=1\textwidth]{pictures/ActivityDiagram_Medico.png}
-        \captionof{figure}{}
-        \end{center}
+    \newpage
+        \paragraph*{Attività dell'attore farmacologo}
+            \begin{center}
+                \includegraphics[width=1\textwidth]{pictures/ActivityDiagram_Farmacologo.png}
+            \captionof{figure}{}
+            \end{center}
 
-\newpage
-    \paragraph*{Attività dell'attore farmacologo}
-        \begin{center}
-            \includegraphics[width=1\textwidth]{pictures/ActivityDiagram_Farmacologo.png}
-        \captionof{figure}{}
-        \end{center}
-
-\newpage
-\section{Scelte progettuali}
+    \newpage
+    \section{Scelte progettuali}
     \subsection{Note sullo sviluppo}
     Si è scelto di sviluppare l'applicazione in Java, utilizzando la libreria \textbf{JavaFX}, senza l'ausilio di FXML, perché soddisfatti del design delle interfacce.\\
     Il progetto è stato interamente sviluppato utilizzando \textbf{Git} come sistema di \textit{code versioning} e GitHub per l'hosting della repository.\\
@@ -254,11 +255,11 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
     modo da non avere problemi su quel frangente.
 
     \subsection{Pattern Architetturale - MVC}
-    Abbiamo deciso di utilizzare il \textbf{pattern Model View Controller}, semplicemente perchè naturalmente implementabile con l'uso di JavaFX. Il sistema è strutturato in tre componenti logiche che interagiscono tra loro. Il \textbf{model} si occupa della gestione dei dati e delle operazioni su di essi. La componente \textbf{View} definisce le interfazze e come i dati vengono presentati all'utente. Il \textbf{Controller} 
+    Abbiamo deciso di utilizzare il \textbf{pattern Model View Controller}, semplicemente perchè naturalmente implementabile con l'uso di JavaFX. Il sistema è strutturato in tre componenti logiche che interagiscono tra loro.\\
+    Il \textbf{model} si occupa della gestione dei dati e delle operazioni su di essi. La componente \textbf{View} definisce le interfacce e come i dati vengono presentati all'utente. Il \textbf{Controller} 
     gestisce infine l'interazione delle interfacce e dell'utente con i dati.
         \begin{center}
             \includegraphics[width=0.70\textwidth]{pictures/mvc.png}
-        \captionof{figure}{Pattern MVC}
         \end{center}
 		
 \newpage
@@ -268,21 +269,22 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
     Per ogni classe del Model (e di conseguenza per quasi tutte le tabelle implementate nel DataBase) si è implementato:
         \begin{itemize}
             \item \textbf{Interfaccia DAO} - Definisce le operazioni standard da eseguire.
-            \item \textbf{Classe concreta DAO} - Implementa l'interfaccia di cuisopra. È responsabile dell'accesso ai dati dal database.
+            \item \textbf{Classe concreta DAO} - Implementa l'interfaccia di cui sopra. È responsabile dell'accesso ai dati dal database.
             \item \textbf{Model Object} - Questo è un semplice oggetto Java che contiene i metodi getter e setter per memorizzare i dati.
         \end{itemize}
     Le classi-modello implementate con il pattern DAO sono (in ordine alfabetico):
         \begin{itemize}
-            \item \textbf{ControlPhase} - Fase di Controllo effettuata dal farmacologo.
+            \item \textbf{ControlPhase} - le fasi di controllo proposte dal farmacologo.
             \item \textbf{Notice} - gli avvisi ricevuti dal farmacologo.
             \item \textbf{Patient} - i pazienti.
             \item \textbf{Reaction} - le reazioni avverse.
+            \item \textbf{Report} - le segnalazioni effettuate dai medici.
             \item \textbf{RiskFactor} - i fattori di rischio relativi ai pazienti.
             \item \textbf{Vaccination} - le vaccinazioni effettuate dai pazienti.
         \end{itemize}
 
     \paragraph*{Nota}
-    Per la classe \textbf{User} (gli utenti che hanno accesso all'applicazione, ovvero dottori e farmacologi) si è decisso di non modellare la classe secondo il pattern DAO, ma di implementarla come un oggetto Java generico.
+    Per la classe \textbf{User} (gli utenti che hanno accesso all'applicazione, ovvero dottori e farmacologi) si è deciso di non modellare la classe secondo il pattern DAO, ma di implementarla come un oggetto Java generico.
 
 \newpage
     \subsection{Diagrammi delle classi}
@@ -306,6 +308,7 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
             \includegraphics[width=1\textwidth]{pictures/ExampleControlViewInteraction.png}
         \captionof{figure}{Interazione tra le classi della View Farmacologo e i loro controller}
         \end{center}
+\newpage
     \paragraph*{Esempio Interazione DAO - Controller}
         \begin{center}
             \includegraphics[width=1\textwidth]{pictures/ControllerDati.png}
@@ -328,7 +331,7 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
     Si è divisa la fase di test in 4 fasi principali:
         \begin{enumerate}
             \item Verifica interna della consistenza dell'applicazione rispetto all'analisi dei requisiti.
-            \item \textbf{Test di sviluppo}, implementati come unit test automatizzato mediante JUnit per verificare la correttezza di
+            \item \textbf{Test di sviluppo}, implementati come unit test automatizzati mediante JUnit per verificare la correttezza di
             alcune delle classi più problematiche.
             \item \textbf{Test di release}, consistente in alcuni stress test, con un team simulato di colleghi esterni allo sviluppo dell'applicazione.
             \item \textbf{Test degli utenti}, in cui si è scelto un campione di conoscenti senza background informatico che verificassero il software facendo le veci di utenti reali in situazioni reali.
@@ -340,13 +343,13 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
         \subsection{Test di Sviluppo: Unit Test}
         Per la parte di Test di sviluppo si è scelto di implementare degli Unit Test sulle classi del \textbf{Controller}. Questa scelta è derivata dal fatto che il controller rappresenta l'interazione tra l'interfaccia (testabile a livello visuale) e le DAO (le cui funzioni sono utilizzate dai controller e quindi implicitamente testate.)\\
             \begin{itemize}
-                \item Per ogni calsse del controller ed ogni metodo si è scelto di \textbf{testare la normale funzione}: input normali con il confronto dei risultati rispetto a quelli che ci si aspetta dall'implementazione del DataBase utilizzata. Per questo la fase di testing unitario è stata statica e ha riguardato una sola giornata di lavoro, successivamente al termine del primo propototipo.
+                \item Per ogni calsse del controller ed ogni metodo si è scelto di \textbf{testare la normale funzione}: input normali con il confronto dei risultati rispetto a quelli che ci si aspetta dall'implementazione e popolazione del DataBase. Per questo la fase di testing unitario è stata statica e ha riguardato una sola giornata di lavoro, successivamente al termine del primo propototipo.
                 \item Per ogni metodo si è implementato anche un test che verificasse l'\textit{handling} degli errori all'interno delle classi. Dando in input oggetti o stringhe vuote si è verificato che i metodi non ritornassero alcuna informazione, o stampassero in \textbf{Standard Output} o \textbf{Standard Error} i messaggi di errore impostati nei catch delle eccezioni.
             \end{itemize}
-        Tutte le classi di test hanno ottenuto un buon risultato, i metodi per cui sono stati rilevati errori (ad esempio non stampavano il messaggio esatto) sono state ricontrollate e corrette. Ogni test è visibile nella sezione apposita dell'eseguibile.
+        Tutte le classi di test hanno ottenuto un buon risultato, i metodi per cui sono stati rilevati errori (ad esempio non stampavano il messaggio esatto) sono state ricontrollati e corretti. Ogni test è visibile nella sezione apposita dell'eseguibile.
         
         \subsubsection*{Nota}
-        Al termine delle Unit Test definiamo ora l'applicazione come la \textbf{realease 1.0}, "rilasciata" in data 24/06/2021. Questa verrà sottoposta ai test di release.
+        Al termine delle Unit Test definiamo ora l'applicazione come la \textbf{release 1.0}, "rilasciata" in data 24/06/2021. Questa verrà sottoposta ai test di release.
 
     \newpage
         \subsection{Test di release}
@@ -361,13 +364,13 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
         In questo caso si è deciso di simulare un test dell'utente che fosse il più possibile vicino ad un vero test: si sono scelti 3 \textit{tester senza background informatico}.\\
         Ai tester si è richiesto di eseguire il test di alcune funzionalità all'interno dell'applicazione.
             \begin{itemize}
-                \item Il primo tester ha fatto le veci di un nuovo utente Dottore, non inizializzato, che non avesse quindi nessun paziente inserito a database. Gli si è chiesto, oltre al testare le normali funzionalità, di inserire nello specifico: un nuovo paziente con una nuova reazione e una nuova storia influenzale, e successivamente per lo stesso paziente (quindi già esistente)
+                \item Il primo tester ha fatto le veci di un nuovo utente Dottore, non inizializzato, che non avesse quindi nessun paziente inserito a database. Gli si è chiesto, oltre al testare le normali funzionalità, di inserire nello specifico: un nuovo paziente con una nuova reazione e una nuova storia vaccinale, e successivamente per lo stesso paziente (quindi già esistente)
                 di inserire una seconda reazione, questa volta esistente e di aggiungere una vaccinazione alla storia.\footnote{Si veda l'appendice B, alla sezione "Passi che si richiede di effettuare, Tester 1}
                 \item Il secondo tester ha fatto le veci di un utente Dottore già esistente, quindi con pazienti già inseriti. Gli si è chiesto di inserire: un nuovo paziente con una reazione già esistente e in seguito di aggiungere, per un paziente già esistente, una nuova reazione.\footnote{Si veda l'appendice B, alla sezione "Passi che si richiede di effettuare, Tester 2}
             \end{itemize}
         In questo modo si sono testate tutte le combinazioni di inserimento dei report da parte dei dottori. Alla fine dei test è stato somministrato un questionario, in cui si è chiesto di valutare (positivamente o negativamente) le diverse funzionalità testate nella parte "Dottore".\footnote{Si veda l'appendice C: Questionari}
             \begin{itemize}
-                \item Il terzo tester ha fatto le veci di un nuovo utente Farmacologo, con tutti gli avvisi generati ancora da leggere e una fase di controllo da proporre. {Si veda l'appendice B, alla sezione "Passi che si richiede di effettuare, nella sezione farmacologo}
+                \item Il terzo tester ha fatto le veci di un nuovo utente Farmacologo, con tutti gli avvisi generati ancora da leggere e una fase di controllo da proporre. \footnote{Si veda l'appendice B, alla sezione "Passi che si richiede di effettuare, nella sezione farmacologo"}
             \end{itemize}
         Anche in questo caso alla fine sono stati somministrati i questionari di valutazione.
     Al termine si sono anche raccolti a voce suggerimenti e note, che riportiamo: 
@@ -440,7 +443,7 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
         \end{verbatim}
     
     \newpage
-    \section*{Appendice B: Documento per i tester Dottore}
+    \section*{Appendice B: Documento per i tester}
     \addcontentsline{toc}{section}{Appendice B: Test Utente}
 
     \section*{Test dell'utente Dottore}
@@ -568,6 +571,7 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
         \subsection*{Tabella di valutazione}
             Si chiede ad entrambi i partecipanti di compilare la tabella di valutazione data assieme a questo modulo.
 
+    \newpage
         \section*{Test dell'utente Farmacologo}
             \subsection*{Traccia su cui basare l'idea del funzionamento}
             Di seguito riportiamo la traccia dell'elaborato per quel che riguarda le funzionalità dell'utente di tipo Dottore.
@@ -596,7 +600,7 @@ In ambo i casi, sarà necessario inserire la data della reazione avversa: questa
                     \item Tornare alla pagina principale.
                     \item Accedere alla lista delle segnalazioni. Guardare le segnalazioni presenti. 
                     \item In basso a destra cliccare sul bottone delle analisi di base.
-                    \item Verificare quanti vaccini hanno avuto una reazione grave nell'ultima settimana e proporre una fase di controllo del vaccino con maggiori reazioni.
+                    \item Verificare quanti vaccini hanno avuto una reazione grave nell'ultima settimana.
                     \item Tornare alla pagina iniziale.
                     \item Cliccare sul bottone "Proponi fase controllo".
                     \item Selezionare tra i vaccini, il vaccino "Jannsen".
