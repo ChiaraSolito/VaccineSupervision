@@ -2,19 +2,19 @@ package Test.PharmacologistControllerTest;
 
 import Control.FarmacologistControl.ReportListController;
 import Model.Report;
-import Model.User;
-import javafx.beans.property.SimpleStringProperty;
+import Model.Vaccination;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReportListControllerTest {
-
-    User user;
 
     ReportListController controller;
 
@@ -24,27 +24,49 @@ class ReportListControllerTest {
     }
 
     @Test
+    @Order(1)
     void getReportList() {
-        List<Report> allReports = new ArrayList<>();
+        List<Report> allReports = controller.getReportList();
 
-        allReports.add(new Report());
-/*        1	"2022-05-04"	"2022-05-02"	"miocardite"	1	"doc1"
-        2	"2022-04-04"	"2022-04-02"	"miocardite"	1	"doc1"
-        3	"2022-04-20"	"2022-04-19"	"miocardite"	1	"doc1"
-        4	"2022-06-20"	"2022-06-20"	"miocardite"	1	"doc1"
-        5	"2022-06-03"	"2022-06-01"	"asma"	2	"doc2"
-        6	"2022-05-03"	"2022-05-03"	"psoriasi"	3	"doc2"
-        7	"2022-06-22"	"2022-06-21"	"asma"	4	"doc1"
-        8	"2022-06-22"	"2022-06-20"	"febbre"	5	"doc1"
-        9	"2022-06-21"	"2022-06-19"	"miocardite"	3	"doc2"
-        10	"2022-06-22"	"2022-06-21"	"miocardite"	4	"doc1"
-        11	"2022-06-23"	"2022-06-23"	"febbre"	4	"doc1"*/
+        assertEquals("1", allReports.get(0).getId());
+        assertEquals("2022-05-04", allReports.get(0).getReportDate());
+        assertEquals("2022-05-02", allReports.get(0).getReactionDate());
+        assertEquals("miocardite", allReports.get(0).getReaction());
+        assertEquals("1", allReports.get(0).getPatient());
+        assertEquals("doc1", allReports.get(0).getDoctor());
 
-        System.out.println(controller.getReportList());
+        assertEquals("6", allReports.get(5).getId());
+        assertEquals("2022-05-03", allReports.get(5).getReportDate());
+        assertEquals("2022-05-03", allReports.get(5).getReactionDate());
+        assertEquals("psoriasi", allReports.get(5).getReaction());
+        assertEquals("3", allReports.get(5).getPatient());
+        assertEquals("doc2", allReports.get(5).getDoctor());
+
     }
 
     @Test
+    @Order(2)
     void getPatientTwoMonthsVaccination() {
-        fail("Not implemented yet");
+        List<Vaccination> twoMonthsVaccination = controller.getPatientTwoMonthsVaccination("2", "2022-06-01");
+
+        assertEquals("2", twoMonthsVaccination.get(0).getPatient());
+        assertEquals("Jannsen", twoMonthsVaccination.get(0).getVaccine());
+        assertEquals("Unica", twoMonthsVaccination.get(0).getTypeSomministration());
+        assertEquals("Padova", twoMonthsVaccination.get(0).getVaccinationSite());
+        assertEquals("2022-04-05", twoMonthsVaccination.get(0).getVaccinationDate());
     }
+
+    @Test
+    @Order(2)
+    @DisplayName("Get two months vaccinations with no input")
+    void getNoTwoMonthsVaccinations() {
+        ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(errContent));
+
+        //Proving the handling of the exception
+        assertNull(controller.getPatientTwoMonthsVaccination("", ""));
+        String expectedOutput = "Error patient or reactionDate: Null String.\r\n";
+        assertEquals(expectedOutput, errContent.toString());
+    }
+
 }
