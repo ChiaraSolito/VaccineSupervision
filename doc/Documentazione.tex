@@ -82,7 +82,6 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
             Ad ogni fine settimana o quando il numero di segnalazioni raggiunge la soglia di 50, il sistema manda un avviso ad uno dei farmacologi responsabili della gestione delle segnalazioni di reazioni avverse. Il farmacologo, dopo autenticazione, accede alle segnalazioni (tutte, con l'indicazione del medico che le ha fatte) e può effettuare alcune analisi di base (quante segnalazioni per vaccino, quante segnalazioni gravi in settimana, quante segnalazioni per provincia e quante segnalazioni per sede di vaccinazione).\\ Il sistema, inoltre, avvisa il farmacologo quando un vaccino ha accumulato in un mese oltre 5 segnalazioni di gravità superiore a 3.
             In base alle segnalazioni e agli avvisi del sistema, il farmacologo può proporre di attivare una fase di controllo del vaccino. Tale proposta viene registrata dal sistema, che tiene traccia di tutte le proposte relative ai vaccini segnalati.
         \end{quotation}
-
     \section{Analisi e Specifica dei Requisiti}
         \subsection{Specifiche casi d'uso}
         In questa sezione definiamo le proprietà dell'applicazione.\\
@@ -221,7 +220,7 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
 
     \newpage
         \subsection{Diagrammi di Attività}
-            \paragraph*{Nota sui diagrammi}
+            \subparagraph*{Nota sui diagrammi}
             Nei diagrammi relativi alle azioni successive al login non si è ritenuto di aggiungere una freccia che collega la scelta finale ad ogni interfaccia di partenza, per chiarezza e compattezza degli schemi.\\
 
             \paragraph*{Attività di Login}
@@ -286,34 +285,35 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
             \paragraph*{Nota}
             Per la classe \textbf{User} (gli utenti che hanno accesso all'applicazione, ovvero dottori e farmacologi) si è deciso di non modellare la classe secondo il pattern DAO, ma di implementarla come un oggetto Java generico.
 
-        \newpage
+    \newpage
         \subsection{Diagrammi delle classi}
         \paragraph*{Classi del Modello}
             \begin{center}
                 \includegraphics[width=1\textwidth]{pictures/DAOInteraction.png}
             \captionof{figure}{Interazione tra le classi del modello}
             \end{center}
-    \newpage
-        \paragraph*{Classi della View}
-            \subparagraph*{Nota} Non si sono inserite nel diagramma le classi considerate \textit{Utils}, quindi le classi che ad esempio generano gli avvisi, i messaggi di errore o la lista dei vaccini possibili.
-            \begin{center}
-                \includegraphics[width=1\textwidth]{pictures/ViewInteraction.png}
-            \captionof{figure}{Interazione tra le classi della View}
-            \end{center}
-    \newpage
-        \paragraph*{Esempio Interazione View - Controller}
-            \subparagraph*{Nota} Si è scelto di riportare come \textit{Class Diagram} solo un esempio di \textbf{interazione tra Vista e Controllore}, perché esemplificativa delle interazioni generali tra questi due.\\
-            La vista chiama i metodi del controllore per poter interagire con i dati, a cui il controllore ha accesso (si veda la prossima DAO).
-            \begin{center}
-                \includegraphics[width=1\textwidth]{pictures/ExampleControlViewInteraction.png}
-            \captionof{figure}{Interazione tra le classi della View Farmacologo e i loro controller}
-            \end{center}
-    \newpage
-        \paragraph*{Esempio Interazione DAO - Controller}
-            \begin{center}
-                \includegraphics[width=1\textwidth]{pictures/ControllerDati.png}
-            \captionof{figure}{Interazione tra le classi del Controller del Dottore e i dati a cui ha accesso}
-            \end{center}
+        \newpage
+            \paragraph*{Classi della View}
+                \subparagraph*{Nota} Non si sono inserite nel diagramma le classi considerate \textit{Utils}, quindi le classi che ad esempio generano gli avvisi, i messaggi di errore o la lista dei vaccini possibili.
+                \begin{center}
+                    \includegraphics[width=1\textwidth]{pictures/ViewInteraction.png}
+                \captionof{figure}{Interazione tra le classi della View}
+                \end{center}
+        \newpage
+            \paragraph*{Esempio Interazione View - Controller}
+                \subparagraph*{Nota} Si è scelto di riportare come \textit{Class Diagram} solo un esempio di \textbf{interazione tra Vista e Controllore}, perché esemplificativa delle interazioni generali tra questi due.\\
+                La vista chiama i metodi del controllore per poter interagire con i dati, a cui il controllore ha accesso (si veda la prossima DAO).
+                \begin{center}
+                    \includegraphics[width=1\textwidth]{pictures/ExampleControlViewInteraction.png}
+                \captionof{figure}{Interazione tra le classi della View Farmacologo e i loro controller}
+                \end{center}
+        \newpage
+            \paragraph*{Esempio Interazione DAO - Controller}
+            \subparagraph*{Nota} Si è scelto anche in questo caso di riportare come \textit{Class Diagram} solo un esempio di \textbf{interazione tra Vista e Controllore}, perché esemplificativa delle interazioni generali tra questi due.
+                \begin{center}
+                    \includegraphics[width=1\textwidth]{pictures/ControllerDati.png}
+                \captionof{figure}{Interazione tra le classi del Controller del Dottore e i dati a cui ha accesso}
+                \end{center}
 
     \newpage
         \subsection{Sequence Diagram}
@@ -399,16 +399,16 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
     Si è scelto di implementare il Database in PostgreSQL. Riportiamo anche le query usate per la creazione delle tabelle, che ci aiutano a comprendere com'è fatto:
     \paragraph*{Tabelle dello schema VaccineSupervisionDB}
         \begin{verbatim}
-            CREATE TABLE patient(
-                idPatient SERIAL PRIMARY KEY,
-                birthYear NUMERIC(4) NOT NULL ,
-                CHECK ( birthYear >= 1900 ),
-                province VARCHAR(20) NOT NULL,
-                profession VARCHAR(20) NOT NULL
+        CREATE TABLE patient(
+            idPatient SERIAL PRIMARY KEY,
+            birthYear NUMERIC(4) NOT NULL ,
+            CHECK ( birthYear >= 1900 ),
+            province VARCHAR(20) NOT NULL,
+            profession VARCHAR(50) NOT NULL
         );
         
         CREATE TABLE RiskFactor(
-            name VARCHAR(20) PRIMARY KEY,
+            name VARCHAR(50) PRIMARY KEY,
             description VARCHAR(50),
             riskLevel NUMERIC(1) NOT NULL,
             CHECK ( riskLevel >= 1 AND riskLevel <= 5 )
@@ -416,10 +416,10 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
         
         CREATE TABLE Vaccination(
             idPatient INTEGER REFERENCES patient(idPatient),
-            vaccine VARCHAR(15) NOT NULL,
-            typeSomministration VARCHAR(10) NOT NULL,
+            vaccine VARCHAR(50) NOT NULL,
+            typeSomministration VARCHAR(25) NOT NULL,
             PRIMARY KEY (idPatient, vaccine, typeSomministration),
-            vaccinationSite VARCHAR(10) NOT NULL,
+            vaccinationSite VARCHAR(25) NOT NULL,
             vaccinationDate DATE NOT NULL
         );
         
@@ -455,7 +455,8 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
         CREATE TABLE ControlPhase(
             pharmacologist VARCHAR(10) REFERENCES users(username),
             vaccine VARCHAR(15) NOT NULL,
-            PRIMARY KEY (pharmacologist, vaccine)
+            date DATE NOT NULL,
+            PRIMARY KEY (pharmacologist, vaccine, date)
         );
         \end{verbatim}
     
