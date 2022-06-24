@@ -69,7 +69,7 @@ public class PatientsList extends Parent {
 
         List<HBoxCell> listHBox = new ArrayList<>();
         for (String patient : patients) {
-            listHBox.add(new HBoxCell("ID Paziente: ", patient, "Info"));
+            listHBox.add(new HBoxCell("ID Paziente: ", patient, "Dati paziente"));
         }
 
         IntegerProperty intProperty = new SimpleIntegerProperty();

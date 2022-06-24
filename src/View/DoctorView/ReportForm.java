@@ -260,19 +260,18 @@ public class ReportForm {
 
         //Third tab layout
         //Hidden VBoxes for new Vaccination
-        // First option: insert new vaccination
         List<Vaccination> vaccinations = new ArrayList<>();
         Vaccination newVaccination = new Vaccination();
 
-        //Implementazione delle dosi -> non visibili
+        //Implementation of somministration type -> not visible
         MenuButton doseList = new MenuButton("Scegli il tipo di somministrazione");
         ToggleGroup doseGroup = new ToggleGroup();
         doseList.setVisible(false);
 
-        //Implementazione della scelta del vaccino
+        //Choose the vaccine
         MenuButton vaccineList = new MenuButton("Scegli il vaccino effettuato");
         ToggleGroup vaccineGroup = new ToggleGroup();
-        //popola il toggle con i vaccini da covid
+        //populates the toggle with covid vaccines
         for (String vaccine : VaccinesList.getCovidVaccinesString()) {
             RadioMenuItem sub = new RadioMenuItem(vaccine);
             vaccineList.getItems().add(sub);
@@ -283,7 +282,7 @@ public class ReportForm {
                 doseList.setVisible(true);
             });
         }
-        //popola il toggle con i vaccini antinfluenzali
+        //populates the toggle with anti-influential vaccine
         for (String vaccine : VaccinesList.getInfluenceVaccines()) {
             RadioMenuItem sub = new RadioMenuItem(vaccine);
             vaccineList.getItems().add(sub);
@@ -308,6 +307,7 @@ public class ReportForm {
             });
         }
 
+        //Other informations text fields
         TextField siteField = BoundField.createBoundTextField(newVaccination.vaccinationSiteProperty());
         VBox siteV = new VBox(10, new Text("Sito della vaccinazione: "), siteField);
         DatePicker datePickerV = new DatePicker();
@@ -316,6 +316,8 @@ public class ReportForm {
             newVaccination.setVaccinationDate(date.toString());
         });
         VBox dateVacc = new VBox(20, new Text("Data della vaccinazione:"), datePickerV);
+
+        //Buttons to insert the vaccine in the list of vaccinations
         Button submitVacc = new Button("Inserisci");
         //insert new risk and clears text fields
         submitVacc.setOnAction(e -> {
@@ -372,17 +374,19 @@ public class ReportForm {
         Button submitAll = new Button("Conferma invio");
 
 
+        //====== CONTROLS =======
         //Controls to submit everything in the correct way
-
         submitAll.setOnAction(e -> {
             int counter = 0;
             boolean patientFlag = false;
-            if (group.getSelectedToggle() == null) {
+            //Controls on the patient side
+            if (group.getSelectedToggle() == null) { //if toggle is empty insert a new patient
                 if ((birthYearTextField.getText().isEmpty() || provinceTextField.getText().isEmpty()
                         || professionTextField.getText().isEmpty() || vaccinations.isEmpty()) && counter == 0) {
                     Alerts.displayErrorMessage(model);
                     counter = 1;
                 } else {
+                    //controls on birth year
                     if ((parseInt(birthYearTextField.getText()) < 1900 || parseInt(birthYearTextField.getText()) > Calendar.getInstance().get(Calendar.YEAR)) && counter == 0) {
                         Alerts.displayNotAcceptedPatient(model);
                         counter = 1;
@@ -397,7 +401,8 @@ public class ReportForm {
                     }
                 }
             }
-            if (group2.getSelectedToggle() == null) {
+            //Controls on reaction side
+            if (group2.getSelectedToggle() == null) { //if toggle is empty we have to create a new reaction
                 if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
                         || gravityFieldReact.getText().isEmpty() || datePickerR.getValue() == null) {
                     if (counter == 0) {
@@ -411,9 +416,15 @@ public class ReportForm {
                     controller.createReaction(reaction);
                 }
             } else {
+                //controls on date coherence
                 if (datePickerR.getValue() == null && counter == 0) {
                     Alerts.displayErrorMessage(model);
                     counter = 1;
+                } else {
+                    if (datePickerR.getValue().isAfter(LocalDate.now()) && counter == 0) {
+                        Alerts.displayNotAcceptedPatient(model);
+                        counter = 1;
+                    }
                 }
             }
 
