@@ -19,6 +19,7 @@
 \usepackage{amsmath}
 \usepackage[hidelinks]{hyperref}
 \usepackage{hypcap}
+\usepackage{textcomp}
 
 
 \pagestyle{fancy}
@@ -339,10 +340,40 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
     Come richiesto dalla traccia si è implementato un database con cui l'applicazione potesse interagire.\\
     Il Database è stato creato sulla base dell'ER qui riportato:
         \begin{center}
-            \includegraphics[width=1\textwidth]{pictures/_Diagramma vuoto.png}
-            \captionof{figure}{Schema ER da modificare!}
+            \includegraphics[width=1\textwidth]{pictures/Schema_ER.png}
+            \captionof{figure}{Schema ER}
         \end{center}
-%Aggiungere Relazionale
+    Modello relazionale:
+    \begin{itemize}
+        \item ControlPhase (\underline{Pharmacologist}, \underline{Vaccine}, \underline{Date})
+        \item Notice (\underline{Id}, Content, noticeDate)
+        \item Patient (\underline{idPatient}, birthYear, Province, Profession)
+        \item PatientRisk (\underline{idPatient}, \underline{Risk})
+        \item ReadNotice (\underline{noticeId}, \underline{pharmId})
+        \item Report (\underline{Id}, reportDate, reactionDate, Reaction, idPatient, Doctor)
+        \item RiskFactor (\underline{Name}, Description, RiskLevel)
+        \item Users (\underline{Username}, Password, Type)
+        \item Vaccination (\underline{idPatient}, \underline{Vaccine}, \underline{typeSomministration}, vaccinationSite, vaccinationDate)
+    \end{itemize}
+
+    Vincoli di chiave esterna:
+        \begin{itemize}
+            \item ControlPhase.pharmacologist \textrightarrow Users
+            \item PatientRisk.idpatient \textrightarrow Patient
+            \item ReadNotice.noticeid \textrightarrow Notice
+            \item ReadNotice.pharmid \textrightarrow Users
+            \item Report.reaction \textrightarrow Reaction
+            \item Report.idpatient \textrightarrow Patient
+            \item Report.doctor \textrightarrow Users
+            \item Vaccination.idpatient \textrightarrow Patient
+        \end{itemize}
+
+    A livello implementativo nell'applicazione, le chiavi esterne riferite a Users si riferiscono a utenti di tipologie diverse:
+        \begin{itemize}
+            \item ControlPhase.pharmacologist fa riferimento ad uno user farmacologo (User.type = 1)
+            \item ReadNotice.pharmid fa riferimento ad uno user farmacologo (User.type = 1)
+            \item Report.doctor fa riferimento ad uno user medico (User.type = 0)
+        \end{itemize}
 
 \newpage
     \section{Fase di Test}
