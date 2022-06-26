@@ -52,7 +52,7 @@ public class ReportAnalysis {
 
         //Title
         Label title = new Label("Analisi di base dei reports");
-        title.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+        title.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
         layout.setTop(title);
         BorderPane.setAlignment(title, Pos.TOP_CENTER);
         BorderPane.setMargin(title, new Insets(5));
@@ -119,14 +119,15 @@ public class ReportAnalysis {
         TableColumn<Map.Entry<String, Integer>, String> vaccineColumn = new TableColumn<>("Vaccino");
         vaccineColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
         vaccineColumn.setPrefWidth(120);
+        vaccineColumn.setReorderable(false);
         severeReportsTable.getColumns().add(vaccineColumn);
         TableColumn<Map.Entry<String, Integer>, String> numberSevereForVaccineColumn = new TableColumn<>("#segnalazioni gravi");
         numberSevereForVaccineColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
         numberSevereForVaccineColumn.setPrefWidth(120);
+        numberSevereForVaccineColumn.setReorderable(false);
         severeReportsTable.getColumns().add(numberSevereForVaccineColumn);
         severeReportsTable.setItems(items5);
         severeReportsTable.setPlaceholder(new Label("No rows to display"));
-
 
         HBox severeReports = new HBox(barChart3, severeReportsTable);
 
@@ -136,10 +137,12 @@ public class ReportAnalysis {
         TableColumn<Map.Entry<String, Integer>, String> provinceColumn = new TableColumn<>("Provincia");
         provinceColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
         provinceColumn.setPrefWidth(200);
+        provinceColumn.setReorderable(false);
         provinceReports.getColumns().add(provinceColumn);
         TableColumn<Map.Entry<String, Integer>, String> numberForProvinceColumn = new TableColumn<>("Numero segnalazioni");
         numberForProvinceColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
         numberForProvinceColumn.setPrefWidth(200);
+        numberForProvinceColumn.setReorderable(false);
         provinceReports.getColumns().add(numberForProvinceColumn);
         provinceReports.setItems(items);
         provinceReports.setPlaceholder(new Label("No rows to display"));
@@ -153,10 +156,12 @@ public class ReportAnalysis {
         TableColumn<Map.Entry<String, Integer>, String> vaccinationSiteColumn = new TableColumn<>("Sito di vaccinazione");
         vaccinationSiteColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
         vaccinationSiteColumn.setPrefWidth(200);
+        vaccinationSiteColumn.setReorderable(false);
         vaccinationSiteReports.getColumns().add(vaccinationSiteColumn);
         TableColumn<Map.Entry<String, Integer>, String> numberForVaccinationSiteColumn = new TableColumn<>("Numero segnalazioni");
         numberForVaccinationSiteColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
         numberForVaccinationSiteColumn.setPrefWidth(200);
+        numberForVaccinationSiteColumn.setReorderable(false);
         vaccinationSiteReports.getColumns().add(numberForVaccinationSiteColumn);
         vaccinationSiteReports.setItems(items2);
         vaccinationSiteReports.setPlaceholder(new Label("No rows to display"));

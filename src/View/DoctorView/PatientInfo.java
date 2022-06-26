@@ -75,19 +75,24 @@ public class PatientInfo {
         TableView<Vaccination> vaccinationsInfo = new TableView<>();
         TableColumn<Vaccination, String> vaccineColumn = new TableColumn<>("Vaccino");
         vaccineColumn.setCellValueFactory(p -> p.getValue().vaccineProperty());
-        vaccineColumn.setPrefWidth(175);
+        vaccineColumn.setMaxWidth(175);
+        vaccineColumn.setMinWidth(175);
+        vaccineColumn.setReorderable(false);
         vaccinationsInfo.getColumns().add(vaccineColumn);
         TableColumn<Vaccination, String> typeSomministrationColumn = new TableColumn<>("Tipo somministrazione");
         typeSomministrationColumn.setCellValueFactory(p -> p.getValue().typeSomministrationProperty());
         typeSomministrationColumn.setPrefWidth(175);
+        typeSomministrationColumn.setReorderable(false);
         vaccinationsInfo.getColumns().add(typeSomministrationColumn);
         TableColumn<Vaccination, String> siteColumn = new TableColumn<>("Sede vaccinazione");
         siteColumn.setCellValueFactory(p -> p.getValue().vaccinationSiteProperty());
         siteColumn.setPrefWidth(175);
+        siteColumn.setReorderable(false);
         vaccinationsInfo.getColumns().add(siteColumn);
         TableColumn<Vaccination, String> dateColumn = new TableColumn<>("Data vaccinazione");
         dateColumn.setCellValueFactory(p -> p.getValue().vaccinationDateProperty());
-        dateColumn.setPrefWidth(175);
+        dateColumn.setPrefWidth(174);
+        dateColumn.setReorderable(false);
         vaccinationsInfo.getColumns().add(dateColumn);
 
         for (Vaccination vaccination : vaccinations) {
@@ -101,22 +106,27 @@ public class PatientInfo {
         TableColumn<TableObject, String> idColumn = new TableColumn<>("Codice report");
         idColumn.setCellValueFactory(p -> p.getValue().idProperty());
         idColumn.setPrefWidth(100);
+        idColumn.setReorderable(false);
         reportsInfo.getColumns().add(idColumn);
         TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
         reactionColumn.setCellValueFactory(p -> p.getValue().reactionProperty());
         reactionColumn.setPrefWidth(100);
+        reactionColumn.setReorderable(false);
         reportsInfo.getColumns().add(reactionColumn);
         TableColumn<TableObject, String> reportDateColumn = new TableColumn<>("Data report");
         reportDateColumn.setCellValueFactory(p -> p.getValue().reportDateProperty());
         reportDateColumn.setPrefWidth(100);
+        reportDateColumn.setReorderable(false);
         reportsInfo.getColumns().add(reportDateColumn);
         TableColumn<TableObject, String> reactionDateColumn = new TableColumn<>("Data reazione");
         reactionDateColumn.setCellValueFactory(p -> p.getValue().reactionDateProperty());
         reactionDateColumn.setPrefWidth(100);
+        reactionDateColumn.setReorderable(false);
         reportsInfo.getColumns().add(reactionDateColumn);
         TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni due mesi precedenti alla reazione");
         vaccinationColumn.setCellValueFactory(p -> p.getValue().twoMonthsVaccinationsProperty());
         vaccinationColumn.setPrefWidth(300);
+        vaccinationColumn.setReorderable(false);
         reportsInfo.getColumns().add(vaccinationColumn);
 
         for (Report report : reports){

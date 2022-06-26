@@ -82,17 +82,21 @@ public class ControlPhaseForm {
         TableColumn<TableObject, String> vaccineColumn = new TableColumn<>("Vaccino");
         vaccineColumn.setCellValueFactory(p -> p.getValue().vaccineProperty());
         vaccineColumn.setPrefWidth(100);
+        vaccineColumn.setReorderable(false);
         vaccineTable.getColumns().add(vaccineColumn);
         TableColumn<TableObject, String> controlPhaseColumn = new TableColumn<>("Num. proposte controllo");
         controlPhaseColumn.setPrefWidth(200);
+        controlPhaseColumn.setReorderable(false);
         TableColumn<TableObject, Number> generalCPColumn = new TableColumn<>("Totali");
         generalCPColumn.setCellValueFactory(p -> p.getValue().generalCPProperty());
         generalCPColumn.setPrefWidth(100);
+        generalCPColumn.setReorderable(false);
         controlPhaseColumn.getColumns().add(generalCPColumn);
         TableColumn<TableObject, Number> sixMonthsCPColumn = new TableColumn<>("Ultimi 6 mesi");
         sixMonthsCPColumn.setCellValueFactory(new PropertyValueFactory<>("sixMonthsCP"));
         sixMonthsCPColumn.setCellValueFactory(p -> p.getValue().sixMonthsCPProperty());
         sixMonthsCPColumn.setPrefWidth(100);
+        sixMonthsCPColumn.setReorderable(false);
         controlPhaseColumn.getColumns().add(sixMonthsCPColumn);
         vaccineTable.getColumns().add(controlPhaseColumn);
 

@@ -40,29 +40,35 @@ public class ReportList {
 
         //Create the TableView
         TableView<TableObject> reportList = new TableView<>();
-        TableColumn<TableObject, String> idColumn = new TableColumn<>("Codice report");
+        TableColumn<TableObject, String> idColumn = new TableColumn<>("Report");
         idColumn.setCellValueFactory(p -> p.getValue().idProperty());
-        idColumn.setPrefWidth(100);
+        idColumn.setPrefWidth(60);
+        idColumn.setReorderable(false);
         reportList.getColumns().add(idColumn);
-        TableColumn<TableObject, String> doctorColumn = new TableColumn<>("Codice dottore");
+        TableColumn<TableObject, String> doctorColumn = new TableColumn<>("Medico");
         doctorColumn.setCellValueFactory(p -> p.getValue().doctorProperty());
-        doctorColumn.setPrefWidth(100);
+        doctorColumn.setPrefWidth(60);
+        doctorColumn.setReorderable(false);
         reportList.getColumns().add(doctorColumn);
         TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
         reactionColumn.setCellValueFactory(p -> p.getValue().reactionProperty());
         reactionColumn.setPrefWidth(100);
+        reactionColumn.setReorderable(false);
         reportList.getColumns().add(reactionColumn);
         TableColumn<TableObject, String> reportDateColumn = new TableColumn<>("Data report");
         reportDateColumn.setCellValueFactory(p -> p.getValue().reportDateProperty());
         reportDateColumn.setPrefWidth(100);
+        reportDateColumn.setReorderable(false);
         reportList.getColumns().add(reportDateColumn);
         TableColumn<TableObject, String> reactionDateColumn = new TableColumn<>("Data reazione");
         reactionDateColumn.setCellValueFactory(p -> p.getValue().reactionDateProperty());
         reactionDateColumn.setPrefWidth(100);
+        reactionDateColumn.setReorderable(false);
         reportList.getColumns().add(reactionDateColumn);
         TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni due mesi precedenti alla reazione");
         vaccinationColumn.setCellValueFactory(p -> p.getValue().twoMonthsVaccinationsProperty());
-        vaccinationColumn.setPrefWidth(200);
+        vaccinationColumn.setPrefWidth(260);
+        vaccinationColumn.setReorderable(false);
         reportList.getColumns().add(vaccinationColumn);
 
         for (Report report : reports){
