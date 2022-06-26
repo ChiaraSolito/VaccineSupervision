@@ -12,7 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -480,11 +483,41 @@ public class ReportForm {
             }
         });
 
+
         HBox buttonsFinal = new HBox(300, backButton, submitAll);
         HBox.setMargin(backButton, insets);
         HBox.setMargin(submitAll, insets);
-        VBox layout = new VBox(10, tabpane, buttonsFinal);
-        VBox.setMargin(buttonsFinal, insets);
+
+        Label title = new Label("Inserimento dati del report");
+        title.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 15));
+        Button help = new Button("Help");
+        help.setAlignment(Pos.CENTER_RIGHT);
+        help.setOnAction(e -> {
+            Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+            dialog.setTitle("Come inserire un report");
+            dialog.setHeaderText("Come inserire un report");
+            dialog.setContentText("""
+                    Guida per inserire un report:
+                     - inserire un paziente: si può scegliere un paziente già esistente oppure inserire un nuovo paziente
+                     - inserire la data della reazione
+                     - inserire una reazione: si può scegliere reazione già esistente oppure inserirne una nuova
+                     - inserire le vaccinazioni: questo campo è obbligatorio se si inserisce un nuovo paziente, altrimenti è opzionale nel caso si sia scelto un paziente già esistente.
+
+                    Nell'inserimento di un nuovo paziente, se si vuole un nuovo fattore di rischio si deve prima inserire negli appositi campi e, dopo averlo inserito, selezionarlo nel menù a tendina a fianco.
+
+                    Nell'inserimento delle vaccinazioni, per ogni vaccinazione che si inserisce è necessario premere sul pulsante 'Inserisci'; poi si può procedere con la conferma di inserimento dell'intero Report.""");
+            dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            dialog.showAndWait();
+        });
+        HBox top = new HBox(title, help);
+        HBox.setMargin(help, new Insets(5, 5, 5, 20));
+        HBox.setMargin(title, new Insets(5, 430, 5, 20));
+
+        BorderPane layout = new BorderPane();
+        layout.setTop(top);
+        layout.setCenter(tabpane);
+        layout.setBottom(buttonsFinal);
+
         return layout;
     }
 }
