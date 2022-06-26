@@ -3,7 +3,7 @@ package View.Utils;
 import java.util.*;
 
 public class VaccinesList {
-    static final Map<String, ArrayList<String>> covidVaccines = new HashMap<>();
+    public static final Map<String, ArrayList<String>> covidVaccines = new HashMap<>();
 
     static final ArrayList<String> influenceVaccines = new ArrayList<>();
 

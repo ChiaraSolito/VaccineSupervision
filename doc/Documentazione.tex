@@ -343,20 +343,20 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
             \includegraphics[width=1\textwidth]{pictures/Schema_ER.png}
             \captionof{figure}{Schema ER}
         \end{center}
-    Modello relazionale:
-    \begin{itemize}
-        \item ControlPhase (\underline{Pharmacologist}, \underline{Vaccine}, \underline{Date})
-        \item Notice (\underline{Id}, Content, noticeDate)
-        \item Patient (\underline{idPatient}, birthYear, Province, Profession)
-        \item PatientRisk (\underline{idPatient}, \underline{Risk})
-        \item ReadNotice (\underline{noticeId}, \underline{pharmId})
-        \item Report (\underline{Id}, reportDate, reactionDate, Reaction, idPatient, Doctor)
-        \item RiskFactor (\underline{Name}, Description, RiskLevel)
-        \item Users (\underline{Username}, Password, Type)
-        \item Vaccination (\underline{idPatient}, \underline{Vaccine}, \underline{typeSomministration}, vaccinationSite, vaccinationDate)
-    \end{itemize}
+    \paragraph*{Modello relazionale:}
+        \begin{itemize}
+            \item ControlPhase (\underline{Pharmacologist}, \underline{Vaccine}, \underline{Date})
+            \item Notice (\underline{Id}, Content, noticeDate)
+            \item Patient (\underline{idPatient}, birthYear, Province, Profession)
+            \item PatientRisk (\underline{idPatient}, \underline{Risk})
+            \item ReadNotice (\underline{noticeId}, \underline{pharmId})
+            \item Report (\underline{Id}, reportDate, reactionDate, Reaction, idPatient, Doctor)
+            \item RiskFactor (\underline{Name}, Description, RiskLevel)
+            \item Users (\underline{Username}, Password, Type)
+            \item Vaccination (\underline{idPatient}, \underline{Vaccine}, \underline{typeSomministration}, vaccinationSite, vaccinationDate)
+        \end{itemize}
 
-    Vincoli di chiave esterna:
+    \paragraph*{Vincoli di chiave esterna:}
         \begin{itemize}
             \item ControlPhase.pharmacologist \textrightarrow Users
             \item PatientRisk.idpatient \textrightarrow Patient

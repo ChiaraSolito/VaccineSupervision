@@ -321,9 +321,15 @@ public class ReportForm {
         Button submitVacc = new Button("Inserisci");
         //insert new risk and clears text fields
         submitVacc.setOnAction(e -> {
+            //Controls on vaccine doses
             Vaccination vaccination = new Vaccination();
+            if (VaccinesList.covidVaccines.get(newVaccination.getVaccine()).contains(newVaccination.getTypeSomministration())) {
+                vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
+            } else {
+                Alerts.displayNotAcceptedDose(model);
+                vaccinations.clear();
+            }
             vaccination.setVaccine(newVaccination.getVaccine());
-            vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
             vaccination.setVaccinationDate(newVaccination.getVaccinationDate());
             vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
             vaccinations.add(vaccination);
@@ -401,6 +407,22 @@ public class ReportForm {
                     }
                 }
             }
+
+            //Controls on vaccine history
+            if (!patientFlag) {
+                for (Vaccination vaccination : vaccinations) {
+                    if (controller.getVaccinationsDoses(patient.getIdPatient()).contains(vaccination.getTypeSomministration())
+                            && !vaccination.getTypeSomministration().equals("Standard")) {
+                        Alerts.displayErrorVaccineHistory(model);
+                        counter = 15;
+                    }
+                }
+
+                if (counter == 15) {
+                    vaccinations.clear();
+                }
+            }
+
             //Controls on reaction side
             if (group2.getSelectedToggle() == null) { //if toggle is empty we have to create a new reaction
                 if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
@@ -428,6 +450,7 @@ public class ReportForm {
                 }
             }
 
+            //Final message of confirmation
             if (counter == 0 && Alerts.displayConfMessage(model).getResult() == ButtonType.OK) {
                 if (patientFlag) {
                     patient.setIdPatient(controller.createPatient(patient));

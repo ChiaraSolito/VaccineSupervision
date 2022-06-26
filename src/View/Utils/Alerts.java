@@ -46,4 +46,20 @@ public class Alerts {
         dialog.setContentText("Per inserire una nuova proposta per questo vaccino riprova in una data diversa.");
         dialog.showAndWait();
     }
+
+    public static void displayNotAcceptedDose(User model) {
+        Alert dialog = new Alert(Alert.AlertType.ERROR);
+        dialog.setTitle("Errore! Input non accettato.");
+        dialog.setHeaderText("Utente: " + model.getUsername());
+        dialog.setContentText("Parte delle informazioni inserite per la vaccinazione sono errate, non possibili o non accettate.");
+        dialog.showAndWait();
+    }
+
+    public static void displayErrorVaccineHistory(User model) {
+        Alert dialog = new Alert(Alert.AlertType.ERROR);
+        dialog.setTitle("Errore! Vaccinazione già presente.");
+        dialog.setHeaderText("Utente: " + model.getUsername());
+        dialog.setContentText("Vaccinazione già presente. La lista delle vaccinazioni inserite verrà cancellata. Inserire nuovamente");
+        dialog.showAndWait();
+    }
 }

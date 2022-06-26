@@ -6,6 +6,7 @@ import Model.Utils.Exceptions.NullStringException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReactionFormController {
@@ -129,6 +130,21 @@ public class ReactionFormController {
         } catch (NullStringException e) {
             System.out.println("Error report: " + e.getMessage());
         }
+    }
+
+    public List<String> getVaccinationsDoses(String patient) {
+        PatientDAOImpl patientDAO = new PatientDAOImpl();
+        List<String> doses = new ArrayList<>();
+        List<Vaccination> vaccinations;
+        try {
+            vaccinations = patientDAO.getPatientVaccinations(patient);
+            for (Vaccination vaccination : vaccinations) {
+                doses.add(vaccination.getTypeSomministration());
+            }
+        } catch (NullStringException e) {
+            System.out.println("Error idpatient: " + e.getMessage());
+        }
+        return doses;
     }
 
 }
