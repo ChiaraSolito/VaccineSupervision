@@ -59,6 +59,7 @@ public class LoginView {
 
         //login button and VBox
         Button loginButton = new Button("Login");
+        loginButton.setDefaultButton(true);
         loginButton.setOnAction(evt -> {
             if (model.getUsername().contains("'") || model.getPassword().contains("'")) {
                 Alerts.displayLoginError();
