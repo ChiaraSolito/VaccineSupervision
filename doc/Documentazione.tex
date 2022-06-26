@@ -400,7 +400,7 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
                 \item Per ogni calsse del controller ed ogni metodo si è scelto di \textbf{testare la normale funzione}: input normali con il confronto dei risultati rispetto a quelli che ci si aspetta dall'implementazione e popolazione del DataBase. Per questo la fase di testing unitario è stata statica e ha riguardato una sola giornata di lavoro, successivamente al termine del primo propototipo.
                 \item Per ogni metodo si è implementato anche un test che verificasse l'\textit{handling} degli errori all'interno delle classi. Dando in input oggetti o stringhe vuote si è verificato che i metodi non ritornassero alcuna informazione, o stampassero in \textbf{Standard Output} o \textbf{Standard Error} i messaggi di errore impostati nei catch delle eccezioni.
             \end{itemize}
-        Tutte le classi di test hanno ottenuto un buon risultato, i metodi per cui sono stati rilevati errori (ad esempio non stampavano il messaggio esatto) sono state ricontrollati e corretti. Ogni test è visibile nella sezione apposita dell'eseguibile.
+        Tutte le classi di test hanno ottenuto un buon risultato, i metodi per cui sono stati rilevati errori (ad esempio non stampavano il messaggio esatto) sono state ricontrollati e corretti. Ogni test è visibile nella sezione apposita dell'eseguibile.\\ Notiamo inoltre Runnando i test con Covarage,che abbiamo ottenuto il 100\% di coverage sulle classi testate.
         
         \subsubsection*{Nota}
         Al termine delle Unit Test definiamo ora l'applicazione come la \textbf{release 1.0}, "rilasciata" in data 24/06/2021. Questa verrà sottoposta ai test di release.
@@ -422,7 +422,8 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
                 \item Inserire un tooltip o un help come guida all'inserimento di un report
                 \item Migliorare i controlli nel caso di inserimenti di campi vuoti per \textit{Risk Factor}
             \end{itemize}
-        \paragraph*{Nota} Tutte le osservazioni fatte sono state prese in carico e messe in atto, tranne il controllo dell'anno di nascita dei pazienti rispetto all'inserimento di vaccinazioni, reazioni, ecc. ai quali non si è riusciti a porre rimedio.
+        \paragraph*{Nota} Tutte le osservazioni fatte sono state prese in carico e messe in atto, tranne il controllo dell'anno di nascita dei pazienti rispetto all'inserimento di vaccinazioni, reazioni, ecc. ai quali non si è riusciti a porre rimedio.\\
+        Al termine degli Stress Test definiamo ora l'applicazione come la \textbf{release 2.0}
     \newpage
         \subsection{Test degli utenti}
         In questo caso si è deciso di simulare un test dell'utente che fosse il più possibile vicino ad un vero test: si sono scelti 3 \textit{tester senza background informatico}.\\
@@ -439,6 +440,14 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
         Anche in questo caso alla fine sono stati somministrati i questionari di valutazione.
     Al termine si sono anche raccolti a voce suggerimenti e note, che riportiamo: 
     \paragraph*{Considerazioni dei tester}
+        \begin{itemize}
+            \item Bisognerebbe cambiare il tipo di data (che al momento è mostrata all'americana).
+            \item Nella sezione dei fattori di rischio non si legge il bottone di selezione. 
+            \item Durante il test è stato incontrato un bug riguardante l'inserimento di vaccinazioni antinfluenzali, quindi si è fixato. 
+            \item Inserire l'indicazione che il livello di rischio o gravità è da 1 a 5.
+            \item La scelta di avere un tab pane per l'inserimento del report è un po' fuorviante.\footnote{Gli sviluppatori hanno scelto di tenere comunque le tab pane (perché di nostro gradimento).}
+        \end{itemize}
+
 \newpage
     \section*{Appendice A: Query di creazione Database}
     \addcontentsline{toc}{section}{Appendice A: DataBase}
@@ -546,17 +555,17 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
                         Nome: \textit{Trombosi}, Descrizione: \textit{Presenza di un coagulo di sangue, che aderisce alle pareti non lesionate dei vasi.}, Gravità: \textit{4}.
                 \item Passare alla tab successiva e scegliere dai vaccini: \textit{Antinfluenzale A/Victoria/2570/2019}
                 \item Inserire nei campi di testo:\\
-                        Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{4/12/2022}
+                        Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{4 Dicembre 2021}
                 \item Cliccare su inserisci.
                 \item Inserire nuovamente un vaccino: questa volta si scelga il vaccino \textit{Pfizer}
                 \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Prima dose}
                 \item Inserire nei campi di testo:\\
-                    Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{2/16/2022}
+                    Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{16 Febbraio 2022}
                 \item Cliccare su inserisci.
                 \item Inserire nuovamente un vaccino: questa volta si scelga il vaccino \textit{Moderna}
                 \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Seconda dose}
                 \item Inserire nei campi di testo:\\
-                    Sito della vaccinazione: \textit{Lecco}, Data della vaccinazione: \textit{4/31/2022}
+                    Sito della vaccinazione: \textit{Lecco}, Data della vaccinazione: \textit{30 Aprile 2022}
                 \item Cliccare su inserisci.
                 \item Cliccare su conferma.
                 \item Apparirà ora un avviso di conferma, cliccare su OK.
@@ -574,7 +583,7 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
                     si scelga il vaccino \textit{Moderna}
                 \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Dose booster}
                 \item Inserire nei campi di testo:\\
-                    Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{6/3/2022}
+                    Sito della vaccinazione: \textit{Varenna}, Data della vaccinazione: \textit{3 Giugno 2022}
                 \item Cliccare su conferma.
                 \item Verificare nuovamente le informazioni inserite dalla pagina di visualizzazione dei pazienti.
                 \item Tornare alla pagina iniziale.
@@ -597,16 +606,16 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
                         Anno di nascita: \textit{1980}, Provincia: \textit{Salerno}, Professione:\textit{Ristoratore}, 
                         inserire un nuovo fattore di rischio: Nome: \textit{Sovrappeso}, Descrizione: \textit{Paziente con un peso superiore a quello indicato per eta e statura}, Livello di rischio: \textit{3}. Cliccare il bottone di inserimento.
                 \item Selezionare ora il fattore di rischio aggiunto dal menù a tendina.
-                \item Passare alla tab successiva e inserire come data reazione, dall'apposito calendario il \textit{30 Maggio del 2022}.
+                \item Passare alla tab successiva e inserire come data reazione, dall'apposito calendario il \textit{30 Maggio 2022}.
                 \item Selezionare dalle reazioni esistenti la reazione \textit{Vomito}
                 \item Passare alla tab successiva e scegliere dai vaccini: \textit{Antinfluenzale A/Darwin/6/2021}
                 \item Inserire nei campi di testo:\\
-                        Sito della vaccinazione: \textit{Salerno}, Data della vaccinazione: \textit{5/20/2022}
+                        Sito della vaccinazione: \textit{Salerno}, Data della vaccinazione: \textit{16 Aprile 2022}
                 \item Cliccare su inserisci.
                 \item Inserire nuovamente un vaccino: questa volta si scelga il vaccino \textit{Jannsen}
                 \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Unica}
                 \item Inserire nei campi di testo:\\
-                    Sito della vaccinazione: \textit{Salerno}, Data della vaccinazione: \textit{4/16/2022}
+                    Sito della vaccinazione: \textit{Salerno}, Data della vaccinazione: \textit{20 Maggio 2022}
                 \item Cliccare su inserisci.
                 \item Cliccare su conferma.
                 \item Apparirà ora un avviso di conferma, cliccare su OK.
@@ -626,7 +635,7 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
                     si scelga il vaccino \textit{Moderna}
                 \item Apparirà un nuovo bottone per scegliere il tipo di somministrazione, si clicchi su: \textit{Dose booster}
                 \item Inserire nei campi di testo:\\
-                    Sito della vaccinazione: \textit{Torino}, Data della vaccinazione: \textit{6/20/2022}
+                    Sito della vaccinazione: \textit{Torino}, Data della vaccinazione: \textit{20 Giugno 2022}
                 \item Cliccare su conferma.
                 \item Verificare nuovamente le informazioni inserite dalla pagina di visualizzazione dei pazienti.
                 \item Tornare alla pagina iniziale.
@@ -680,5 +689,15 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
     \newpage
     \section*{Appendice C: Valutazione degli utenti}
     \addcontentsline{toc}{section}{Appendice C: Documenti di valutazione}
-
+    \begin{center}
+        \includegraphics[width=1\textwidth]{pictures/doc1.png}
+    \end{center}
+    \newpage
+    \begin{center}
+        \includegraphics[width=1\textwidth]{pictures/doc2.png}
+    \end{center}
+    \newpage
+    \begin{center}
+        \includegraphics[width=1\textwidth]{pictures/farm.png}
+    \end{center}
 \end{document}
