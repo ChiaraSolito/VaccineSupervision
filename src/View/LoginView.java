@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -52,10 +53,12 @@ public class LoginView {
         Insets insets = new Insets(30);
 
         //Login Form - two HBoxes with corrected insets
+/*
         HBox userHBox = new HBox(25, new Text("User ID: "), BoundField.createBoundTextField(model.userProperty()));
         HBox passwordHBox = new HBox(10, new Text("Password: "), BoundField.createBoundPasswordField(model.passwordProperty()));
         userHBox.setPrefWidth(300);
         passwordHBox.setPrefWidth(300);
+*/
 
         //login button and VBox
         Button loginButton = new Button("Login");
@@ -94,15 +97,25 @@ public class LoginView {
         ImageView icon = new ImageView("pic/userIcon.png");
         icon.setFitWidth(50);
         icon.setFitHeight(50);
-        VBox results = new VBox(10, icon, userHBox, passwordHBox, loginButton);
+/*        VBox results = new VBox(10, icon, userHBox, passwordHBox, loginButton);*/
+
+        GridPane results = new GridPane();
+        results.add(icon, 0, 0);
+        results.add(new Text("User ID: "), 0, 1);
+        results.add(BoundField.createBoundTextField(model.userProperty()), 1, 1);
+        results.add(new Text("Password: "), 0, 2);
+        results.add(BoundField.createBoundPasswordField(model.passwordProperty()), 1, 2);
+        results.add(loginButton, 0, 4);
+        results.setHgap(10);
+        results.setVgap(10);
         results.setPrefWidth(300);
         results.setPadding(insets);
 
         //Using an ImageView to set an image in the login form
         ImageView imageView = new ImageView();
         imageView.setImage(new Image("pic/VaccineSupervision.png"));
-        imageView.setFitWidth(300);
-        imageView.setFitHeight(300);
+        imageView.setFitWidth(400);
+        imageView.setFitHeight(400);
 
         // Set the alignment
         BorderPane.setAlignment(imageView, Pos.CENTER_LEFT);
@@ -114,7 +127,7 @@ public class LoginView {
         // Set the Location
         borderPane.setLeft(imageView);
         borderPane.setRight(results);
-        BorderPane.setMargin(imageView, insets);
+        //BorderPane.setMargin(imageView, insets);
         BorderPane.setMargin(results, insets);
 
         return borderPane;
