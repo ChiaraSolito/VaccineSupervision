@@ -60,29 +60,33 @@ public class LoginView {
         //login button and VBox
         Button loginButton = new Button("Login");
         loginButton.setOnAction(evt -> {
-            try {
-                int flag = controller.checkAccess();
-                if (flag == 0) {
-                    primaryStage.setScene(new Scene(new MainPageDoc(primaryStage, model).getView(), 700, 400));
-                    primaryStage.setResizable(false);
-                    primaryStage.setTitle("Menù Principale");
-                    primaryStage.show();
-                } else if (flag == 1) {
-                    MainPagePharm main = new MainPagePharm(primaryStage, model);
-                    primaryStage.setScene(new Scene(main.getView(), 700, 400));
-                    primaryStage.setResizable(false);
-                    primaryStage.setTitle("Menù Principale");
-                    primaryStage.show();
+            if (model.getUsername().contains("'") || model.getPassword().contains("'")) {
+                Alerts.displayLoginError();
+            } else {
+                try {
+                    int flag = controller.checkAccess();
+                    if (flag == 0) {
+                        primaryStage.setScene(new Scene(new MainPageDoc(primaryStage, model).getView(), 700, 400));
+                        primaryStage.setResizable(false);
+                        primaryStage.setTitle("Menù Principale");
+                        primaryStage.show();
+                    } else if (flag == 1) {
+                        MainPagePharm main = new MainPagePharm(primaryStage, model);
+                        primaryStage.setScene(new Scene(main.getView(), 700, 400));
+                        primaryStage.setResizable(false);
+                        primaryStage.setTitle("Menù Principale");
+                        primaryStage.show();
 
-                    Alert dialog = main.readNotice();
-                    if (dialog != null) {
-                        dialog.showAndWait();
+                        Alert dialog = main.readNotice();
+                        if (dialog != null) {
+                            dialog.showAndWait();
+                        }
+                    } else {
+                        Alerts.displayLoginError();
                     }
-                } else {
-                    Alerts.displayLoginError();
+                } catch (FileNotFoundException | SQLException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (FileNotFoundException | SQLException e) {
-                throw new RuntimeException(e);
             }
         });
 

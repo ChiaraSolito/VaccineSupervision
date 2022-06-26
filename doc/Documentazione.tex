@@ -442,8 +442,8 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
         
         CREATE TABLE RiskFactor(
             name VARCHAR(50) PRIMARY KEY,
-            description VARCHAR(50),
             riskLevel NUMERIC(1) NOT NULL,
+            description VARCHAR(50),
             CHECK ( riskLevel >= 1 AND riskLevel <= 5 )
         );
         

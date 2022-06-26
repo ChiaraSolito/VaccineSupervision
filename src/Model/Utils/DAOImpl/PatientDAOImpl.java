@@ -8,7 +8,6 @@ import Model.Utils.DAO.PatientDAO;
 import Model.Utils.Exceptions.NullStringException;
 import Model.Vaccination;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.SQLException;
@@ -214,7 +213,7 @@ public class PatientDAOImpl implements PatientDAO {
                             "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
                 } else {
                     pConnection.statement.executeUpdate("INSERT INTO RiskFactor " +
-                            "VALUES('" + risk.getName() + "', '" + risk.getRiskLevel() + "', " + risk.getDescription() + "')");
+                            "VALUES('" + risk.getName() + "', '" + risk.getRiskLevel() + "', '" + risk.getDescription() + "')");
                     pConnection.statement.executeUpdate("INSERT INTO PatientRisk " +
                             "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
                 }

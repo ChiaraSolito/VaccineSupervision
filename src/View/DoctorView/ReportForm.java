@@ -105,10 +105,18 @@ public class ReportForm {
 
         //insert new risk and clears text fields
         submit.setOnAction(e -> {
-            controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
-            CheckMenuItem risk = new CheckMenuItem(newRisk.getName());
-            riskFactor.getItems().add(risk);
-            risk.setOnAction(a -> addedRisks.add(controller.getRisk(newRisk.getName())));
+            if (newRisk.getName().isEmpty() || newRisk.getDescription().isEmpty() || newRisk.getRiskLevel() < 1
+                    || newRisk.getRiskLevel() > 5 || newRisk.getName().contains("'") || newRisk.getDescription().contains("'")) {
+                Alerts.displayRiskError(model);
+            } else {
+                controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
+                CheckMenuItem risk = new CheckMenuItem(newRisk.getName());
+                riskFactor.getItems().add(risk);
+                risk.setOnAction(a -> {
+                    System.out.println(newRisk.getName());
+                    addedRisks.add(controller.getRisk(risk.getText()));
+                });
+            }
             nameField.clear();
             descriptionField.clear();
             levelField.clear();
@@ -233,6 +241,7 @@ public class ReportForm {
         newReactionMenu.setOnAction(e -> {
             newReactionVBOX.setVisible(true);
             group2.selectToggle(null);
+            reactions.setText("Scegli reazione esistente: ");
         });
 
         HBox priorInfo = new HBox(20, dateReact, infoMenuReaction);
@@ -256,7 +265,7 @@ public class ReportForm {
         BorderPane layout3 = new BorderPane();
 
         //Header
-        Text infoMenuVaccination = new Text("Inserimento dei dati riguardanti le vaccinazioni: ");
+        Text infoMenuVaccination = new Text("Inserimento dei dati riguardanti le vaccinazioni, inserire in ordine cronologico: ");
 
         //Third tab layout
         //Hidden VBoxes for new Vaccination
@@ -319,20 +328,26 @@ public class ReportForm {
 
         //Buttons to insert the vaccine in the list of vaccinations
         Button submitVacc = new Button("Inserisci");
+        List<String> doses = new ArrayList<>();
+        List<LocalDate> dates = new ArrayList<>();
+
         //insert new risk and clears text fields
         submitVacc.setOnAction(e -> {
             //Controls on vaccine doses
             Vaccination vaccination = new Vaccination();
-            if (VaccinesList.covidVaccines.get(newVaccination.getVaccine()).contains(newVaccination.getTypeSomministration())) {
+            if (VaccinesList.covidVaccines.get(newVaccination.getVaccine()).contains(newVaccination.getTypeSomministration()
+            ) && !doses.contains(newVaccination.getTypeSomministration()) && (dates.isEmpty() || datePickerV.getValue().isAfter(dates.get(dates.size() - 1)))
+                    && datePickerV.getValue().isBefore(datePickerR.getValue())) {
                 vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
+                doses.add(newVaccination.getTypeSomministration());
+                dates.add(datePickerV.getValue());
+                vaccination.setVaccine(newVaccination.getVaccine());
+                vaccination.setVaccinationDate(newVaccination.getVaccinationDate());
+                vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
+                vaccinations.add(vaccination);
             } else {
-                Alerts.displayNotAcceptedDose(model);
-                vaccinations.clear();
+                Alerts.displayNotAcceptedVacc(model);
             }
-            vaccination.setVaccine(newVaccination.getVaccine());
-            vaccination.setVaccinationDate(newVaccination.getVaccinationDate());
-            vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
-            vaccinations.add(vaccination);
             vaccineGroup.selectToggle(null);
             doseGroup.selectToggle(null);
             vaccineList.setText("Scegli il vaccino effettuato");
@@ -426,7 +441,8 @@ public class ReportForm {
             //Controls on reaction side
             if (group2.getSelectedToggle() == null) { //if toggle is empty we have to create a new reaction
                 if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
-                        || gravityFieldReact.getText().isEmpty() || datePickerR.getValue() == null) {
+                        || gravityFieldReact.getText().isEmpty() || Integer.parseInt(gravityFieldReact.getText()) < 1
+                        || Integer.parseInt(gravityFieldReact.getText()) > 5 || datePickerR.getValue() == null) {
                     if (counter == 0) {
                         Alerts.displayErrorMessage(model);
                         counter = 1;
