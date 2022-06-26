@@ -76,12 +76,12 @@ public class MainPageDoc extends Parent {
 
         //
         ImageView icon2 = new ImageView("pic/reazione.png");
-        Text text2 = new Text("Inserisci reazione");
+        Text text2 = new Text("Inserisci report");
         Button button2 = createButton(new Button(), icon2, text2);
         //inserire una chiamata al form inserisci reazione
         button2.setOnAction(e -> {
             mainDocStage.setScene(new Scene(new ReportForm(mainDocStage, model).getView(), 700, 400));
-            mainDocStage.setTitle("Inserimento reazione");
+            mainDocStage.setTitle("Inserimento report");
             mainDocStage.setResizable(false);
             mainDocStage.show();
         });
