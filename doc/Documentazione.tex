@@ -320,7 +320,11 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
 
     \newpage
         \subsection{Sequence Diagram}
-            \subsubsection*{Chiamate della View del PatientInfo nel metodo getView}
+        \paragraph*{Nota} Si è scelto di rappresentare con i Sequence Diagram due classi esemplificative del funzionamento generale delle chiamate all'interno dell'applicazione.\\ La prima immagine (divisa in due pagine) mostra le chiamate della classe PatientInfo (la View in cui vengono 
+        mostrate le informazioni relative ad uno specifico paziente inserito da un dottore) nel metodo getView. Il diagramma mostra perfettamente come la View chiami il suo Controller, il quale a sua volta effettua le chiamate alle classi Model per creare gli oggetti e alle Implementazioni dei Data Access Object
+        per accedere ai dati presenti nel database. La View chiama a sua volta la View da cui vi si accede, per tornare indietro. Questo esempio mostra come vengono visualizzati i dati che popolano il database.
+        \paragraph*{} La seconda classe mostrata è ControlPhase, sempre nel metodo getView, che mostra questa volta un esempio di inserimento di dati nel database. La View fa sempre riferimento al Controller per inserire i dati di proposta della fase di controllo, il quale a sua volta fa riferimento all'implementazione della DAO di ControlPhase, che si collega al database.
+            \subsubsection*{Classe PatientInfo, Metodo getView}
             \begin{center}
                 \includegraphics[width=0.90\textwidth]{pictures/prova_001.png}
             \end{center}
@@ -406,9 +410,15 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
         Per effettuare i test di release si è deciso di trovare 4 colleghi disposti a testare l'applicazione e ad effettuare gli \textbf{stress test} che ritenessero più adeguati.\\
         In data 25/06/2022 l'applicazione è stata sottoposta a testing, riportiamo le considerazioni dei \textit{tester}:
             \begin{itemize}
-                \item 
+                \item Inserire che di defaul il bottone di Login venga premuto con il tasto \textbf{ENTER};
+                \item Bloccare le colonne delle \textit{Table View} nelle liste di informazioni dal poter essere spostate;
+                \item Inserire controlli del valore degli interi all'interno di tutti i form;
+                \item Inserire un controllo sulle date e verificare che abbiano tutte senso le une rispetto alle altre;
+                \item Gestire diversamente i catch delle Exception, poiché non sempre appaiono errori rispetto all'utente;
+                \item Eliminare gli scroll pane laterali o definirli in maniera migliore;
+                \item Allargare le dimensioni dei bottoni in cui non si leggono le scritte
             \end{itemize}
-
+        \paragraph*{Nota} Tutte le osservazioni fatte sono state prese in carico e messe in atto, tranne il controllo dell'anno di nascita dei pazienti rispetto all'inserimento di vaccinazioni, reazioni, ecc. ai quali non si è riusciti a porre rimedio.
     \newpage
         \subsection{Test degli utenti}
         In questo caso si è deciso di simulare un test dell'utente che fosse il più possibile vicino ad un vero test: si sono scelti 3 \textit{tester senza background informatico}.\\
