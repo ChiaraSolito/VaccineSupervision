@@ -514,6 +514,18 @@ Insieme a questo documento in formato PDF viene fornito anche il codice \LaTeX  
             date DATE NOT NULL,
             PRIMARY KEY (pharmacologist, vaccine, date)
         );
+
+        CREATE TABLE Notice(
+            id SERIAL PRIMARY KEY,
+            content VARCHAR(512) NOT NULL,
+            noticedate DATE NOT NULL
+        );
+
+        CREATE TABLE ReadNotice(
+            noticeid INTEGER NOT NULL REFERENCES notice(id),
+            pharmid VARCHAR(20) NOT NULL REFERENCES users(username),
+            PRIMARY KEY(noticeid, pharmid)
+        );
         \end{verbatim}
     
     \newpage
