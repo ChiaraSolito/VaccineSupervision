@@ -81,21 +81,25 @@ public class ControlPhaseForm {
         TableView<TableObject> vaccineTable = new TableView<>();
         TableColumn<TableObject, String> vaccineColumn = new TableColumn<>("Vaccino");
         vaccineColumn.setCellValueFactory(p -> p.getValue().vaccineProperty());
-        vaccineColumn.setPrefWidth(100);
+        vaccineColumn.setMaxWidth(100);
+        vaccineColumn.setMinWidth(100);
         vaccineColumn.setReorderable(false);
         vaccineTable.getColumns().add(vaccineColumn);
         TableColumn<TableObject, String> controlPhaseColumn = new TableColumn<>("Num. proposte controllo");
-        controlPhaseColumn.setPrefWidth(200);
+        controlPhaseColumn.setMaxWidth(200);
+        controlPhaseColumn.setMinWidth(200);
         controlPhaseColumn.setReorderable(false);
         TableColumn<TableObject, Number> generalCPColumn = new TableColumn<>("Totali");
         generalCPColumn.setCellValueFactory(p -> p.getValue().generalCPProperty());
-        generalCPColumn.setPrefWidth(100);
+        generalCPColumn.setMaxWidth(100);
+        generalCPColumn.setMinWidth(100);
         generalCPColumn.setReorderable(false);
         controlPhaseColumn.getColumns().add(generalCPColumn);
         TableColumn<TableObject, Number> sixMonthsCPColumn = new TableColumn<>("Ultimi 6 mesi");
         sixMonthsCPColumn.setCellValueFactory(new PropertyValueFactory<>("sixMonthsCP"));
         sixMonthsCPColumn.setCellValueFactory(p -> p.getValue().sixMonthsCPProperty());
-        sixMonthsCPColumn.setPrefWidth(100);
+        sixMonthsCPColumn.setMaxWidth(100);
+        sixMonthsCPColumn.setMinWidth(100);
         sixMonthsCPColumn.setReorderable(false);
         controlPhaseColumn.getColumns().add(sixMonthsCPColumn);
         vaccineTable.getColumns().add(controlPhaseColumn);
@@ -137,7 +141,7 @@ public class ControlPhaseForm {
         HBox buttons = new HBox(500, backButton, submit);
         BorderPane.setAlignment(buttons, Pos.BOTTOM_CENTER);
         layout.setBottom(buttons);
-        BorderPane.setMargin(buttons, insets);
+        BorderPane.setMargin(buttons, new Insets(15));
         return layout;
     }
 

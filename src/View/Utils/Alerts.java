@@ -71,6 +71,15 @@ public class Alerts {
         dialog.showAndWait();
     }
 
+    public static void displayDateError(User model) {
+        Alert dialog = new Alert(Alert.AlertType.ERROR);
+        dialog.setTitle("Errore! Bisogna inserire prima la reazione.");
+        dialog.setHeaderText("Utente: " + model.getUsername());
+        dialog.setContentText("Prima di inserire una vaccinazione, è necessario inserire i dati della reazione (reazione e data).");
+        dialog.showAndWait();
+    }
+
+
     public static void displayRiskError(User model) {
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setTitle("Errore! Inserimento non consentito.");

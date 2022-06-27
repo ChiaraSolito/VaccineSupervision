@@ -44,8 +44,8 @@ public class MainPageDoc extends Parent {
         ImageView img = new ImageView("pic/userIcon.png");
         img.setFitWidth(20);
         img.setFitHeight(20);
-        Label actions = new Label("Menù:");
-        Text helloText = new Text("Ciao Doc!");
+        Label actions = new Label("Menù");
+        Text helloText = new Text("Accesso eseguito come\nDOTTORE");
 
         HBox user = new HBox(10, new Text("User ID: "), new Text(model.getUsername()));
         user.setPrefWidth(300);
@@ -76,9 +76,9 @@ public class MainPageDoc extends Parent {
 
         //
         ImageView icon2 = new ImageView("pic/reazione.png");
-        Text text2 = new Text("Inserisci report");
+        Text text2 = new Text("Inserisci segnalazione");
         Button button2 = createButton(new Button(), icon2, text2);
-        //inserire una chiamata al form inserisci reazione
+        //inserire una chiamata al form inserisci segnalazione
         button2.setOnAction(e -> {
             mainDocStage.setScene(new Scene(new ReportForm(mainDocStage, model).getView(), 700, 400));
             mainDocStage.setTitle("Inserimento report");

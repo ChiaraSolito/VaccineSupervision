@@ -95,7 +95,7 @@ public class PatientsList extends Parent {
         });
         layout.setBottom(backButton);
         BorderPane.setAlignment(backButton, Pos.CENTER_LEFT);
-        BorderPane.setMargin(backButton, new Insets(5, 5, 5, 5));
+        BorderPane.setMargin(backButton, new Insets(15));
 
 
         return layout;

@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -55,8 +56,8 @@ public class ReportForm {
         BorderPane layout1 = new BorderPane();
 
         //Header
-        Text infoMenuPatient1 = new Text("Inserimento dei dati del paziente: ");
-        Text infoMenuPatient2 = new Text("scegliere la modalità di inserimento");
+        Text infoMenuPatient1 = new Text("1° passo \nInserimento dei dati del paziente: \nè possibile inserire un NUOVO PAZIENTE o scegliere un PAZIENTE GIA' ESISTENTE.");
+        Text infoMenuPatient2 = new Text("Scegliere la modalità di inserimento");
         VBox infoMenuPatient = new VBox(10, infoMenuPatient1, infoMenuPatient2);
 
         //First option: insert new patient
@@ -76,7 +77,7 @@ public class ReportForm {
         profession.setPrefWidth(200);
 
         //Adding new Risk Factors
-        Button addRisk = new Button("Nuovo Fattore di Rischio");
+        Button addRisk = new Button("Nuovo Fattore");
 
         //Double Hidden VBoxes for new Risk Factor
         RiskFactor newRisk = new RiskFactor();
@@ -87,7 +88,7 @@ public class ReportForm {
         VBox description = new VBox(10, new Text("Descrizione: "), descriptionField);
 
         TextField levelField = BoundField.createBoundTextFieldInt(newRisk.riskLevelProperty());
-        VBox riskLevel = new VBox(10, new Text("Livello di rischio: "), levelField);
+        VBox riskLevel = new VBox(10, new Text("Livello di rischio (da 1 a 5): "), levelField);
         Button submit = new Button("Inserisci");
 
         VBox addRiskFactor = new VBox(10, name, description, riskLevel, submit);
@@ -95,7 +96,7 @@ public class ReportForm {
         //MenuButton to choose exising Risk Factors
         //the menu is under the other New Risk because you can insert and then choose - DO NOT CHANGE POSITION
         List<RiskFactor> addedRisks = new ArrayList<>();
-        MenuButton riskFactor = new MenuButton("Fattori di rischio");
+        MenuButton riskFactor = new MenuButton("Fattori rischio");
         for (String risk : controller.getAllExistingRisks()) {
             CheckMenuItem sub = new CheckMenuItem(risk);
             riskFactor.getItems().add(sub);
@@ -126,10 +127,11 @@ public class ReportForm {
         });
 
         //Get everything in a VBox
-        HBox buttons = new HBox(10, riskFactor, addRisk);
+        HBox buttons = new HBox(15, riskFactor, addRisk);
         //create a box for all new patient stuff
         VBox newPatientVBOX = new VBox(10, birthYear, province, profession, buttons);
         VBox totalNewLy = new VBox(10, newPatientMenu, newPatientVBOX);
+        totalNewLy.setPrefWidth(225);
 
         //Second option: choose existing patient
         MenuButton choosePatient = new MenuButton("Scegli paziente esistente");
@@ -181,14 +183,16 @@ public class ReportForm {
         //everything goes in a scroll pane
         ScrollPane sp1 = new ScrollPane();
         sp1.setContent(layout1);
+        sp1.setStyle("-fx-font-size: 20px;");
+        layout1.setStyle("-fx-font-size: 12px;");
+
 
         //SECOND TAB
         BorderPane layout2 = new BorderPane();
 
         //Header
-        Text infoMenuReaction1 = new Text("Inserimento dei dati riguardanti la reazione: ");
-        Text infoMenuReaction2 = new Text("scegliere la modalità di inserimento");
-        VBox infoMenuReaction = new VBox(10, infoMenuReaction1, infoMenuReaction2);
+        Text infoMenuReaction1 = new Text("2° passo \nInserimento dei dati riguardanti la reazione: \nè possibile inserire una NUOVA REAZIONE oppure scegliere una REAZIONE GIA' ESISTENTE. ");
+        Text infoMenuReaction2 = new Text("Scegliere la modalità di inserimento");
 
         //Second tab layout
         // First option: insert new reaction
@@ -202,7 +206,7 @@ public class ReportForm {
             LocalDate date = datePickerR.getValue();
             report.setReactionDate(date.toString());
         });
-        VBox dateReact = new VBox(20, new Text("Data della reazione:"), datePickerR);
+        HBox dateReact = new HBox(20, new Text("Data della reazione:"), datePickerR);
 
 
         //Other text fields
@@ -211,7 +215,7 @@ public class ReportForm {
         TextField descriptionFieldReact = BoundField.createBoundTextField(newReaction.descriptionProperty());
         VBox descriptionV = new VBox(10, new Text("Descrizione: "), descriptionFieldReact);
         TextField gravityFieldReact = BoundField.createBoundTextFieldInt(newReaction.gravityProperty());
-        VBox gravityV = new VBox(10, new Text("Livello di gravità: "), gravityFieldReact);
+        VBox gravityV = new VBox(10, new Text("Livello di gravità (da 1 a 5): "), gravityFieldReact);
 
         //Get everything in a VBox
         VBox newReactionVBOX = new VBox(10, nameV, descriptionV, gravityV);
@@ -247,7 +251,7 @@ public class ReportForm {
             reactions.setText("Scegli reazione esistente: ");
         });
 
-        HBox priorInfo = new HBox(20, dateReact, infoMenuReaction);
+        VBox priorInfo = new VBox(20, infoMenuReaction1, dateReact, infoMenuReaction2);
         //On top are the informations
         layout2.setTop(priorInfo);
         BorderPane.setMargin(priorInfo, insets);
@@ -262,13 +266,20 @@ public class ReportForm {
 
         ScrollPane sp2 = new ScrollPane();
         sp2.setContent(layout2);
+        sp2.setStyle("-fx-font-size: 20px;");
+        layout2.setStyle("-fx-font-size: 12px;");
 
 
         //THIRD TAB
         BorderPane layout3 = new BorderPane();
 
         //Header
-        Text infoMenuVaccination = new Text("Inserimento dei dati riguardanti le vaccinazioni, inserire in ordine cronologico: ");
+        Text infoMenuVaccination = new Text("""
+                3° passo\s
+                Inserimento dei dati riguardanti le vaccinazioni, inserire in ORDINE CRONOLOGICO:\s
+                è importante cliccare su 'Inserisci' quando si vuole inserire una nuova vaccinazione.
+                Se le vaccinazioni non sono state inserite in ORDINE CRONOLOGICO, è necessario rifare tutta la procedura\s
+                di inserimento della segnalazione.""");
 
         //Third tab layout
         //Hidden VBoxes for new Vaccination
@@ -338,7 +349,9 @@ public class ReportForm {
         submitVacc.setOnAction(e -> {
             //Controls on vaccine doses
             Vaccination vaccination = new Vaccination();
-            if (VaccinesList.covidVaccines.get(newVaccination.getVaccine()).contains(newVaccination.getTypeSomministration()
+            if (datePickerR.getValue() == null){
+                Alerts.displayDateError(model);
+            } else if (VaccinesList.covidVaccines.get(newVaccination.getVaccine()).contains(newVaccination.getTypeSomministration()
             ) && !doses.contains(newVaccination.getTypeSomministration()) && (dates.isEmpty() || datePickerV.getValue().isAfter(dates.get(dates.size() - 1)))
                     && datePickerV.getValue().isBefore(datePickerR.getValue())) {
                 vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
@@ -359,8 +372,11 @@ public class ReportForm {
             datePickerV.cancelEdit();
         });
 
+        Label warning = new Label("** Questo campo è OBBLIGATORIO per \nNUOVO PAZIENTE, altrimenti opzionale");
+        warning.setTextFill(Color.color(1, 0, 0));
+        HBox hbox = new HBox(10, submitVacc, warning);
         //Get everything in a VBox
-        VBox vaccinationVBOX = new VBox(10, vaccineList, doseList, siteV, dateVacc, submitVacc);
+        VBox vaccinationVBOX = new VBox(30, vaccineList, doseList, siteV, dateVacc, hbox);
         vaccinationVBOX.setPrefWidth(300);
 
         //On top are the informations
@@ -374,6 +390,9 @@ public class ReportForm {
 
         ScrollPane sp3 = new ScrollPane();
         sp3.setContent(layout3);
+        sp3.setStyle("-fx-font-size: 20px;");
+        layout3.setStyle("-fx-font-size: 12px;");
+
 
         //Create the TabPane
         TabPane tabpane = new TabPane();
@@ -501,11 +520,14 @@ public class ReportForm {
                      - inserire un paziente: si può scegliere un paziente già esistente oppure inserire un nuovo paziente
                      - inserire la data della reazione
                      - inserire una reazione: si può scegliere reazione già esistente oppure inserirne una nuova
-                     - inserire le vaccinazioni: questo campo è obbligatorio se si inserisce un nuovo paziente, altrimenti è opzionale nel caso si sia scelto un paziente già esistente.
+                     - inserire le vaccinazioni: si possono inserire vaccinazioni anti-Covid e antinfluenzali
 
+                    Prima di confermare la segnalazione, e' necessario compilare OBBLIGATORIAMENTE i dati del paziente e i dati della reazione, mentre è FACOLTATIVA la compilazione delle vaccinazioni nel caso si sia scelto un paziente già esistente (altrimenti anche questo campo è obbligatorio).
+                    I tab vanno compilati SEQUENZIALMENTE.
+                    
                     Nell'inserimento di un nuovo paziente, se si vuole un nuovo fattore di rischio si deve prima inserire negli appositi campi e, dopo averlo inserito, selezionarlo nel menù a tendina a fianco.
 
-                    Nell'inserimento delle vaccinazioni, per ogni vaccinazione che si inserisce è necessario premere sul pulsante 'Inserisci'; poi si può procedere con la conferma di inserimento dell'intero Report.""");
+                    Nell'inserimento delle vaccinazioni, per ogni vaccinazione che si inserisce è necessario premere sul pulsante 'Inserisci', poi si può procedere con la conferma di inserimento dell'intera segnalazione.""");
             dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             dialog.showAndWait();
         });

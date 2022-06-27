@@ -40,17 +40,20 @@ public class ReadNoticeList extends Parent {
         TableView<Notice> noticeList = new TableView<>();
         TableColumn<Notice, String> idColumn = new TableColumn<>("Codice avviso");
         idColumn.setCellValueFactory(p -> p.getValue().idProperty());
-        idColumn.setPrefWidth(125);
+        idColumn.setMaxWidth(125);
+        idColumn.setMinWidth(125);
         idColumn.setReorderable(false);
         noticeList.getColumns().add(idColumn);
         TableColumn<Notice, String> dateColumn = new TableColumn<>("Data avviso");
         dateColumn.setCellValueFactory(p -> p.getValue().noticeDateProperty());
-        dateColumn.setPrefWidth(125);
+        dateColumn.setMaxWidth(125);
+        dateColumn.setMinWidth(125);
         dateColumn.setReorderable(false);
         noticeList.getColumns().add(dateColumn);
         TableColumn<Notice, String> contentColumn = new TableColumn<>("Content");
         contentColumn.setCellValueFactory(p -> p.getValue().contentProperty());
-        contentColumn.setPrefWidth(449);
+        contentColumn.setMaxWidth(449);
+        contentColumn.setMinWidth(449);
         contentColumn.setReorderable(false);
         noticeList.getColumns().add(contentColumn);
 

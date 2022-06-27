@@ -18,8 +18,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -51,14 +49,6 @@ public class LoginView {
     public Parent getView() {
 
         Insets insets = new Insets(30);
-
-        //Login Form - two HBoxes with corrected insets
-/*
-        HBox userHBox = new HBox(25, new Text("User ID: "), BoundField.createBoundTextField(model.userProperty()));
-        HBox passwordHBox = new HBox(10, new Text("Password: "), BoundField.createBoundPasswordField(model.passwordProperty()));
-        userHBox.setPrefWidth(300);
-        passwordHBox.setPrefWidth(300);
-*/
 
         //login button and VBox
         Button loginButton = new Button("Login");

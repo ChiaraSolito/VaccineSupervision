@@ -53,8 +53,8 @@ public class MainPagePharm extends Parent {
         ImageView img = new ImageView("pic/userIcon.png");
         img.setFitWidth(20);
         img.setFitHeight(20);
-        Label actions = new Label("Menù:");
-        Text helloText = new Text("Ciao Farmacologo!");
+        Label actions = new Label("Menù");
+        Text helloText = new Text("Accesso eseguito come\nFARMACOLOGO");
 
         HBox user = new HBox(10, new Text("User ID: "), new Text(model.getUsername()));
         user.setPrefWidth(300);

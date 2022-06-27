@@ -42,22 +42,26 @@ public class ReportList {
         TableView<TableObject> reportList = new TableView<>();
         TableColumn<TableObject, String> idColumn = new TableColumn<>("Report");
         idColumn.setCellValueFactory(p -> p.getValue().idProperty());
-        idColumn.setPrefWidth(60);
+        idColumn.setMaxWidth(60);
+        idColumn.setMinWidth(60);
         idColumn.setReorderable(false);
         reportList.getColumns().add(idColumn);
         TableColumn<TableObject, String> doctorColumn = new TableColumn<>("Medico");
         doctorColumn.setCellValueFactory(p -> p.getValue().doctorProperty());
-        doctorColumn.setPrefWidth(60);
+        doctorColumn.setMaxWidth(60);
+        doctorColumn.setMinWidth(60);
         doctorColumn.setReorderable(false);
         reportList.getColumns().add(doctorColumn);
         TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
         reactionColumn.setCellValueFactory(p -> p.getValue().reactionProperty());
-        reactionColumn.setPrefWidth(100);
+        reactionColumn.setMaxWidth(100);
+        reactionColumn.setMinWidth(100);
         reactionColumn.setReorderable(false);
         reportList.getColumns().add(reactionColumn);
         TableColumn<TableObject, String> reportDateColumn = new TableColumn<>("Data report");
         reportDateColumn.setCellValueFactory(p -> p.getValue().reportDateProperty());
-        reportDateColumn.setPrefWidth(100);
+        reportDateColumn.setMaxWidth(100);
+        reportDateColumn.setMinWidth(100);
         reportDateColumn.setReorderable(false);
         reportList.getColumns().add(reportDateColumn);
         TableColumn<TableObject, String> reactionDateColumn = new TableColumn<>("Data reazione");
@@ -67,7 +71,7 @@ public class ReportList {
         reportList.getColumns().add(reactionDateColumn);
         TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni due mesi precedenti alla reazione");
         vaccinationColumn.setCellValueFactory(p -> p.getValue().twoMonthsVaccinationsProperty());
-        vaccinationColumn.setPrefWidth(260);
+        vaccinationColumn.setPrefWidth(265);
         vaccinationColumn.setReorderable(false);
         reportList.getColumns().add(vaccinationColumn);
 
@@ -103,10 +107,10 @@ public class ReportList {
             reportListStage.show();
         });
 
-        HBox buttons = new HBox(520, backButton, analysisButton);
+        HBox buttons = new HBox(500, backButton, analysisButton);
         BorderPane.setAlignment(buttons, Pos.BOTTOM_CENTER);
         layout.setBottom(buttons);
-        BorderPane.setMargin(buttons, new Insets(5));
+        BorderPane.setMargin(buttons, new Insets(15));
 
         return layout;
     }
