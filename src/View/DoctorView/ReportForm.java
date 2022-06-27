@@ -349,11 +349,10 @@ public class ReportForm {
         submitVacc.setOnAction(e -> {
             //Controls on vaccine doses
             Vaccination vaccination = new Vaccination();
-            if (datePickerR.getValue() == null){
-                Alerts.displayDateError(model);
-            } else if (VaccinesList.covidVaccines.get(newVaccination.getVaccine()).contains(newVaccination.getTypeSomministration()
-            ) && !doses.contains(newVaccination.getTypeSomministration()) && (dates.isEmpty() || datePickerV.getValue().isAfter(dates.get(dates.size() - 1)))
-                    && datePickerV.getValue().isBefore(datePickerR.getValue())) {
+            boolean flag = true;
+            //Vaccino anti influenzale non soggetto a controlli
+            if (newVaccination.getTypeSomministration() == "Standard") {
+                flag = false;
                 vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
                 doses.add(newVaccination.getTypeSomministration());
                 dates.add(datePickerV.getValue());
@@ -362,7 +361,22 @@ public class ReportForm {
                 vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
                 vaccinations.add(vaccination);
             } else {
-                Alerts.displayNotAcceptedVacc(model);
+                //Vaccini covid soggetti a controlli
+                if (datePickerR.getValue() == null) {
+                    Alerts.displayDateError(model);
+                } else if (flag && VaccinesList.covidVaccines.get(newVaccination.getVaccine()).contains(newVaccination.getTypeSomministration()
+                ) && !doses.contains(newVaccination.getTypeSomministration()) && (dates.isEmpty() || datePickerV.getValue().isAfter(dates.get(dates.size() - 1)))
+                        && datePickerV.getValue().isBefore(datePickerR.getValue())) {
+                    vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
+                    doses.add(newVaccination.getTypeSomministration());
+                    dates.add(datePickerV.getValue());
+                    vaccination.setVaccine(newVaccination.getVaccine());
+                    vaccination.setVaccinationDate(newVaccination.getVaccinationDate());
+                    vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
+                    vaccinations.add(vaccination);
+                } else {
+                    Alerts.displayNotAcceptedVacc(model);
+                }
             }
             vaccineGroup.selectToggle(null);
             doseGroup.selectToggle(null);
@@ -533,7 +547,7 @@ public class ReportForm {
         });
         HBox top = new HBox(title, help);
         HBox.setMargin(help, new Insets(5, 5, 5, 20));
-        HBox.setMargin(title, new Insets(5, 430, 5, 20));
+        HBox.setMargin(title, new Insets(5, 300, 5, 20));
 
         BorderPane layout = new BorderPane();
         layout.setTop(top);
