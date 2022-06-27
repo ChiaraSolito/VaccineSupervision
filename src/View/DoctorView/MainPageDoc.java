@@ -94,7 +94,7 @@ public class MainPageDoc extends Parent {
 
         Button logout = new Button("Logout");
         logout.setOnAction(e -> {
-            mainDocStage.setTitle("Drug Supervision - Login");
+            mainDocStage.setTitle("Vaccine Supervision - Login");
             mainDocStage.setScene(new Scene(new LoginView(mainDocStage, new User()).getView(), 700, 400));
             mainDocStage.setResizable(false);
             mainDocStage.show();

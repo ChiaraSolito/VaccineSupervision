@@ -124,7 +124,7 @@ public class MainPagePharm extends Parent {
 
         Button logout = new Button("Logout");
         logout.setOnAction(e -> {
-            mainPharmStage.setTitle("Drug Supervision - Login");
+            mainPharmStage.setTitle("Vaccine Supervision - Login");
             mainPharmStage.setScene(new Scene(new LoginView(mainPharmStage, new User()).getView(), 700, 400));
             mainPharmStage.setResizable(false);
             mainPharmStage.show();

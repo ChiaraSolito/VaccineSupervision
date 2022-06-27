@@ -48,7 +48,7 @@ public class LoginView {
      */
     public Parent getView() {
 
-        Insets insets = new Insets(30);
+        Insets insets = new Insets(15);
 
         //login button and VBox
         Button loginButton = new Button("Login");

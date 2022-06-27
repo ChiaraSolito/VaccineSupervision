@@ -107,7 +107,7 @@ public class ReportList {
             reportListStage.show();
         });
 
-        HBox buttons = new HBox(500, backButton, analysisButton);
+        HBox buttons = new HBox(450, backButton, analysisButton);
         BorderPane.setAlignment(buttons, Pos.BOTTOM_CENTER);
         layout.setBottom(buttons);
         BorderPane.setMargin(buttons, new Insets(15));
