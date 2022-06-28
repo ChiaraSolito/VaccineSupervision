@@ -507,8 +507,12 @@ public class ReportForm {
                 if (patientFlag) {
                     patient.setIdPatient(controller.createPatient(patient));
                 }
-                controller.addVaccination(patient, vaccinations);
-                controller.createReport(patient, reaction, datePickerR.getValue().toString());
+                if (patient.getIdPatient().isEmpty()) {
+                    Alerts.patientError(model);
+                } else {
+                    controller.addVaccination(patient, vaccinations);
+                    controller.createReport(patient, reaction, datePickerR.getValue().toString());
+                }
                 reportDocStage.setScene(new Scene(new MainPageDoc(reportDocStage, model).getView(), 700, 400));
                 reportDocStage.setTitle("Menù Principale");
                 reportDocStage.setResizable(false);

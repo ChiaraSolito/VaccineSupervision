@@ -87,4 +87,12 @@ public class Alerts {
         dialog.setContentText("L'inserimento non è andato a termine. Ricorda che il livello del rischio deve essere tra 1 e 5 e di non aver inserito apici nella descrizione.");
         dialog.showAndWait();
     }
+
+    public static void patientError(User model) {
+        Alert dialog = new Alert(Alert.AlertType.ERROR);
+        dialog.setTitle("Errore! Paziente non inserito.");
+        dialog.setHeaderText("Utente: " + model.getUsername());
+        dialog.setContentText("L'inserimento non è andato a termine. C'è stato un errore nell'inserimento del paziente, riprova.");
+        dialog.showAndWait();
+    }
 }
