@@ -67,7 +67,7 @@ public class ReportAnalysis {
             pieChart1.getData().add(above);
             sum += mod.getValue();
         }
-        pieChart1.setLabelsVisible(true);
+        pieChart1.setLabelsVisible(false);
 
         int finalSum = sum;
         pieChart1.getData().forEach(data -> {
@@ -83,7 +83,7 @@ public class ReportAnalysis {
             pieChart2.getData().add(above);
             sum2 += mod.getValue();
         }
-        pieChart2.setLabelsVisible(true);
+        pieChart2.setLabelsVisible(false);
 
         int finalSum2 = sum2;
         pieChart2.setTitle("Ultimi 6 mesi");
