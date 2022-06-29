@@ -2,6 +2,7 @@ package View.Utils;
 
 import Model.User;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.Region;
 
 public class Alerts {
 
@@ -19,7 +20,8 @@ public class Alerts {
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setTitle("Errore!");
         dialog.setHeaderText("Utente: " + model.getUsername());
-        dialog.setContentText("Hai dimenticato qualcosa. Inserisci tutti i dati necessari prima di andare avanti.");
+        dialog.setContentText("I dati inseriti non sono nel formato corretto o nel range richiesto oppure ci sono dati mancanti. \nInserisci tutti i dati necessari prima di andare avanti.");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         dialog.showAndWait();
     }
 
@@ -84,7 +86,17 @@ public class Alerts {
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setTitle("Errore! Inserimento non consentito.");
         dialog.setHeaderText("Utente: " + model.getUsername());
-        dialog.setContentText("L'inserimento non è andato a termine. Ricorda che il livello del rischio deve essere tra 1 e 5 e di non aver inserito apici nella descrizione.");
+        dialog.setContentText("L'inserimento non è andato a termine. I dati inseriti non sono nel formato corretto o nel range richiesto o vuoti. \nRicorda che il livello del rischio deve essere tra 1 e 5 e di non aver inserito apici nella descrizione.");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        dialog.showAndWait();
+    }
+
+    public static void displayRegexError(User model) {
+        Alert dialog = new Alert(Alert.AlertType.ERROR);
+        dialog.setTitle("Errore! Inserimento non consentito.");
+        dialog.setHeaderText("Utente: " + model.getUsername());
+        dialog.setContentText("I dati inseriti non sono nel formato corretto o nel range richiesto o vuoti. \nLe stringhe devono essere inserite con SOLO lettere e spazi; i numeri con SOLE cifre senza apostrofi.");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         dialog.showAndWait();
     }
 

@@ -109,8 +109,9 @@ public class ReportForm {
 
         //insert new risk and clears text fields
         submit.setOnAction(e -> {
-            if (newRisk.getName().isEmpty() || newRisk.getDescription().isEmpty() || newRisk.getRiskLevel() < 1
-                    || newRisk.getRiskLevel() > 5 || newRisk.getName().contains("'") || newRisk.getDescription().contains("'")) {
+            if (newRisk.getName().isEmpty() || newRisk.getDescription().isEmpty() || !newRisk.getName().matches("[A-Za-z ]+")
+                    || !newRisk.getDescription().matches("[A-Za-z ]+") || !String.valueOf(newRisk.getRiskLevel()).matches("\\d")
+                    || newRisk.getRiskLevel() < 1 || newRisk.getRiskLevel() > 5 || newRisk.getName().contains("'") || newRisk.getDescription().contains("'")) {
                 Alerts.displayRiskError(model);
             } else {
                 controller.addRisk(newRisk.getName(), newRisk.getDescription(), newRisk.getRiskLevel());
@@ -350,23 +351,12 @@ public class ReportForm {
             //Controls on vaccine doses
             Vaccination vaccination = new Vaccination();
             boolean flag = true;
-            //Vaccino anti influenzale non soggetto a controlli
-            if (newVaccination.getTypeSomministration() == "Standard") {
-                flag = false;
-                vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
-                doses.add(newVaccination.getTypeSomministration());
-                dates.add(datePickerV.getValue());
-                vaccination.setVaccine(newVaccination.getVaccine());
-                vaccination.setVaccinationDate(newVaccination.getVaccinationDate());
-                vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
-                vaccinations.add(vaccination);
+            if(!newVaccination.getVaccinationSite().matches("[A-Za-z ]+")) {
+                Alerts.displayRegexError(model);
             } else {
-                //Vaccini covid soggetti a controlli
-                if (datePickerR.getValue() == null) {
-                    Alerts.displayDateError(model);
-                } else if (flag && VaccinesList.covidVaccines.get(newVaccination.getVaccine()).contains(newVaccination.getTypeSomministration()
-                ) && !doses.contains(newVaccination.getTypeSomministration()) && (dates.isEmpty() || datePickerV.getValue().isAfter(dates.get(dates.size() - 1)))
-                        && datePickerV.getValue().isBefore(datePickerR.getValue())) {
+                //Vaccino anti influenzale non soggetto a controlli
+                if (newVaccination.getTypeSomministration().equals("Standard")) {
+                    flag = false;
                     vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
                     doses.add(newVaccination.getTypeSomministration());
                     dates.add(datePickerV.getValue());
@@ -375,7 +365,22 @@ public class ReportForm {
                     vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
                     vaccinations.add(vaccination);
                 } else {
-                    Alerts.displayNotAcceptedVacc(model);
+                    //Vaccini covid soggetti a controlli
+                    if (datePickerR.getValue() == null) {
+                        Alerts.displayDateError(model);
+                    } else if (flag && VaccinesList.covidVaccines.get(newVaccination.getVaccine()).contains(newVaccination.getTypeSomministration()
+                    ) && !doses.contains(newVaccination.getTypeSomministration()) && (dates.isEmpty() || datePickerV.getValue().isAfter(dates.get(dates.size() - 1)))
+                            && datePickerV.getValue().isBefore(datePickerR.getValue())) {
+                        vaccination.setTypeSomministration(newVaccination.getTypeSomministration());
+                        doses.add(newVaccination.getTypeSomministration());
+                        dates.add(datePickerV.getValue());
+                        vaccination.setVaccine(newVaccination.getVaccine());
+                        vaccination.setVaccinationDate(newVaccination.getVaccinationDate());
+                        vaccination.setVaccinationSite(newVaccination.getVaccinationSite());
+                        vaccinations.add(vaccination);
+                    } else {
+                        Alerts.displayNotAcceptedVacc(model);
+                    }
                 }
             }
             vaccineGroup.selectToggle(null);
@@ -438,8 +443,9 @@ public class ReportForm {
             boolean patientFlag = false;
             //Controls on the patient side
             if (group.getSelectedToggle() == null) { //if toggle is empty insert a new patient
-                if ((birthYearTextField.getText().isEmpty() || provinceTextField.getText().isEmpty()
-                        || professionTextField.getText().isEmpty() || vaccinations.isEmpty()) && counter == 0) {
+                if ((birthYearTextField.getText().isEmpty() || provinceTextField.getText().isEmpty() || professionTextField.getText().isEmpty() || vaccinations.isEmpty()
+                        || !birthYearTextField.getText().matches("\\d+") || !provinceTextField.getText().matches("[A-Za-z ]+") || !professionTextField.getText().matches("[A-Za-z ]+"))
+                        && counter == 0) {
                     Alerts.displayErrorMessage(model);
                     counter = 1;
                 } else {
@@ -476,9 +482,9 @@ public class ReportForm {
 
             //Controls on reaction side
             if (group2.getSelectedToggle() == null) { //if toggle is empty we have to create a new reaction
-                if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty()
-                        || gravityFieldReact.getText().isEmpty() || Integer.parseInt(gravityFieldReact.getText()) < 1
-                        || Integer.parseInt(gravityFieldReact.getText()) > 5 || datePickerR.getValue() == null) {
+                if (nameFieldReact.getText().isEmpty() || descriptionFieldReact.getText().isEmpty() || gravityFieldReact.getText().isEmpty()
+                        || !nameFieldReact.getText().matches("[A-Za-z ]+") || !descriptionFieldReact.getText().matches("[A-Za-z ]+")  || !gravityFieldReact.getText().matches("\\d")
+                        || Integer.parseInt(gravityFieldReact.getText()) < 1  || Integer.parseInt(gravityFieldReact.getText()) > 5 || datePickerR.getValue() == null) {
                     if (counter == 0) {
                         Alerts.displayErrorMessage(model);
                         counter = 1;
