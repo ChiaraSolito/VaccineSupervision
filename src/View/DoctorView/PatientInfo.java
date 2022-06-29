@@ -75,26 +75,25 @@ public class PatientInfo {
         TableView<Vaccination> vaccinationsInfo = new TableView<>();
         TableColumn<Vaccination, String> vaccineColumn = new TableColumn<>("Vaccino");
         vaccineColumn.setCellValueFactory(p -> p.getValue().vaccineProperty());
-        vaccineColumn.setMaxWidth(175);
-        vaccineColumn.setMinWidth(175);
+        vaccineColumn.setPrefWidth(250);
         vaccineColumn.setReorderable(false);
         vaccinationsInfo.getColumns().add(vaccineColumn);
-        TableColumn<Vaccination, String> typeSomministrationColumn = new TableColumn<>("Tipo somministrazione");
+        TableColumn<Vaccination, String> typeSomministrationColumn = new TableColumn<>("Tipo somm.");
         typeSomministrationColumn.setCellValueFactory(p -> p.getValue().typeSomministrationProperty());
-        typeSomministrationColumn.setMaxWidth(175);
-        typeSomministrationColumn.setMinWidth(175);
+        typeSomministrationColumn.setMaxWidth(140);
+        typeSomministrationColumn.setMinWidth(140);
         typeSomministrationColumn.setReorderable(false);
         vaccinationsInfo.getColumns().add(typeSomministrationColumn);
         TableColumn<Vaccination, String> siteColumn = new TableColumn<>("Sede vaccinazione");
         siteColumn.setCellValueFactory(p -> p.getValue().vaccinationSiteProperty());
-        siteColumn.setMaxWidth(175);
-        siteColumn.setMinWidth(175);
+        siteColumn.setMaxWidth(169);
+        siteColumn.setMinWidth(169);
         siteColumn.setReorderable(false);
         vaccinationsInfo.getColumns().add(siteColumn);
         TableColumn<Vaccination, String> dateColumn = new TableColumn<>("Data vaccinazione");
         dateColumn.setCellValueFactory(p -> p.getValue().vaccinationDateProperty());
-        dateColumn.setMaxWidth(174);
-        dateColumn.setMinWidth(174);
+        dateColumn.setMaxWidth(140);
+        dateColumn.setMinWidth(140);
         dateColumn.setReorderable(false);
         vaccinationsInfo.getColumns().add(dateColumn);
 
@@ -114,7 +113,7 @@ public class PatientInfo {
         reportsInfo.getColumns().add(idColumn);
         TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
         reactionColumn.setCellValueFactory(p -> p.getValue().reactionProperty());
-        reactionColumn.setMaxWidth(100);
+        reactionColumn.setPrefWidth(150);
         reactionColumn.setMinWidth(100);
         reactionColumn.setReorderable(false);
         reportsInfo.getColumns().add(reactionColumn);
@@ -131,7 +130,7 @@ public class PatientInfo {
         reportsInfo.getColumns().add(reactionDateColumn);
         TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni due mesi precedenti alla reazione");
         vaccinationColumn.setCellValueFactory(p -> p.getValue().twoMonthsVaccinationsProperty());
-        vaccinationColumn.setPrefWidth(300);
+        vaccinationColumn.setPrefWidth(450);
         vaccinationColumn.setReorderable(false);
         reportsInfo.getColumns().add(vaccinationColumn);
 

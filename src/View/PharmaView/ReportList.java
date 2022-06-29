@@ -54,7 +54,7 @@ public class ReportList {
         reportList.getColumns().add(doctorColumn);
         TableColumn<TableObject, String> reactionColumn = new TableColumn<>("Reazione");
         reactionColumn.setCellValueFactory(p -> p.getValue().reactionProperty());
-        reactionColumn.setMaxWidth(100);
+        reactionColumn.setPrefWidth(150);
         reactionColumn.setMinWidth(100);
         reactionColumn.setReorderable(false);
         reportList.getColumns().add(reactionColumn);
@@ -71,7 +71,7 @@ public class ReportList {
         reportList.getColumns().add(reactionDateColumn);
         TableColumn<TableObject, String> vaccinationColumn = new TableColumn<>("Vaccinazioni due mesi precedenti alla reazione");
         vaccinationColumn.setCellValueFactory(p -> p.getValue().twoMonthsVaccinationsProperty());
-        vaccinationColumn.setPrefWidth(265);
+        vaccinationColumn.setPrefWidth(430);
         vaccinationColumn.setReorderable(false);
         reportList.getColumns().add(vaccinationColumn);
 
