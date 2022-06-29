@@ -185,7 +185,7 @@ public class PatientDAOImpl implements PatientDAO {
     @Override
     public String createPatient(String birthYear, String province, String profession, List<RiskFactor> risk_factor) throws NullStringException {
 
-        if (birthYear.isEmpty() || province.isEmpty() || profession.isEmpty() || risk_factor.isEmpty()) {
+        if (birthYear.isEmpty() || province.isEmpty() || profession.isEmpty()) {
             throw new NullStringException();
         }
 
@@ -205,17 +205,19 @@ public class PatientDAOImpl implements PatientDAO {
                 idCurrent = pConnection.rs.getString("max");
             }
 
-            for (RiskFactor risk : risk_factor) {
-                pConnection.rs = pConnection.statement.executeQuery("SELECT true WHERE EXISTS " +
-                        "(SELECT name FROM RiskFactor WHERE name = '" + risk.getName() + "')");
-                if (pConnection.rs.next()) {
-                    pConnection.statement.executeUpdate("INSERT INTO PatientRisk " +
-                            "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
-                } else {
-                    pConnection.statement.executeUpdate("INSERT INTO RiskFactor " +
-                            "VALUES('" + risk.getName() + "', '" + risk.getRiskLevel() + "', '" + risk.getDescription() + "')");
-                    pConnection.statement.executeUpdate("INSERT INTO PatientRisk " +
-                            "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
+            if (!risk_factor.isEmpty()) {
+                for (RiskFactor risk : risk_factor) {
+                    pConnection.rs = pConnection.statement.executeQuery("SELECT true WHERE EXISTS " +
+                            "(SELECT name FROM RiskFactor WHERE name = '" + risk.getName() + "')");
+                    if (pConnection.rs.next()) {
+                        pConnection.statement.executeUpdate("INSERT INTO PatientRisk " +
+                                "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
+                    } else {
+                        pConnection.statement.executeUpdate("INSERT INTO RiskFactor " +
+                                "VALUES('" + risk.getName() + "', '" + risk.getRiskLevel() + "', '" + risk.getDescription() + "')");
+                        pConnection.statement.executeUpdate("INSERT INTO PatientRisk " +
+                                "VALUES('" + idCurrent + "', '" + risk.getName() + "')");
+                    }
                 }
             }
 
