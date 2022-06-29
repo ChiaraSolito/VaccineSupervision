@@ -279,8 +279,8 @@ public class ReportForm {
                 3° passo\s
                 Inserimento dei dati riguardanti le vaccinazioni, inserire in ORDINE CRONOLOGICO:\s
                 è importante cliccare su 'Inserisci' quando si vuole inserire una nuova vaccinazione.
-                Se le vaccinazioni non sono state inserite in ORDINE CRONOLOGICO, è necessario rifare tutta la procedura\s
-                di inserimento della segnalazione.""");
+                Se le vaccinazioni non sono state inserite in ORDINE CRONOLOGICO, è necessario\s
+                rifare tutta la procedura di inserimento della segnalazione.""");
 
         //Third tab layout
         //Hidden VBoxes for new Vaccination
@@ -334,6 +334,7 @@ public class ReportForm {
         //Other informations text fields
         TextField siteField = BoundField.createBoundTextField(newVaccination.vaccinationSiteProperty());
         VBox siteV = new VBox(10, new Text("Sito della vaccinazione: "), siteField);
+        siteV.setMaxWidth(300);
         DatePicker datePickerV = new DatePicker();
         datePickerV.setOnAction(e -> {
             LocalDate date = datePickerV.getValue();

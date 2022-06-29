@@ -40,8 +40,8 @@ public class ReadNoticeList extends Parent {
         TableView<Notice> noticeList = new TableView<>();
         TableColumn<Notice, String> idColumn = new TableColumn<>("Codice avviso");
         idColumn.setCellValueFactory(p -> p.getValue().idProperty());
-        idColumn.setMaxWidth(125);
-        idColumn.setMinWidth(125);
+        idColumn.setMaxWidth(110);
+        idColumn.setMinWidth(110);
         idColumn.setReorderable(false);
         noticeList.getColumns().add(idColumn);
         TableColumn<Notice, String> dateColumn = new TableColumn<>("Data avviso");
@@ -88,7 +88,7 @@ public class ReadNoticeList extends Parent {
         });
         layout.setBottom(backButton);
         BorderPane.setAlignment(backButton, Pos.CENTER_LEFT);
-        BorderPane.setMargin(backButton, new Insets(5, 5, 5, 5));
+        BorderPane.setMargin(backButton, new Insets(15));
 
         return layout;
     }

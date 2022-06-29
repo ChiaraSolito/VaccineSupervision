@@ -16,7 +16,7 @@ public class Notices {
 
         if (reportDAO.getReportNumber() > 50) {
             try {
-                noticeDAO.createNotice("Negli ultimi 7 giorni si sono superate le 50 segnalazioni. Riceverai questo messaggio ad ogni apertura dell applicazione, se non diminuiscono.");
+                noticeDAO.createNotice("Si sono superate le 50 segnalazioni. Riceverai questo messaggio ad ogni apertura dell applicazione, se non diminuiscono.");
             } catch (NullStringException e) {
                 System.out.println("Error: " + e.getMessage());
                 e.printStackTrace();
@@ -37,7 +37,7 @@ public class Notices {
         if (!dangerousVaccines.isEmpty()) {
             try {
                 noticeDAO.createNotice("Avviso importante! I vaccini\n" + dangerousVaccines + "" +
-                        "\n hanno riportato più di 5 reazioni di gravità maggiore di 3 negli ultimi 7 giorni.");
+                        "\n hanno riportato più di 5 reazioni di gravità maggiore di 3 negli ultimi 30 giorni.");
             } catch (NullStringException e) {
                 System.out.println("Error: " + e.getMessage());
                 e.printStackTrace();

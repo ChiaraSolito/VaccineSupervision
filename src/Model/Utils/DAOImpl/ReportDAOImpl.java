@@ -135,7 +135,7 @@ public class ReportDAOImpl implements ReportDAO {
                     "JOIN report R ON R.idpatient = V.idpatient " +
                     "JOIN reaction RE ON R.reaction = RE.name " +
                     "WHERE V.vaccine NOT LIKE 'Antinfluenzale%' " +
-                    "AND R.reportdate > current_date - 7 " +
+                    "AND R.reportdate > current_date - 30 " +
                     "AND V.vaccinationdate > R.reportdate - 60 " +
                     "AND RE.gravity > 3 " +
                     "GROUP BY V.vaccine"
